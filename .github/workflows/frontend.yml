@@ -1,0 +1,40 @@
+name: safari-app (Next.js)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_IP }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd /root
+
+            # Clone repo if not exists
+            if [ ! -d "safari-frontend" ]; then
+              git clone git@github.com:shahisrail/safari-frontend.git
+            fi
+
+            cd /root/safari-frontend
+
+            # Force pull latest changes
+            git fetch origin main
+            git reset --hard origin/main
+
+            # Stop & remove previous container
+            docker stop safari-frontend || true
+            docker rm safari-frontend || true
+
+            # Build & run new container
+            docker build -t safari-frontend .
+            docker run -d -p 3000:80 --name safari-frontend safari-frontend

@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+
+
+
+
+body {
+  font-family: var(--font-roboto); /* Use the Roboto variable */
+}
+.text-colora{
+text:#f4805f
+}
+.text-colorb{
+    color: #996756;
+}
+/* Style for the logo text - using custom font variable and color */
+.logo-text {
+  font-family: var(--font-roboto);
+  font-weight: 900; /* Roboto Black */
+  letter-spacing: -0.05em;
+  color: var(--color-logo-brown);
+}
+
+/* Style for the "SAFARIS" text - using custom font variable and color */
+.safaris-text {
+  font-family: var(--font-roboto);
+  font-weight: 900; /* Roboto Black */
+  letter-spacing: -0.05em;
+  color: var(--color-logo-orange);
+}
+
+/* Remove the @import url for Google Fonts, next/font handles it */
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'); */
