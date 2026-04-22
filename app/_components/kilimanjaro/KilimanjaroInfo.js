@@ -57,39 +57,39 @@ const KilimanjaroInfo = () => {
               </h3>
               <div className="space-y-3">
                 <div className="flex items-start">
-                  <div className="w-2 h-2 bg-[#465b2d] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#8B6F47] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                   <span className="text-gray-600"><strong>Best for beginners</strong> – Marangu or Machame Routes</span>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-2 h-2 bg-[#465b2d] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#8B6F47] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                   <span className="text-gray-600"><strong>Spectacular scenery</strong> – Lemosho or Machame Routes</span>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-2 h-2 bg-[#465b2d] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#8B6F47] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                   <span className="text-gray-600"><strong>Beginners with a budget</strong> – Marangu Route</span>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-2 h-2 bg-[#465b2d] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#8B6F47] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                   <span className="text-gray-600"><strong>For moderate hikers</strong> – Machame or Lemosho Routes</span>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-2 h-2 bg-[#465b2d] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#8B6F47] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                   <span className="text-gray-600"><strong>Expert hikers</strong> – Umbwe Route</span>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-2 h-2 bg-[#465b2d] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#8B6F47] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                   <span className="text-gray-600"><strong>Most popular Mount Kilimanjaro route</strong> – Machame Route</span>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-2 h-2 bg-[#465b2d] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#8B6F47] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                   <span className="text-gray-600"><strong>Longest Mt Kilimanjaro route</strong> – Northern circuit</span>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-2 h-2 bg-[#465b2d] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#8B6F47] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                   <span className="text-gray-600"><strong>During rainy season</strong> – Rongai Route</span>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-2 h-2 bg-[#465b2d] rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <div className="w-2 h-2 bg-[#8B6F47] rounded-full mt-2 mr-3 flex-shrink-0"></div>
                   <span className="text-gray-600"><strong>Highest success rate?</strong> – 8 days Lemosho Route or 9 days Northern Circuit</span>
                 </div>
               </div>
@@ -118,7 +118,7 @@ const KilimanjaroInfo = () => {
                 <div 
                   key={index}
                   className={`cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-300 ${
-                    selectedImage === index ? 'border-[#465b2d]' : 'border-gray-200'
+                    selectedImage === index ? 'border-[#8B6F47]' : 'border-gray-200'
                   }`}
                   onClick={() => setSelectedImage(index)}
                 >
@@ -132,7 +132,7 @@ const KilimanjaroInfo = () => {
             </div>
 
             {/* Quick Facts Box */}
-            <div className="bg-gradient-to-br from-[#465b2d] to-[#3a4a24] rounded-lg p-6 text-white">
+            <div className="bg-gradient-to-br from-[#8B6F47] to-[#6B5A3D] rounded-lg p-6 text-white">
               <h4 className="font-bold text-lg mb-4">Quick Facts</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">

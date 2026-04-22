@@ -22,7 +22,7 @@ import {
 
 // Color constants
 const COLORS = {
-  primary: '#465b2d',
+  primary: '#8B6F47',
   primaryDark: '#3a4a25',
   primaryLight: '#5a7245',
   accent: '#8a9a6d',
@@ -255,11 +255,11 @@ export default function TravelProposalPage() {
               return (
                 <div key={step.number} className="flex items-center">
                   <div className={`flex flex-col items-center transition-all duration-300 ${
-                    currentStep >= step.number ? 'text-[#465b2d]' : 'text-gray-400'
+                    currentStep >= step.number ? 'text-[#8B6F47]' : 'text-gray-400'
                   }`}>
                     <div className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all ${
                       currentStep >= step.number 
-                        ? 'bg-[#465b2d] border-emerald-700 text-white shadow-lg' 
+                        ? 'bg-[#8B6F47] border-emerald-700 text-white shadow-lg' 
                         : 'border-gray-300 bg-white'
                     }`}>
                       {currentStep > step.number ? <FaCheck className="w-6 h-6" /> : <StepIcon className="w-6 h-6" />}
@@ -269,7 +269,7 @@ export default function TravelProposalPage() {
                   </div>
                   {index < steps.length - 1 && (
                     <div className={`w-20 h-1 mx-4 transition-all duration-300 ${
-                      currentStep > step.number ? 'bg-[#465b2d]' : 'bg-gray-300'
+                      currentStep > step.number ? 'bg-[#8B6F47]' : 'bg-gray-300'
                     }`} />
                   )}
                 </div>
@@ -363,7 +363,7 @@ export default function TravelProposalPage() {
                     {/* Travel Duration */}
                     <div className="mb-8">
                       <label className="block text-lg font-semibold text-gray-900 mb-4">
-                        Trip Duration: <span className="text-[#465b2d] font-bold">{formData.days} days</span>
+                        Trip Duration: <span className="text-[#8B6F47] font-bold">{formData.days} days</span>
                       </label>
                       <div className="bg-gray-50 rounded-xl p-6">
                         <input
@@ -372,7 +372,7 @@ export default function TravelProposalPage() {
                           max="21"
                           value={formData.days}
                           onChange={(e) => setFormData(prev => ({ ...prev, days: parseInt(e.target.value) }))}
-                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#465b2d] [&::-webkit-slider-thumb]:shadow-lg"
+                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#8B6F47] [&::-webkit-slider-thumb]:shadow-lg"
                         />
                         <div className="flex justify-between text-sm text-gray-500 mt-4">
                           <span>3 days</span>
@@ -442,7 +442,7 @@ export default function TravelProposalPage() {
                     {/* Budget */}
                     <div>
                       <label className="block text-lg font-semibold text-gray-900 mb-4">
-                        Budget Range: <span className="text-[#465b2d] font-bold">${formData.budget.toLocaleString()} per person</span>
+                        Budget Range: <span className="text-[#8B6F47] font-bold">${formData.budget.toLocaleString()} per person</span>
                       </label>
                       <div className="bg-gray-50 rounded-xl p-6">
                         <input
@@ -452,7 +452,7 @@ export default function TravelProposalPage() {
                           step="500"
                           value={formData.budget}
                           onChange={(e) => setFormData(prev => ({ ...prev, budget: parseInt(e.target.value) }))}
-                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#465b2d] [&::-webkit-slider-thumb]:shadow-lg"
+                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-[#8B6F47] [&::-webkit-slider-thumb]:shadow-lg"
                         />
                         <div className="flex justify-between text-sm text-gray-500 mt-4">
                           <span>$1,500</span>
@@ -699,7 +699,7 @@ export default function TravelProposalPage() {
                     <button
                       type="button"
                       onClick={handleNext}
-                      className="px-8 py-4 bg-[#465b2d] text-white rounded-xl hover:bg-[#324120] transition-colors font-semibold shadow-lg hover:shadow-xl"
+                      className="px-8 py-4 bg-[#8B6F47] text-white rounded-xl hover:bg-[#324120] transition-colors font-semibold shadow-lg hover:shadow-xl"
                     >
                       Continue to Next Step
                     </button>

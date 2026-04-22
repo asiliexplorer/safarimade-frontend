@@ -21,9 +21,9 @@ import {
   FaShare
 } from 'react-icons/fa';
 
-// Color constants based on #465b2d
+// Color constants based on #8B6F47
 const COLORS = {
-  primary: '#465b2d',
+  primary: '#8B6F47',
   primaryDark: '#3a4a25',
   primaryLight: '#5a7245',
   accent: '#8a9a6d',

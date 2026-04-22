@@ -42,17 +42,32 @@ const WhyChooseUs = () => {
   };
 
   return (
-    <div className="w-full flex justify-between flex-wrap bg-gradient-to-br from-slate-50 to-slate-100 py-16 px-4">
-      <div className="max-w-full mx-auto">
+    <div className="w-full flex justify-between flex-wrap py-16 px-4 relative overflow-hidden bg-white">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 -z-10">
+        {/* Solid color background with low opacity */}
+        <div className="absolute inset-0 bg-[#ff6b4a]/5"></div>
+        
+        {/* Top accent */}
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-[#ff6b4a]/8 rounded-full blur-3xl"></div>
+        
+        {/* Bottom accent */}
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#ff6b4a]/7 rounded-full blur-3xl"></div>
+        
+        {/* Left accent */}
+        <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-72 h-72 bg-[#ff6b4a]/6 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-full mx-auto relative z-10">
         {/* Header Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl lg:text-5xl font-bold text-slate-800 mb-4">
-            WHY CHOOSE <span className="text-[#465b2d] uppercase">Safari Trip Booking</span>
+            WHY CHOOSE <span className="text-[#8B6F47] uppercase">Safari Trip Booking</span>
           </h1>
           <h2 className="text-xl lg:text-2xl text-slate-600 mb-6">
             THE EXPERT WITH IN-DEPTH KNOWLEDGE
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-[#465b2d] to-[#8B5A4A] rounded-full mx-auto mb-8"></div>
+          <div className="w-24 h-1 bg-[#8B6F47] rounded-full mx-auto mb-8"></div>
           
           {/* Main Description */}
           <div className="max-w-4xl mx-auto">
@@ -68,7 +83,7 @@ const WhyChooseUs = () => {
   {/* Left Side - Wider Feature List */}
   <div className="flex-1 lg:flex-[2] w-full">
     <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200 p-6 md:p-8 shadow-lg h-full">
-      <h3 className="text-2xl font-bold text-[#465b2d] mb-6 text-center">
+      <h3 className="text-2xl font-bold text-[#8B6F47] mb-6 text-center">
         Why We're Different
       </h3>
 
@@ -79,7 +94,7 @@ const WhyChooseUs = () => {
             key={index}
             className="flex items-start gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors duration-200"
           >
-            <div className="w-6 h-6 bg-[#465b2d] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+            <div className="w-6 h-6 bg-[#8B6F47] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
               <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path
                   fillRule="evenodd"
@@ -97,13 +112,13 @@ const WhyChooseUs = () => {
       <div className="flex flex-col sm:flex-row gap-4 mt-8">
         <Link
           href="/travel-proposal"
-          className="bg-gradient-to-r from-[#465b2d] to-[#3a4a24] text-white font-bold py-3 px-6 rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex-1 text-center text-sm md:text-base"
+          className="bg-[#8B6F47] text-white font-bold py-3 px-6 rounded-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex-1 text-center text-sm md:text-base"
         >
           REQUEST A TRAVEL PROPOSAL
         </Link>
         <Link
           href="/packages"
-          className="bg-white/80 text-slate-700 font-bold py-3 px-6 rounded-xl border-2 border-slate-300 hover:border-[#465b2d] hover:bg-white transition-all duration-300 flex-1 text-center text-sm md:text-base"
+          className="bg-white/80 text-slate-700 font-bold py-3 px-6 rounded-xl border-2 border-slate-300 hover:border-[#8B6F47] hover:bg-white transition-all duration-300 flex-1 text-center text-sm md:text-base"
         >
           VIEW ITINERARIES
         </Link>
@@ -113,7 +128,7 @@ const WhyChooseUs = () => {
 
   {/* Right Side - Video Card */}
   <div className="flex-1 w-full lg:max-w-md">
-    <div className="bg-gradient-to-br from-[#465b2d] to-[#8B5A4A] rounded-2xl overflow-hidden relative h-[240px] sm:h-[320px] md:h-[400px] shadow-lg w-full group">
+    <div className="bg-[#8B6F47] rounded-2xl overflow-hidden relative h-[240px] sm:h-[320px] md:h-[400px] shadow-lg w-full group">
       <div className="relative w-full h-full">
         <video
           ref={videoRef}

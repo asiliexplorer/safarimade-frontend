@@ -96,7 +96,7 @@ const ZanzibarInfo = () => {
             <p className="text-gray-700 mb-6">
                 If you have a question about a Zanzibar holiday or our beach itineraries, please contact us.
             </p>
-            <button className="bg-[#465b2d] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#3c5025] cursor-pointer transition-colors">
+            <button className="bg-[#8B6F47] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#3c5025] cursor-pointer transition-colors">
                 Contact Us Today
             </button>
             </div> */}

@@ -2,272 +2,255 @@
 "use client";
 
 import Link from "next/link";
+import { Star, MapPin, Zap, Home, Target, Trophy, Heart, Mountain, Leaf } from "lucide-react";
 
 const GetInspiredSection = () => {
   return (
-    <section className="py-16 bg-white ">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+    <section className="py-20 bg-white relative overflow-hidden">
+      {/* Decorative background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#ff6b4a]/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#8B6F47]/5 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#2c5c2c] mb-4 tracking-wide">
-            GET INSPIRED
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center gap-2 bg-[#ff6b4a]/10 px-4 py-2 rounded-full border border-[#ff6b4a]/20 mb-6">
+            <Zap className="w-4 h-4 text-[#ff6b4a]" />
+            <span className="text-sm font-bold text-[#ff6b4a] uppercase">Get Inspired</span>
+          </div>
+          <h2 className="text-5xl md:text-6xl font-black text-slate-900 mb-6 leading-tight">
+            Discover & Explore <span className="text-[#8B6F47]">Tanzania</span>
           </h2>
-          <h3 className="text-2xl md:text-3xl font-semibold text-[#8B5A4A] mb-6">
-            DISCOVER AND EXPLORE
-          </h3>
-          <p className="text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed">
-            Embark on an unforgettable journey through Tanzania with Tanzania
-            Specialist and our experts. Our past travelers confirm: it's an
-            unforgettable experience. Come aboard for a remarkable journey
-            through this beautiful country.
+          <p className="text-lg md:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+            Embark on an unforgettable journey through Tanzania. From safari adventures to stunning Zanzibar beaches, explore everything this beautiful country has to offer.
           </p>
         </div>
 
-        {/* Card 1: Customer Experiences - Text Left, Image Right */}
-        <div className="flex justify-center flex-col lg:flex-row gap-2 mb-4 items-stretch">
-          {/* Text Content - Larger side */}
-          {/* <div className="lg:w-1/2 bg-gradient-to-br from-[#2c5c2c] to-[#1e401e] text-white rounded-2xl p-6 shadow-2xl"> */}
-          <div className="lg:w-2/4 bg-gradient-to-br from-[#2c5c2c] to-[#1e401e] text-white rounded-l-2xl p-6 shadow-2xl border-l border-t border-b border-[#3b7a3b]">
-            <h3 className="text-xl font-bold uppercase mb-3 tracking-wide">
-              GREAT CUSTOMER EXPERIENCES
-            </h3>
-
-            <p className="text-md opacity-70 mb-2 leading-relaxed">
-              Discover the stories of Tanzania Specialist travelers.
-              <br />
-              Click through and enjoy their wonderful experiences.
-              <br />
-              Create your own adventure and explore Tanzania with us.
-            </p>
-
-            {/* Ratings with Stars */}
-            <div className="space-y-4 mb-2 flex">
-              {/* Rating 1 */}
-              <div className="flex  flex-col items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <span className="text-md font-bold">4.9/5</span>
-                  <div className="flex space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className="w-4 h-4 text-yellow-400 fill-current"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                </div>
-                <span className="text-xs opacity-90">
-                  Based on 3455+ reviews
-                </span>
-              </div>
-
-              {/* Rating 2 */}
-              <div className="flex flex-col items-center space-x-4">
-                <div className="flex items-center space-x-2">
-                  <span className="text-md font-bold">4.7/5</span>
-                  <div className="flex space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className="w-4 h-4 text-yellow-400 fill-current"
-                        viewBox="0 0 20 20"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                </div>
-                <span className="text-xs opacity-90">
-                  Based on 828+ reviews
-                </span>
+        {/* Cards Grid - 2x2 Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          
+          {/* Card 1: Customer Experiences */}
+          <div className="group bg-white rounded-2xl border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2">
+            <div className="relative h-80 overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                alt="Happy travelers in Tanzania"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md rounded-full px-3 py-1 flex items-center gap-1">
+                <Star className="w-3 h-3 text-[#8B6F47] fill-[#8B6F47]" />
+                <span className="text-xs font-bold text-[#8B6F47]">TOP RATED</span>
               </div>
             </div>
+            <div className="p-8">
+              <div className="flex items-start gap-3 mb-4">
+                <Star className="w-6 h-6 text-[#ff6b4a] flex-shrink-0" />
+                <h3 className="text-2xl font-bold text-slate-900">Customer Experiences</h3>
+              </div>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Join thousands of travelers who've experienced Tanzania with us. Discover authentic stories and create unforgettable memories.
+              </p>
+              
+              {/* Ratings */}
+              <div className="grid grid-cols-2 gap-4 mb-6 pb-6 border-b border-gray-200">
+                <div className="text-center">
+                  <div className="text-3xl font-black text-[#8B6F47]">4.9/5</div>
+                  <div className="flex justify-center gap-0.5 my-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-xs text-gray-500">3455+ reviews</span>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-black text-[#8B6F47]">4.7/5</div>
+                  <div className="flex justify-center gap-0.5 my-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <span className="text-xs text-gray-500">828+ reviews</span>
+                </div>
+              </div>
 
-            <Link href="/blog" className="group inline-flex items-center bg-white/80  text-[#465b2d] font-semibold py-2 px-6 rounded-xl transition duration-300 transform hover:scale-105 shadow-lg">
-              READ MORE
-              <svg
-                className="ml-3 w-5 h-5 transform group-hover:translate-x-1 transition duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </Link>
+              <Link href="/blog" className="inline-flex items-center gap-2 bg-[#8B6F47] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#6B5A3D] transition duration-300 transform hover:scale-105">
+                Read Stories
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
           </div>
 
-          {/* Image - Smaller side */}
-          <div className="lg:w-1/4 relative h-64 lg:h-auto rounded-tr-2xl rounded-br-2xl overflow-hidden shadow-2xl">
-            <img
-              src="https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-              alt="Happy travelers in Tanzania"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+          {/* Card 2: National Parks */}
+          <div className="group bg-white rounded-2xl border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2">
+            <div className="relative h-80 overflow-hidden">
+              <img
+                src="https://plus.unsplash.com/premium_photo-1661894578639-e8c257a7fe4e?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Tanzania National Parks"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md rounded-full px-3 py-1 flex items-center gap-1">
+                <Trophy className="w-3 h-3 text-[#8B6F47]" />
+                <span className="text-xs font-bold text-[#8B6F47]">WILDLIFE</span>
+              </div>
+            </div>
+            <div className="p-8">
+              <div className="flex items-start gap-3 mb-4">
+                <MapPin className="w-6 h-6 text-[#ff6b4a] flex-shrink-0" />
+                <h3 className="text-2xl font-bold text-slate-900">National Parks</h3>
+              </div>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Experience the wonders of Serengeti, Ngorongoro, and beyond. Witness the Great Migration and extraordinary wildlife with our expert guides.
+              </p>
+              <div className="mb-6 pb-6 border-b border-gray-200">
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <div className="text-2xl font-black text-[#8B6F47]">15+</div>
+                    <span className="text-xs text-gray-500">Parks</span>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black text-[#8B6F47]">500K</div>
+                    <span className="text-xs text-gray-500">Wildlife</span>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black text-[#8B6F47]">Endless</div>
+                    <span className="text-xs text-gray-500">Views</span>
+                  </div>
+                </div>
+              </div>
+
+              <Link href="/parks" className="inline-flex items-center gap-2 bg-[#8B6F47] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#6B5A3D] transition duration-300 transform hover:scale-105">
+                Explore Parks
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+
+          {/* Card 3: Activities */}
+          <div className="group bg-white rounded-2xl border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2">
+            <div className="relative h-80 overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1709402606682-400133d92ab2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Tanzania Activities"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md rounded-full px-3 py-1 flex items-center gap-1">
+                <Target className="w-3 h-3 text-[#8B6F47]" />
+                <span className="text-xs font-bold text-[#8B6F47]">ADVENTURE</span>
+              </div>
+            </div>
+            <div className="p-8">
+              <div className="flex items-start gap-3 mb-4">
+                <Zap className="w-6 h-6 text-[#ff6b4a] flex-shrink-0" />
+                <h3 className="text-2xl font-bold text-slate-900">Activities</h3>
+              </div>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                Hot air balloon rides, hiking, cultural tours, and more. Experience the thrill of adventure in the heart of Africa.
+              </p>
+              <div className="mb-6 pb-6 border-b border-gray-200">
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-600">Excitement Level</span>
+                    <span className="font-bold text-[#8B6F47]">⭐⭐⭐⭐⭐</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-gray-600">Duration</span>
+                    <span className="font-bold text-[#8B6F47]">Full Day</span>
+                  </div>
+                </div>
+              </div>
+
+              <button className="inline-flex items-center gap-2 bg-[#8B6F47] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#6B5A3D] transition duration-300 transform hover:scale-105">
+                Discover Activities
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Card 4: Accommodations */}
+          <div className="group bg-white rounded-2xl border border-gray-100 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden hover:-translate-y-2">
+            <div className="relative h-80 overflow-hidden">
+              <img
+                src="https://plus.unsplash.com/premium_photo-1664303913205-edadd765441f?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                alt="Tanzania Accommodations"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+              <div className="absolute top-4 left-4 bg-white/95 backdrop-blur-md rounded-full px-3 py-1 flex items-center gap-1">
+                <Home className="w-3 h-3 text-[#8B6F47]" />
+                <span className="text-xs font-bold text-[#8B6F47]">LUXURY</span>
+              </div>
+            </div>
+            <div className="p-8">
+              <div className="flex items-start gap-3 mb-4">
+                <Home className="w-6 h-6 text-[#ff6b4a] flex-shrink-0" />
+                <h3 className="text-2xl font-bold text-slate-900">Accommodations</h3>
+              </div>
+              <p className="text-gray-600 mb-6 leading-relaxed">
+                From luxury lodges to authentic camps, find your perfect retreat. Every accommodation is handpicked for comfort and authenticity.
+              </p>
+              <div className="mb-6 pb-6 border-b border-gray-200">
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div>
+                    <div className="text-2xl font-black text-[#8B6F47]">50+</div>
+                    <span className="text-xs text-gray-500">Lodges</span>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black text-[#8B6F47]">24/7</div>
+                    <span className="text-xs text-gray-500">Service</span>
+                  </div>
+                  <div>
+                    <div className="text-2xl font-black text-[#8B6F47]">⭐⭐⭐⭐</div>
+                    <span className="text-xs text-gray-500">Quality</span>
+                  </div>
+                </div>
+              </div>
+
+              <button className="inline-flex items-center gap-2 bg-[#8B6F47] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#6B5A3D] transition duration-300 transform hover:scale-105">
+                View Options
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Card 2: National Parks - Image Left, Text Right */}
-        <div className="flex justify-center flex-col lg:flex-row gap-2 mb-4 items-stretch">
-          {/* Image - Smaller side */}
-          <div className="lg:w-1/4 relative h-64 lg:h-auto rounded-tl-2xl rounded-bl-2xl overflow-hidden shadow-2xl">
-            <img
-              src="https://cdn-ajfhi.nitrocdn.com/KGztweKcUtUgsFQkUHxObgZRMXOaBfJI/assets/images/optimized/rev-e4b7f67/tanzania-specialist.com/wp-content/uploads/2023/07/animal_national_parks-580x580.jpg"
-              alt="Tanzania National Parks"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-          </div>
-
-          {/* Text Content - Larger side */}
-          {/* <div className="lg:w-2/4 bg-gradient-to-br from-[#e74c3c] to-[#c0392b]  rounded-2xl p-6 shadow-2xl"> */}
-          <div className="lg:w-2/4 relative h-64 lg:h-auto bg-gray-400 p-6 rounded-tr-2xl rounded-br-2xl overflow-hidden shadow-2xl">
-            <h3 className="text-xl font-bold uppercase mb-3 tracking-wide">
-              NATIONAL PARKS
-            </h3>
-
-            <p className="text-md opacity-70 mb-2 leading-relaxed">
-              Experience the national parks of Tanzania with our experienced
-              guides. From the Serengeti to the Ngorongoro Crater, each park
-              offers a unique experience. Let yourself be amazed by the rich
-              biodiversity and breathtaking landscapes of this beautiful
-              country.
-            </p>
-
-            <Link href="parks" className="g absolute bottom-4 right-4 roup inline-flex items-center bg-white hover:bg-gray-100 text-[#465b2d]  font-semibold py-2 px-6 rounded-xl transition duration-300 transform hover:scale-105 shadow-lg">
-              EXPLORE PARKS
-              <svg
-                className="ml-3 w-5 h-5 transform group-hover:translate-x-1 transition duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </Link>
+        {/* Quick Links */}
+        <div className="mt-20 pt-12 border-t border-gray-200">
+          <h3 className="text-2xl font-bold text-center text-slate-900 mb-12">Explore by Interest</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {[
+              { label: "SAFARIS", href: "/packages", icon: Trophy },
+              { label: "KILIMANJARO", href: "/kilimanjaro", icon: Mountain },
+              { label: "ZANZIBAR", href: "/zanzibar", icon: MapPin },
+              { label: "NATIONAL PARKS", href: "/parks", icon: Leaf },
+              { label: "HONEYMOON", href: "/", icon: Heart },
+            ].map((item, i) => {
+              const IconComponent = item.icon;
+              return (
+                <Link
+                  key={i}
+                  href={item.href}
+                  className="group relative bg-white border-2 border-[#8B6F47] text-[#8B6F47] px-4 py-4 rounded-xl font-semibold text-center transition-all duration-300 hover:bg-[#8B6F47] hover:text-white hover:shadow-lg hover:-translate-y-1 overflow-hidden"
+                >
+                  <IconComponent className="w-6 h-6 mx-auto mb-2 group-hover:text-white text-[#8B6F47]" />
+                  <span className="text-sm">{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
-
-        {/* Card 3: Activities - Text Left, Image Right */}
-        <div className="flex  justify-center flex-col lg:flex-row gap-2 mb-4 items-stretch">
-          {/* Text Content - Larger side */}
-          <div className="lg:w-1/4 relative h-64 lg:h-auto bg-gradient-to-br from-[#3498db] to-[#2980b9] text-white rounded-tl-2xl rounded-bl-2xl p-3 shadow-2xl">
-            <h3 className="text-xl font-bold uppercase mb-2 tracking-wide">
-              ACTIVITIES
-            </h3>
-
-            <p className="text-md mb-1opacity-70 leading-relaxed">
-              Get ready to be amazed by the fantastic excursions offered by
-              Tanzania Specialist. From safari adventures to cultural
-              experiences, we offer a wide range of activities that will make
-              your journey unforgettable. Click through and explore all the
-              possibilities.
-            </p>
-
-            <button className="group inline-flex items-center bg-white hover:bg-gray-100 text-[#465b2d] font-semibold py-2 px-6 rounded-xl transition duration-300 transform hover:scale-105 shadow-lg">
-              DISCOVER ACTIVITIES
-              <svg
-                className="ml-3 w-5 h-5 transform group-hover:translate-x-1 transition duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Image - Smaller side */}
-          <div className="lg:w-2/4 relative h-64 lg:h-auto rounded-tr-2xl rounded-br-2xl overflow-hidden shadow-2xl">
-            <img
-              src="https://cdn-ajfhi.nitrocdn.com/KGztweKcUtUgsFQkUHxObgZRMXOaBfJI/assets/images/optimized/rev-e4b7f67/tanzania-specialist.com/wp-content/uploads/2023/07/balloon_home-1230x580.jpg"
-              alt="Tanzania Activities"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-          </div>
-        </div>
-
-        {/* Card 4: Accommodations - Image Left, Text Right */}
-        <div className="flex justify-center flex-col lg:flex-row gap-2  items-stretch">
-          {/* Text Content - Larger side */}
-          <div className="lg:w-2/4 relative lg:h-auto h-64 bg-gradient-to-br from-[#996756] to-[#996756] text-white rounded-tl-2xl rounded-bl-2xl p-6 shadow-2xl">
-            <h3 className="text-xl font-bold uppercase mb-3 tracking-wide">
-              ACCOMMODATIONS
-            </h3>
-
-            <p className="text-md opacity-70 mb-2 leading-relaxed">
-              Choose from our amazing accommodations during your journey through
-              Tanzania. Whether you're looking for a luxurious lodge with
-              stunning views or a rustic camp close to nature, we have something
-              for every taste and budget. Click through and explore all the
-              possibilities.
-            </p>
-
-            <button className="group inline-flex items-center bg-white hover:bg-gray-100 text-[#465b2d] font-semibold py-2 px-6 rounded-xl transition duration-300 transform hover:scale-105 shadow-lg">
-              VIEW ACCOMMODATIONS
-              <svg
-                className="ml-3 w-5 h-5 transform group-hover:translate-x-1 transition duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </button>
-          </div>
-
-          {/* Image - Smaller side */}
-          <div className="lg:w-1/4 relative h-64 lg:h-auto rounded-tr-2xl rounded-br-2xl overflow-hidden shadow-2xl">
-            <img
-              src="https://cdn-ajfhi.nitrocdn.com/KGztweKcUtUgsFQkUHxObgZRMXOaBfJI/assets/images/optimized/rev-e4b7f67/tanzania-specialist.com/wp-content/uploads/2023/08/Accommodation-example-Tanzania-Specialist.jpg"
-              alt="Tanzania Accommodations"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-          </div>
-        </div>
-
-<div className="flex flex-wrap justify-center gap-4 lg:justify-between p-6 mt-18">
-  {[
-    { label: "SAFARIS", href: "/packages" },
-    { label: "KILIMANJARO", href: "/kilimanjaro" },
-    { label: "ZANZIBAR", href: "/zanzibar" },
-    { label: "NATIONAL PARKS", href: "/parks" },
-    { label: "HONEYMOON", href: "/" },
-  ].map((item, i) => (
-    <Link
-      key={i}
-      href={item.href}
-      className="w-full sm:w-[45%] md:w-[30%] lg:w-[18%] px-6 py-3 bg-white text-[#465b2d] border-2 border-[#465b2d] font-semibold rounded-lg shadow-md hover:bg-[#465b2d] hover:text-white transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl text-center"
-    >
-      {item.label}
-    </Link>
-  ))}
-</div>
-
       </div>
     </section>
   );

@@ -17,15 +17,18 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <TanzaniaParks />
       <TanzaniaWonders />
+      <TanzaniaParks />
+      
       <TanzaniaVacation />
-      <TestimonialSection />
+      
       <WhyChooseUs />
       <TanzaniaToursSlider />
       <GetInspiredSection />
       <FAQSection />
-      <TailorMadeTrip />
+      <TestimonialSection />
+      
+      {/* <TailorMadeTrip /> */}
     </>
   );
 }

@@ -4,9 +4,10 @@ import { useState, useRef } from 'react';
 
 const HeroSection = () => {
   const [formData, setFormData] = useState({
-    adults: 2,
-    children: 0,
-    arrivalDate: '2025-11-22'
+    location: '',
+    checkIn: '2025-11-22',
+    checkOut: '2025-11-28',
+    travelers: 2
   });
 
   const videoRef = useRef(null);
@@ -21,15 +22,15 @@ const HeroSection = () => {
     console.log('Trip planning form submitted:', formData);
   };
 
-  const features = [
-    "All trips are 100% tailor-made",
-    "8-star customer reviews", 
-    "Best value & free quotation",
-    "Experts in Tanzania travel"
+  const stats = [
+    { number: "69+", label: "Destinations" },
+    { number: "150+", label: "Safari Packages" },
+    { number: "22+", label: "Years Experience" },
+    { number: "5820+", label: "Happy Travelers" }
   ];
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-between overflow-hidden pt-20 pb-10">
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
         <video
@@ -43,112 +44,113 @@ const HeroSection = () => {
         >
           <source src='https://videos.pexels.com/video-files/11760783/11760783-uhd_2732_1440_30fps.mp4' type="video/mp4" />
         </video>
-
-        {/* Optional overlay */}
-        {/* <div className="absolute inset-0 bg-black/30"></div> */}
+        {/* Black Overlay */}
+        <div className="absolute inset-0 bg-black/50"></div>
       </div>
 
       {/* Main Content */}
-      <div className=" z-10 w-full  px-4 md:px-6 py-18 md:py-16">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-10">
-          
-          {/* Left Content */}
-          <div className="flex-1 text-center  lg:text-left text-white">
-            <h1 className="text-4xl md:text-5xl w-[60%] lg:text-6xl font-bold leading-tight">
-              Plan Your Dream Trip to{' '}
-              <span className="bg-gradient-to-r from-[#465b2d] to-[#8B5A4A] bg-clip-text text-transparent">
-                Tanzania
-              </span>
-            </h1>
-          </div>
-
-          {/* Right Content - Form */}
-          <div className="w-full max-w-md bg-white/15 mr-5 backdrop-blur-md rounded-xl border border-white/25 shadow-2xl p-5 sm:p-6">
-            <h2 className="text-lg md:text-xl font-bold text-center text-white mb-4 tracking-wide">
-              LET'S PLAN YOUR DREAM TRIP TOGETHER!
-            </h2>
-
-            <form onSubmit={handleSubmit} className="space-y-3">
-              {/* Adults */}
-              <div>
-                <label htmlFor="adults" className="block text-sm font-semibold text-white mb-1 uppercase tracking-wide">
-                  ADULTS
-                </label>
-                <input
-                  type="number"
-                  id="adults"
-                  name="adults"
-                  value={formData.adults}
-                  onChange={handleChange}
-                  min="1"
-                  className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#465b2d]"
-                />
-              </div>
-
-              {/* Arrival Date */}
-              <div>
-                <label htmlFor="arrivalDate" className="block text-sm font-semibold text-white mb-1 uppercase tracking-wide">
-                  ESTIMATED ARRIVAL DATE
-                </label>
-                <input
-                  type="date"
-                  id="arrivalDate"
-                  name="arrivalDate"
-                  value={formData.arrivalDate}
-                  onChange={handleChange}
-                  min={new Date().toISOString().split('T')[0]}
-                  className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-lg text-white [color-scheme:dark] focus:outline-none focus:ring-2 focus:ring-[#465b2d]"
-                />
-              </div>
-
-              {/* Children */}
-              <div>
-                <label htmlFor="children" className="block text-sm font-semibold text-white mb-1 uppercase tracking-wide">
-                  CHILDREN
-                </label>
-                <input
-                  type="number"
-                  id="children"
-                  name="children"
-                  value={formData.children}
-                  onChange={handleChange}
-                  min="0"
-                  className="w-full px-3 py-2 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#465b2d]"
-                />
-              </div>
-
-              {/* Submit */}
-              <Link                 href='/travel-proposal'
->
-              <button
-                // type="submit"
-                className="w-full bg-gradient-to-r from-[#465b2d] to-[#3a4a24] text-white font-bold py-3 rounded-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 uppercase tracking-wide mt-3"
-              >
-                START CUSTOMIZING
-                </button>
-              </Link>
-            </form>
-          </div>
+      <div className="z-10 w-full px-4 md:px-6 flex flex-col items-center">
+        {/* Title */}
+        <div className="text-center mb-8 max-w-3xl">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-3">
+            Discover Your Dream{' '}
+            <span className="text-[#FF6B4A]">
+              African Safari
+            </span>
+          </h1>
+          <p className="text-gray-200 text-lg">Find and book incredible safari experiences across Tanzania</p>
         </div>
 
-        {/* Features Section */}
-        <div className="mt-10 absolute bottom-1 md:mt-12">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {features.map((feature, index) => (
+        {/* Search Form */}
+        <div className="w-full max-w-5xl bg-white/15 backdrop-blur-md rounded-xl border border-white/25 shadow-2xl p-6 md:p-8 mb-12">
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            {/* Location */}
+            <div className="flex flex-col">
+              <label htmlFor="location" className="text-sm font-semibold text-white mb-2 uppercase tracking-wide">
+                Where
+              </label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="Select destination"
+                value={formData.location}
+                onChange={handleChange}
+                className="px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8B6F47]"
+              />
+            </div>
+
+            {/* Check In Date */}
+            <div className="flex flex-col">
+              <label htmlFor="checkIn" className="text-sm font-semibold text-white mb-2 uppercase tracking-wide">
+                Check In
+              </label>
+              <input
+                type="date"
+                id="checkIn"
+                name="checkIn"
+                value={formData.checkIn}
+                onChange={handleChange}
+                min={new Date().toISOString().split('T')[0]}
+                className="px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white [color-scheme:dark] focus:outline-none focus:ring-2 focus:ring-[#8B6F47]"
+              />
+            </div>
+
+            {/* Check Out Date */}
+            <div className="flex flex-col">
+              <label htmlFor="checkOut" className="text-sm font-semibold text-white mb-2 uppercase tracking-wide">
+                Check Out
+              </label>
+              <input
+                type="date"
+                id="checkOut"
+                name="checkOut"
+                value={formData.checkOut}
+                onChange={handleChange}
+                min={new Date().toISOString().split('T')[0]}
+                className="px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white [color-scheme:dark] focus:outline-none focus:ring-2 focus:ring-[#8B6F47]"
+              />
+            </div>
+
+            {/* Travelers */}
+            <div className="flex flex-col">
+              <label htmlFor="travelers" className="text-sm font-semibold text-white mb-2 uppercase tracking-wide">
+                Travelers
+              </label>
+              <input
+                type="number"
+                id="travelers"
+                name="travelers"
+                value={formData.travelers}
+                onChange={handleChange}
+                min="1"
+                className="px-4 py-3 bg-white/20 border border-white/30 rounded-lg text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-[#8B6F47]"
+              />
+            </div>
+
+            {/* Search Button */}
+            <div className="flex flex-col justify-end">
+              <Link href='/travel-proposal'>
+                <button
+                  className="w-full bg-[#8B6F47] text-white font-bold py-3 rounded-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 uppercase tracking-wide"
+                >
+                  Search
+                </button>
+              </Link>
+            </div>
+          </form>
+        </div>
+
+        {/* Stats Section */}
+        <div className="w-full max-w-5xl">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {stats.map((stat, index) => (
               <div
                 key={index}
-                className="flex items-center justify-center  p-3 "
+                className="bg-white/10 backdrop-blur-md border border-white/20 rounded-lg p-4 md:p-6 text-center hover:bg-white/15 transition-all duration-300"
               >
-                <div className="w-5 h-5 bg-[#465b2d] rounded-full flex items-center justify-center mr-2">
-                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      fillRule="evenodd"
-                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </div>
-                <span className="text-white text-sm font-medium text-center">{feature}</span>
+                <p className="text-3xl md:text-4xl font-bold text-white mb-2">{stat.number}</p>
+                <p className="text-sm md:text-base text-gray-200">{stat.label}</p>
               </div>
             ))}
           </div>

@@ -91,7 +91,7 @@ const RangeSlider = ({
         >
           {/* Active range (draggable area) */}
           <div
-            className="absolute h-2 bg-gradient-to-r from-[#465b2d] to-[#5a7238] rounded-full transition-all duration-150 z-10 cursor-grab active:cursor-grabbing"
+            className="absolute h-2 bg-gradient-to-r from-[#8B6F47] to-[#5a7238] rounded-full transition-all duration-150 z-10 cursor-grab active:cursor-grabbing"
             style={{
               left: `${progressLeft}%`,
               right: `${progressRight}%`,
@@ -121,14 +121,14 @@ const RangeSlider = ({
 
           {/* Thumbs */}
           <div
-            className="absolute w-5 h-5 bg-[#465b2d] border-2 border-white rounded-full shadow-md transition-all duration-200 z-50"
+            className="absolute w-5 h-5 bg-[#8B6F47] border-2 border-white rounded-full shadow-md transition-all duration-200 z-50"
             style={{
               left: `calc(${progressLeft}% - 0.625rem)`,
               top: '-6px',
             }}
           />
           <div
-            className="absolute w-5 h-5 bg-[#465b2d] border-2 border-white rounded-full shadow-md transition-all duration-200 z-50"
+            className="absolute w-5 h-5 bg-[#8B6F47] border-2 border-white rounded-full shadow-md transition-all duration-200 z-50"
             style={{
               left: `calc(${100 - progressRight}% - 0.625rem)`,
               top: '-6px',
@@ -151,7 +151,7 @@ const FilterSection = ({ title, children, isOpen = true, onToggle }) => (
   <div className="border-b border-gray-200 last:border-b-0">
     <button
       onClick={onToggle}
-      className="w-full py-4 flex justify-between items-center text-left hover:text-[#465b2d] transition-colors duration-200"
+      className="w-full py-4 flex justify-between items-center text-left hover:text-[#8B6F47] transition-colors duration-200"
     >
       <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
       <svg
@@ -206,7 +206,7 @@ const PackageCard = ({ pkg }) => {
       <div className="p-5 flex-grow flex flex-col">
         <div className="mb-4">
           <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="text-2xl sm:text-3xl font-bold text-[#465b2d]">
+            <span className="text-2xl sm:text-3xl font-bold text-[#8B6F47]">
               ${pkg.price.toLocaleString()}
             </span>
             <span className="text-sm text-gray-500">to</span>
@@ -223,10 +223,10 @@ const PackageCard = ({ pkg }) => {
           </p>
           
           {/* <div className="flex items-start gap-2 text-sm text-gray-700">
-            <FaStar className="text-[#465b2d] mt-0.5 flex-shrink-0" /> */}
+            <FaStar className="text-[#8B6F47] mt-0.5 flex-shrink-0" /> */}
             <div className="mb-4">
   <div className="flex items-start gap-2 text-sm text-gray-700">
-    <FaMapMarkerAlt className="text-[#465b2d] mt-0.5 flex-shrink-0" />
+    <FaMapMarkerAlt className="text-[#8B6F47] mt-0.5 flex-shrink-0" />
     <div>
       <span className="font-semibold text-gray-900">You Visit: </span>
       <span className="text-gray-600">
@@ -272,7 +272,7 @@ const PackageCard = ({ pkg }) => {
             
             <Link
               href={`/packages/${pkg.id}`}
-              className="bg-[#465b2d] text-white text-xs font-semibold py-2 px-4 rounded-lg hover:bg-[#3a4a24] transition-colors duration-200 whitespace-nowrap shadow-md hover:shadow-lg flex-shrink-0"
+              className="bg-[#8B6F47] text-white text-xs font-semibold py-2 px-4 rounded-lg hover:bg-[#6B5A3D] transition-colors duration-200 whitespace-nowrap shadow-md hover:shadow-lg flex-shrink-0"
             >
               VIEW DETAILS
             </Link>
@@ -482,7 +482,7 @@ const PackageListing = () => {
             onClick={() => setMobileFiltersOpen(true)}
             className="w-full bg-white border border-gray-200 rounded-md p-4 flex items-center justify-center space-x-3 shadow-md hover:shadow-lg transition-all duration-300"
           >
-            <FaSearch className="text-[#465b2d]" />
+            <FaSearch className="text-[#8B6F47]" />
             <span className="text-lg font-semibold text-gray-800">Filter Packages</span>
           </button>
         </div>
@@ -492,7 +492,7 @@ const PackageListing = () => {
             <div className="bg-white rounded-md shadow-xl border border-gray-200 p-6 sticky top-6">
               {mobileFiltersOpen && (
                 <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200 lg:hidden">
-                  <h2 className="text-2xl font-bold text-[#465b2d]">FILTERS</h2>
+                  <h2 className="text-2xl font-bold text-[#8B6F47]">FILTERS</h2>
                   <button
                     onClick={() => setMobileFiltersOpen(false)}
                     className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -503,10 +503,10 @@ const PackageListing = () => {
               )}
 
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-xl font-bold text-[#465b2d] hidden lg:block">FILTERS</h2>
+                <h2 className="text-xl font-bold text-[#8B6F47] hidden lg:block">FILTERS</h2>
                 <button
                   onClick={resetFilters}
-                  className="text-sm bg-[#465b2d] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#3a4a24] transition-colors duration-200"
+                  className="text-sm bg-[#8B6F47] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#6B5A3D] transition-colors duration-200"
                 >
                   Reset All
                 </button>
@@ -562,8 +562,8 @@ const PackageListing = () => {
                         />
                         <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-all duration-200 ${
                           activeFilters.startingFrom === option.id 
-                            ? 'border-[#465b2d] bg-[#465b2d]' 
-                            : 'border-gray-300 group-hover:border-[#465b2d]'
+                            ? 'border-[#8B6F47] bg-[#8B6F47]' 
+                            : 'border-gray-300 group-hover:border-[#8B6F47]'
                         }`}>
                           {activeFilters.startingFrom === option.id && (
                             <div className="w-2 h-2 bg-white rounded-full" />
@@ -594,8 +594,8 @@ const PackageListing = () => {
                         />
                         <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-all duration-200 ${
                           activeFilters.comfortLevel === option.id 
-                            ? 'border-[#465b2d] bg-[#465b2d]' 
-                            : 'border-gray-300 group-hover:border-[#465b2d]'
+                            ? 'border-[#8B6F47] bg-[#8B6F47]' 
+                            : 'border-gray-300 group-hover:border-[#8B6F47]'
                         }`}>
                           {activeFilters.comfortLevel === option.id && (
                             <div className="w-2 h-2 bg-white rounded-full" />
@@ -626,8 +626,8 @@ const PackageListing = () => {
                         />
                         <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-all duration-200 ${
                           activeFilters.tourType === option.id 
-                            ? 'border-[#465b2d] bg-[#465b2d]' 
-                            : 'border-gray-300 group-hover:border-[#465b2d]'
+                            ? 'border-[#8B6F47] bg-[#8B6F47]' 
+                            : 'border-gray-300 group-hover:border-[#8B6F47]'
                         }`}>
                           {activeFilters.tourType === option.id && (
                             <div className="w-2 h-2 bg-white rounded-full" />
@@ -658,8 +658,8 @@ const PackageListing = () => {
                         />
                         <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-all duration-200 ${
                           activeFilters.safariType === option.id 
-                            ? 'border-[#465b2d] bg-[#465b2d]' 
-                            : 'border-gray-300 group-hover:border-[#465b2d]'
+                            ? 'border-[#8B6F47] bg-[#8B6F47]' 
+                            : 'border-gray-300 group-hover:border-[#8B6F47]'
                         }`}>
                           {activeFilters.safariType === option.id && (
                             <div className="w-2 h-2 bg-white rounded-full" />
@@ -689,8 +689,8 @@ const PackageListing = () => {
                         />
                         <div className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-all duration-200 ${
                           activeFilters.specializedTours.includes(option.id)
-                            ? 'border-[#465b2d] bg-[#465b2d]' 
-                            : 'border-gray-300 group-hover:border-[#465b2d]'
+                            ? 'border-[#8B6F47] bg-[#8B6F47]' 
+                            : 'border-gray-300 group-hover:border-[#8B6F47]'
                         }`}>
                           {activeFilters.specializedTours.includes(option.id) && (
                             <FaCheck className="w-3 h-3 text-white" />
@@ -720,8 +720,8 @@ const PackageListing = () => {
                         />
                         <div className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-all duration-200 ${
                           activeFilters.otherFeatures.includes(option.id)
-                            ? 'border-[#465b2d] bg-[#465b2d]' 
-                            : 'border-gray-300 group-hover:border-[#465b2d]'
+                            ? 'border-[#8B6F47] bg-[#8B6F47]' 
+                            : 'border-gray-300 group-hover:border-[#8B6F47]'
                         }`}>
                           {activeFilters.otherFeatures.includes(option.id) && (
                             <FaCheck className="w-3 h-3 text-white" />
@@ -737,7 +737,7 @@ const PackageListing = () => {
               {mobileFiltersOpen && (
                 <button
                   onClick={() => setMobileFiltersOpen(false)}
-                  className="w-full mt-6 bg-[#465b2d] text-white py-3 rounded-lg font-semibold hover:bg-[#3a4a24] transition-colors duration-200 lg:hidden"
+                  className="w-full mt-6 bg-[#8B6F47] text-white py-3 rounded-lg font-semibold hover:bg-[#6B5A3D] transition-colors duration-200 lg:hidden"
                 >
                   Apply Filters
                 </button>
@@ -747,7 +747,7 @@ const PackageListing = () => {
 
           <div className="flex-1 min-w-0">
             <div className="mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#465b2d] mb-3">Our Safari Packages</h1>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#8B6F47] mb-3">Our Safari Packages</h1>
               {/* <p className="text-sm sm:text-base text-gray-600 mb-4">
                 Discover our range of meticulously crafted Tanzania safari experiences
               </p> */}
@@ -774,7 +774,7 @@ const PackageListing = () => {
                     className={`p-2 rounded-full ${
                       currentPage === 1 
                         ? 'text-gray-400 cursor-not-allowed' 
-                        : 'text-[#465b2d] hover:bg-gray-200'
+                        : 'text-[#8B6F47] hover:bg-gray-200'
                     }`}
                     aria-label="Previous page"
                   >
@@ -796,8 +796,8 @@ const PackageListing = () => {
                           onClick={() => paginate(pageNumber)}
                           className={`w-10 h-10 rounded-full ${
                             currentPage === pageNumber
-                              ? 'bg-[#465b2d] text-white'
-                              : 'text-[#465b2d] hover:bg-gray-200'
+                              ? 'bg-[#8B6F47] text-white'
+                              : 'text-[#8B6F47] hover:bg-gray-200'
                           }`}
                           aria-label={`Go to page ${pageNumber}`}
                         >
@@ -824,7 +824,7 @@ const PackageListing = () => {
                     className={`p-2 rounded-full ${
                       currentPage === totalPages 
                         ? 'text-gray-400 cursor-not-allowed' 
-                        : 'text-[#465b2d] hover:bg-gray-200'
+                        : 'text-[#8B6F47] hover:bg-gray-200'
                     }`}
                     aria-label="Next page"
                   >
@@ -843,7 +843,7 @@ const PackageListing = () => {
                 </p>
                 <button
                   onClick={resetFilters}
-                  className="bg-[#465b2d] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#3a4a24] transition-colors duration-200"
+                  className="bg-[#8B6F47] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6B5A3D] transition-colors duration-200"
                 >
                   Reset All Filters
                 </button>

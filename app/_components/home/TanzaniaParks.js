@@ -124,50 +124,50 @@ export default function ParksLayout() {
     <div className=" bg-gray-50 py-10 ">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6">
         {/* Header */}
-        <div className="mb-4">
-          <h1 className="text-2xl font-bold text-[#465b2d]">Tanzania National Parks</h1>
+        <div className="mb-4 text-center">
+          <h1 className="text-5xl font-bold text-[#465b2d]">Tanzania National Parks</h1>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-2">
-          {/* Left Sidebar - Minimal Parks List */}
-          <div className="lg:w-1/5">
-            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-3 py-5">
-              <h2 className="text-sm font-semibold text-gray-800 mb-3 uppercase tracking-wide">Parks List</h2>
+        <div className="flex flex-col gap-4">
+          {/* Top Row - Horizontal Parks List */}
+          <div className="w-full">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-3">
+              <h2 className="text-sm font-semibold text-gray-800 mb-3 uppercase tracking-wide">Select a Park</h2>
               
-              {/* Minimal Parks List - Only Names */}
-              <div className="space-y-1">
+              {/* Horizontal Parks List with Scroll */}
+              <div className="flex gap-2 overflow-x-auto pb-2 scroll-smooth">
                 {parks.map((park, index) => (
-                  <div 
+                  <button 
                     key={index}
-                    className={`p-2 rounded cursor-pointer transition-all duration-150 text-sm ${
+                    className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-all duration-150 flex-shrink-0 ${
                       selectedPark === index 
-                        ? 'bg-blue-50 text-[#465b2d] font-medium border-l-2 border-blue-500' 
-                        : 'text-gray-600 hover:bg-gray-50 border-l-2 border-transparent'
+                        ? 'bg-[#465b2d] text-white shadow-md' 
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                     }`}
                     onClick={() => setSelectedPark(index)}
                   >
                     {park.name}
-                  </div>
+                  </button>
                 ))}
-                <a href="/parks" className="flex items-center gap-2 border cursor-pointer  text-gray-600 text-sm px-1 py-2  rounded-md hover:bg-blue-50 hover:text-[#465b2d] transition-all duration-300">
-  All 15 Parks & Reserves
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={2}
-    stroke="currentColor"
-    className="w-4 h-4"
-  >
-    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-  </svg>
-</a>
+                <a href="/parks" className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-[#465b2d] hover:text-white text-gray-700 rounded-lg font-medium text-sm whitespace-nowrap transition-all duration-300 flex-shrink-0">
+                  All Parks
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Right Content - All Information on Background Image */}
-          <div className="lg:w-4/5">
+          {/* Bottom Row - Full Width Park Details */}
+          <div className="w-full">
             <div className="rounded-xl shadow-lg border border-gray-200 overflow-hidden">
               {/* Background Image with All Content Overlay */}
               <div 

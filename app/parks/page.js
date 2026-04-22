@@ -243,7 +243,7 @@ const TanzaniaDetailsPage = () => {
               {overview.wildlifeSection.title}
             </h3>
             <p className="text-gray-700 mb-4">{overview.wildlifeSection.content}</p>
-            <button className="inline-flex items-center px-4 py-2 bg-[#465b2d] hover:bg-[#3a4a24] text-white font-semibold rounded-lg transition-colors">
+            <button className="inline-flex items-center px-4 py-2 bg-[#8B6F47] hover:bg-[#6B5A3D] text-white font-semibold rounded-lg transition-colors">
               {overview.wildlifeSection.moreLink}
               <FaChevronRight className="ml-2 w-4 h-4" />
             </button>
@@ -301,7 +301,7 @@ const TanzaniaDetailsPage = () => {
                       </p>
                       
                       <Link href={`/parks/${park.name.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="w-full py-2 bg-gradient-to-r from-[#465b2d] to-[#5a7238] hover:from-[#3a4a24] hover:to-[#465b2d] text-white font-medium rounded text-center block transition-colors">
+                        className="w-full py-2 bg-gradient-to-r from-[#8B6F47] to-[#5a7238] hover:from-[#6B5A3D] hover:to-[#8B6F47] text-white font-medium rounded text-center block transition-colors">
                         Explore Park
                       </Link>
                     </div>
@@ -365,7 +365,7 @@ const TanzaniaDetailsPage = () => {
                       </div>
                       
                       <Link href={`/parks/${park.slug}`}
-                        className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-[#465b2d] to-[#5a7238] hover:from-[#3a4a24] hover:to-[#465b2d] text-white font-medium rounded transition-colors">
+                        className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-[#8B6F47] to-[#5a7238] hover:from-[#6B5A3D] hover:to-[#8B6F47] text-white font-medium rounded transition-colors">
                         View Details
                         <FaChevronRight className="ml-2 w-3 h-3" />
                       </Link>
@@ -876,10 +876,10 @@ const TanzaniaDetailsPage = () => {
           </div>
 
           <div className="mt-6 flex flex-col sm:flex-row gap-4">
-            <button className="flex-1 py-3 bg-[#465b2d] hover:bg-[#3a4a24] text-white font-semibold rounded-lg transition-colors">
+            <button className="flex-1 py-3 bg-[#8B6F47] hover:bg-[#6B5A3D] text-white font-semibold rounded-lg transition-colors">
               View Sample Itinerary
             </button>
-            <button className="flex-1 py-3 border-2 border-[#465b2d] text-[#465b2d] hover:bg-[#465b2d] hover:text-white font-semibold rounded-lg transition-colors">
+            <button className="flex-1 py-3 border-2 border-[#8B6F47] text-[#8B6F47] hover:bg-[#8B6F47] hover:text-white font-semibold rounded-lg transition-colors">
               Get Custom Quote
             </button>
           </div>
@@ -968,12 +968,12 @@ const TanzaniaDetailsPage = () => {
         <ContentCard>
           <div className="p-6">
             <div className="flex items-start space-x-4 mb-6">
-              <div className="w-16 h-16 bg-[#465b2d] rounded-lg flex items-center justify-center text-white font-bold">
+              <div className="w-16 h-16 bg-[#8B6F47] rounded-lg flex items-center justify-center text-white font-bold">
                 PB
               </div>
               <div>
                 <h4 className="text-xl font-bold text-gray-900">{malariaVaccinations.expert.name}</h4>
-                <p className="text-[#465b2d] font-semibold">Travel Health Expert</p>
+                <p className="text-[#8B6F47] font-semibold">Travel Health Expert</p>
                 <p className="text-gray-600 mt-2">{malariaVaccinations.expert.bio}</p>
               </div>
             </div>
@@ -1086,12 +1086,12 @@ const TanzaniaDetailsPage = () => {
         <ContentCard>
           <div className="p-6">
             <div className="flex items-start space-x-4 mb-6">
-              <div className="w-16 h-16 bg-[#465b2d] rounded-lg flex items-center justify-center text-white font-bold">
+              <div className="w-16 h-16 bg-[#8B6F47] rounded-lg flex items-center justify-center text-white font-bold">
                 PB
               </div>
               <div>
                 <h4 className="text-xl font-bold text-gray-900">{stayingSafe.expert.name}</h4>
-                <p className="text-[#465b2d] font-semibold">Safety & Security Expert</p>
+                <p className="text-[#8B6F47] font-semibold">Safety & Security Expert</p>
                 <p className="text-gray-600 mt-2">{stayingSafe.expert.bio}</p>
               </div>
             </div>

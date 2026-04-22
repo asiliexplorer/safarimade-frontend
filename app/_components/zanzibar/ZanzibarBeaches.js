@@ -73,7 +73,7 @@ const ZanzibarBeachesSimple = () => {
                     onClick={() => setActiveSection(section.id)}
                     className={`w-full text-left px-4 py-3 rounded transition-colors ${
                       activeSection === section.id
-                        ? 'bg-[#465b2d] text-white'
+                        ? 'bg-[#8B6F47] text-white'
                         : 'bg-white text-gray-700 hover:bg-gray-100'
                     }`}
                   >

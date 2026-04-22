@@ -100,7 +100,7 @@ const KilimanjaroRoutes = () => {
                     onClick={() => setActiveRoute(routeKey)}
                     className={`w-full text-left p-4 rounded-lg transition-all ${
                       activeRoute === routeKey 
-                        ? 'bg-[#465b2d] text-white' 
+                        ? 'bg-[#8B6F47] text-white' 
                         : 'bg-white text-gray-700 hover:bg-gray-100'
                     }`}
                   >
@@ -114,7 +114,7 @@ const KilimanjaroRoutes = () => {
 
               {/* Expert Note */}
               <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-100">
-                <h4 className="font-bold text-[#465b2d] mb-2 text-sm">Expert Recommendation</h4>
+                <h4 className="font-bold text-[#8B6F47] mb-2 text-sm">Expert Recommendation</h4>
                 <p className="text-xs text-gray-700">
                   The Asiliexplorer team are experts at defining the best route for your journey. 
                   We take time to listen to your group's specific needs and requirements.
@@ -132,7 +132,7 @@ const KilimanjaroRoutes = () => {
                 <div className="flex flex-wrap items-center justify-between mb-4">
                   <div>
                     <h2 className="text-2xl font-bold text-gray-900">{currentRoute.name}</h2>
-                    <p className="text-[#465b2d] font-medium">{currentRoute.nickname}</p>
+                    <p className="text-[#8B6F47] font-medium">{currentRoute.nickname}</p>
                   </div>
                   <div className="flex space-x-4">
                     <div className="text-center">

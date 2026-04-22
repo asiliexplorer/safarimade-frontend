@@ -144,7 +144,7 @@ const ZanzibarFAQ = () => {
           <p className="text-gray-700 mb-6">
             Contact us for more information about Zanzibar tours and safaris.
           </p>
-          <button className="bg-[#465b2d] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#384923] 700 transition-colors">
+          <button className="bg-[#8B6F47] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#384923] 700 transition-colors">
             Contact Our Travel Specialists
           </button>
         </div>

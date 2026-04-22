@@ -22,17 +22,17 @@ const TwoCardLayout = () => {
               {/* Left Side - Text & Button */}
               <div className="flex-1 p-8 lg:p-12 flex flex-col justify-center">
                 <div className="mb-6">
-                  <div className="inline-flex items-center gap-2 bg-[#465b2d]/10 px-4 py-2 rounded-full mb-4">
-                    <div className="w-2 h-2 bg-[#465b2d] rounded-full animate-pulse"></div>
-                    <span className="text-[#465b2d] text-sm font-bold">Safari Trip Booking</span>
+                  <div className="inline-flex items-center gap-2 bg-[#8B6F47]/10 px-4 py-2 rounded-full mb-4">
+                    <div className="w-2 h-2 bg-[#8B6F47] rounded-full animate-pulse"></div>
+                    <span className="text-[#8B6F47] text-sm font-bold">Safari Trip Booking</span>
                   </div>
-                  <h1 className="text-3xl lg:text-4xl font-bold text-[#465b2d] mb-4 leading-tight">
+                  <h1 className="text-3xl lg:text-4xl font-bold text-[#8B6F47] mb-4 leading-tight">
                     LET US CREATE YOUR{' '}
-                    <span className="bg-gradient-to-r from-[#465b2d] to-[#8B5A4A] bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] bg-clip-text text-transparent">
                       TAILOR—MADE TRIP
                     </span>
                   </h1>
-                  <div className="w-20 h-1 bg-gradient-to-r from-[#465b2d] to-[#8B5A4A] rounded-full mb-4"></div>
+                  <div className="w-20 h-1 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] rounded-full mb-4"></div>
                   <p className="text-lg text-slate-700 mb-2 font-semibold">
                     RECEIVE A FREE, NO OBLIGATION QUOTE
                   </p>
@@ -48,10 +48,10 @@ const TwoCardLayout = () => {
                   </p>
                   
                   <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                    <button className="bg-gradient-to-r from-[#465b2d] to-[#3a4a24] text-white font-bold py-4 px-8 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex-1 text-center">
+                    <button className="bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white font-bold py-4 px-8 rounded-xl hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex-1 text-center">
                       GET FREE QUOTE
                     </button>
-                    <button className="border-2 border-[#465b2d] text-[#465b2d] font-bold py-4 px-8 rounded-xl hover:bg-[#465b2d] hover:text-white transition-all duration-300 flex-1 text-center">
+                    <button className="border-2 border-[#8B6F47] text-[#8B6F47] font-bold py-4 px-8 rounded-xl hover:bg-[#8B6F47] hover:text-white transition-all duration-300 flex-1 text-center">
                       VIEW ITINERARIES
                     </button>
                   </div>
@@ -126,14 +126,14 @@ const TwoCardLayout = () => {
                     <div className="space-y-4">
                       <div className="flex items-center justify-between group hover:bg-white/60 p-3 rounded-lg transition-all duration-300">
                         <span className="font-bold text-slate-700 text-lg">USA:</span>
-                        {/* <span className="text-xl font-semibold text-[#465b2d] group-hover:text-[#3a4a24] transition-colors duration-300">
+                        {/* <span className="text-xl font-semibold text-[#8B6F47] group-hover:text-[#6B5A3D] transition-colors duration-300">
                           +255 0767140150
 
                         </span> */}
                       </div>
                       <div className="flex items-center justify-between group hover:bg-white/60 p-3 rounded-lg transition-all duration-300">
                         <span className="font-bold text-slate-700 text-lg">UK:</span>
-                        {/* <span className="text-xl font-semibold text-[#465b2d] group-hover:text-[#3a4a24] transition-colors duration-300">
+                        {/* <span className="text-xl font-semibold text-[#8B6F47] group-hover:text-[#6B5A3D] transition-colors duration-300">
                           +255 0767140150
                         </span> */}
                       </div>

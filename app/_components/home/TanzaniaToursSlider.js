@@ -81,22 +81,21 @@ const TanzaniaToursSlider = () => {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-4">
           <div className="mb-6 lg:mb-0">
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-green-50 border border-green-100 mb-4">
-              <span className="w-2 h-2 bg-[#465b2d] rounded-full mr-2"></span>
-              <span className="text-sm font-medium text-[#465b2d]">
+              <span className="w-2 h-2 bg-[#8B6F47] rounded-full mr-2"></span>
+              <span className="text-sm font-medium text-[#8B6F47]">
                 POPULAR TOURS
               </span>
             </div>
             <h2 className="text-5xl font-bold text-gray-900 mb-4">
-              Tanzania <span className="text-[#465b2d]">Safari</span> Packages
+              Tanzania <span className="text-[#8B6F47]">Safari</span> Packages
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl">
-              Experience the ultimate African adventure with our carefully
-              curated safari packages
+            <p className="text-xl  w-full  text-gray-600 max-w-4xl">
+              Experience the ultimate African adventure with our carefully curated safari packages
             </p>
           </div>
           <a
             href="/packages"
-            className="group flex items-center text-[#465b2d] font-semibold text-lg hover:text-[#3a4a24] transition-colors"
+            className="group flex items-center text-[#8B6F47] font-semibold text-lg hover:text-[#6B5A3D] transition-colors"
           >
             View All Packages
             <svg
@@ -182,7 +181,7 @@ const TanzaniaToursSlider = () => {
                       </span>
                     </div>
                     {tour.tourType === "private" && (
-                      <div className="bg-gradient-to-r from-[#465b2d] to-[#3a4a24] text-white px-2 py-1 rounded-2xl shadow-lg">
+                      <div className="bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-2 py-1 rounded-2xl shadow-lg">
                         <span className="font-semibold text-sm">
                           PRIVATE TOUR
                         </span>
@@ -234,16 +233,16 @@ const TanzaniaToursSlider = () => {
                   {/* Price and CTA */}
                   <div className="flex justify-between items-center pt-2 border-t border-gray-200">
                     <div>
-                      <span className="text-xl font-bold text-[#465b2d]">
+                      <span className="text-xl font-bold text-[#8B6F47]">
                         $ {tour.price}
                       </span>
                       <span className="block text-sm text-gray-500">
                         per person
                       </span>
                     </div>
-                    <button className="group relative bg-gradient-to-r from-[#465b2d] to-[#3a4a24] text-white px-8 py-2 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden">
+                    <button className="group relative bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-8 py-2 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden">
                       <span className="relative z-10">Read More</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#3a4a24] to-[#465b2d] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-[#6B5A3D] to-[#8B6F47] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </button>
                   </div>
                 </div>
@@ -262,7 +261,7 @@ const TanzaniaToursSlider = () => {
                 onClick={() => setCurrentSlide(index * visibleCards)}
                 className={`w-3 h-3 rounded-full transition-all duration-500 ${
                   Math.floor(currentSlide / visibleCards) === index
-                    ? "bg-gradient-to-r from-[#465b2d] to-[#3a4a24] w-12"
+                    ? "bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] w-12"
                     : "bg-gray-300 hover:bg-gray-400"
                 }`}
               />

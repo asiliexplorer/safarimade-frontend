@@ -5,14 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import {
-  FaBars,
-  FaTimes,
-  FaSearch,
-  FaChevronDown,
-  FaGlobe,
-  FaStar,
-  FaPhone,
-} from "react-icons/fa";
+  Menu,
+  X,
+  Search,
+  ChevronDown,
+  Globe,
+  Star,
+  Phone,
+} from "lucide-react";
 import logo from "../../public/safari-trip-booking.png";
 
 const Header = () => {
@@ -155,14 +155,14 @@ const Header = () => {
   //           {/* Header */}
   //           <div className="flex justify-between items-center mb-6">
   //             <div>
-  //               <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-[#465b2d] bg-clip-text text-transparent mb-2">
+  //               <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-[#8B6F47] bg-clip-text text-transparent mb-2">
   //                 View all sample itineraries
   //               </h2>
   //               <p className="text-gray-600 text-sm font-light">Explore Africa's most breathtaking destinations</p>
   //             </div>
   //             <Link
   //               href="/tanzania"
-  //               className="bg-gradient-to-r from-[#465b2d] to-[#3a4a24] text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold hover:scale-105 transform"
+  //               className="bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold hover:scale-105 transform"
   //               onClick={closeAllDropdowns}
   //             >
   //               View All →
@@ -193,7 +193,7 @@ const Header = () => {
   //                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
   //                     {/* Type Badge */}
   //                     <div className="mb-2">
-  //                       <span className="bg-[#465b2d] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
+  //                       <span className="bg-[#8B6F47] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
   //                         {destination.type}
   //                       </span>
   //                     </div>
@@ -227,7 +227,7 @@ const Header = () => {
   //                 </div>
 
   //                 {/* Bottom Glow Effect */}
-  //                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#465b2d] to-[#3a4a24] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+  //                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
   //               </Link>
   //             ))}
   //           </div>
@@ -293,15 +293,15 @@ const Header = () => {
     return (
       <div
         ref={discoverPanelRef}
-        className="absolute top-full -left-50 w-[950px] mt-8 rounded-xl z-50 
-                 bg-white/60 backdrop-blur-xl border border-white/50 shadow-2xl"
+        className="absolute top-full left-0 w-[calc(100vw-2rem)] md:w-[900px] lg:w-[950px] mt-8 rounded-xl z-50 
+                 bg-white/60 backdrop-blur-xl border border-white/50 shadow-2xl overflow-hidden"
         onMouseLeave={() => setShowItineraryPanel(false)}
       >
         <div className="p-6">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <div>
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-[#465b2d] bg-clip-text text-transparent mb-2">
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-[#8B6F47] bg-clip-text text-transparent mb-2">
                 View all sample itineraries
               </h2>
               <p className="text-gray-600 text-sm font-light">
@@ -310,7 +310,7 @@ const Header = () => {
             </div>
             <Link
               href="/tanzania"
-              className="bg-gradient-to-r from-[#465b2d] to-[#3a4a24] text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold hover:scale-105 transform"
+              className="bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold hover:scale-105 transform"
               onClick={closeAllDropdowns}
             >
               View All →
@@ -342,7 +342,7 @@ const Header = () => {
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                     {/* Type Badge */}
                     <div className="mb-2">
-                      <span className="bg-[#465b2d] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
+                      <span className="bg-[#8B6F47] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
                         {destination.type}
                       </span>
                     </div>
@@ -374,7 +374,7 @@ const Header = () => {
                 </div>
 
                 {/* Bottom Glow Effect */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#465b2d] to-[#3a4a24] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </Link>
             ))}
           </div>
@@ -451,14 +451,14 @@ const Header = () => {
   //           {/* Header */}
   //           <div className="flex justify-between items-center mb-6">
   //             <div>
-  //               <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-[#465b2d] bg-clip-text text-transparent mb-2">
+  //               <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-[#8B6F47] bg-clip-text text-transparent mb-2">
   //                 Discover Tanzania
   //               </h2>
   //               <p className="text-gray-600 text-sm font-light">Explore Africa's most breathtaking destinations</p>
   //             </div>
   //             <Link
   //               href="/tanzania"
-  //               className="bg-gradient-to-r from-[#465b2d] to-[#3a4a24] text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold hover:scale-105 transform"
+  //               className="bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold hover:scale-105 transform"
   //               onClick={closeAllDropdowns}
   //             >
   //               View All →
@@ -489,7 +489,7 @@ const Header = () => {
   //                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
   //                     {/* Type Badge */}
   //                     <div className="mb-2">
-  //                       <span className="bg-[#465b2d] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
+  //                       <span className="bg-[#8B6F47] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
   //                         {destination.type}
   //                       </span>
   //                     </div>
@@ -523,7 +523,7 @@ const Header = () => {
   //                 </div>
 
   //                 {/* Bottom Glow Effect */}
-  //                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#465b2d] to-[#3a4a24] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+  //                 <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
   //               </Link>
   //             ))}
   //           </div>
@@ -589,15 +589,15 @@ const Header = () => {
     return (
       <div
         ref={discoverPanelRef}
-        className="absolute top-full -right-50 w-[950px] mt-8 rounded-xl z-50 
-                 bg-white/60 backdrop-blur-xl border border-white/50 shadow-2xl"
+        className="absolute top-full right-0 w-[calc(100vw-2rem)] md:w-[900px] lg:w-[950px] mt-8 rounded-xl z-50 
+                 bg-white/60 backdrop-blur-xl border border-white/50 shadow-2xl overflow-hidden"
         onMouseLeave={() => setShowDiscoverPanel(false)}
       >
         <div className="p-6">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <div>
-              <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-[#465b2d] bg-clip-text text-transparent mb-2">
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-[#8B6F47] bg-clip-text text-transparent mb-2">
                 Discover Tanzania
               </h2>
               <p className="text-gray-600 text-sm font-light">
@@ -606,7 +606,7 @@ const Header = () => {
             </div>
             <Link
               href="/parks"
-              className="bg-gradient-to-r from-[#465b2d] to-[#3a4a24] text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold hover:scale-105 transform"
+              className="bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold hover:scale-105 transform"
               onClick={closeAllDropdowns}
             >
               View All →
@@ -638,7 +638,7 @@ const Header = () => {
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                     {/* Type Badge */}
                     <div className="mb-2">
-                      <span className="bg-[#465b2d] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
+                      <span className="bg-[#8B6F47] text-white px-2 py-1 rounded-full text-xs font-semibold shadow-lg">
                         {destination.type}
                       </span>
                     </div>
@@ -670,7 +670,7 @@ const Header = () => {
                 </div>
 
                 {/* Bottom Glow Effect */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#465b2d] to-[#3a4a24] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </Link>
             ))}
           </div>
@@ -735,7 +735,7 @@ const Header = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {items.map((section, sectionIndex) => (
               <div key={sectionIndex} className="space-y-4">
-                <h4 className="font-semibold text-lg text-[#465b2d] border-b border-[#465b2d]/20 pb-2">
+                <h4 className="font-semibold text-lg text-[#8B6F47] border-b border-[#8B6F47]/20 pb-2">
                   {section.title}
                 </h4>
                 <div className="space-y-3">
@@ -743,7 +743,7 @@ const Header = () => {
                     <Link
                       key={itemIndex}
                       href={item.href}
-                      className="block text-gray-700 hover:text-[#465b2d] transition-colors duration-200 group/item"
+                      className="block text-gray-700 hover:text-[#8B6F47] transition-colors duration-200 group/item"
                       onClick={closeAllDropdowns}
                     >
                       <span className="group-hover/item:ml-2 transition-all duration-200">
@@ -760,7 +760,7 @@ const Header = () => {
               <span className="text-gray-600">Need help choosing?</span>
               <Link
                 href="/contact"
-                className="bg-[#465b2d] text-white px-6 py-2 rounded-lg hover:bg-[#3a4a24] transition-colors duration-200"
+                className="bg-[#8B6F47] text-white px-6 py-2 rounded-lg hover:bg-[#6B5A3D] transition-colors duration-200"
                 onClick={closeAllDropdowns}
               >
                 Contact Our Experts
@@ -791,14 +791,14 @@ const Header = () => {
     }, []);
 
     return (
-      <div className="fixed inset-0 z-60 flex items-start justify-center pt-20">
+      <div className="fixed inset-0 z-60 flex items-start justify-center pt-20 px-4">
         {/* Refined Blur Background */}
         <div className="absolute inset-0 bg-opacity-40 backdrop-blur-sm" />
 
         {/* Search Content */}
         <div
           ref={searchRef}
-          className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl mx-4 transform transition-all duration-300 scale-100 border border-gray-200"
+          className="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl transform transition-all duration-300 scale-100 border border-gray-200"
         >
           <div className="p-6 border-b border-gray-200">
             <div className="flex items-center justify-between mb-4">
@@ -809,15 +809,15 @@ const Header = () => {
                 onClick={() => setIsSearchOpen(false)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
               >
-                <FaTimes className="text-gray-600 text-lg" />
+                <X className="text-gray-600" size={20} />
               </button>
             </div>
             <div className="relative">
-              <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="text"
                 placeholder="Search for safaris, destinations, itineraries..."
-                className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#465b2d] focus:border-transparent text-lg placeholder-gray-500"
+                className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#8B6F47] focus:border-transparent text-lg placeholder-gray-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 autoFocus
@@ -841,7 +841,7 @@ const Header = () => {
                   <button
                     key={index}
                     onClick={() => setSearchQuery(term)}
-                    className="px-4 py-2 bg-gray-100 hover:bg-[#465b2d] hover:text-white text-gray-700 rounded-full transition-colors duration-200 text-sm"
+                    className="px-4 py-2 bg-gray-100 hover:bg-[#8B6F47] hover:text-white text-gray-700 rounded-full transition-colors duration-200 text-sm"
                   >
                     {term}
                   </button>
@@ -856,7 +856,7 @@ const Header = () => {
                 <div className="space-y-3">
                   <Link
                     href="/safaris"
-                    className="block p-3 hover:bg-[#465b2d]/10 rounded-lg cursor-pointer transition-colors duration-200"
+                    className="block p-3 hover:bg-[#8B6F47]/10 rounded-lg cursor-pointer transition-colors duration-200"
                   >
                     <div className="font-medium text-gray-800">
                       Safari Packages
@@ -868,7 +868,7 @@ const Header = () => {
                   </Link>
                   <Link
                     href="/kilimanjaro"
-                    className="block p-3 hover:bg-[#465b2d]/10 rounded-lg cursor-pointer transition-colors duration-200"
+                    className="block p-3 hover:bg-[#8B6F47]/10 rounded-lg cursor-pointer transition-colors duration-200"
                   >
                     <div className="font-medium text-gray-800">
                       Kilimanjaro Climbing Routes
@@ -879,7 +879,7 @@ const Header = () => {
                   </Link>
                   <Link
                     href="/itineraries/7-day-safari"
-                    className="block p-3 hover:bg-[#465b2d]/10 rounded-lg cursor-pointer transition-colors duration-200"
+                    className="block p-3 hover:bg-[#8B6F47]/10 rounded-lg cursor-pointer transition-colors duration-200"
                   >
                     <div className="font-medium text-gray-800">
                       7-Day Classic Safari
@@ -899,25 +899,25 @@ const Header = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <Link
                     href="/safaris"
-                    className="p-3 bg-gray-50 hover:bg-[#465b2d]/10 rounded-lg transition-colors duration-200"
+                    className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
                   >
                     <div className="font-medium text-gray-800">All Safaris</div>
                   </Link>
                   <Link
                     href="/kilimanjaro"
-                    className="p-3 bg-gray-50 hover:bg-[#465b2d]/10 rounded-lg transition-colors duration-200"
+                    className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
                   >
                     <div className="font-medium text-gray-800">Kilimanjaro</div>
                   </Link>
                   <Link
                     href="/zanzibar"
-                    className="p-3 bg-gray-50 hover:bg-[#465b2d]/10 rounded-lg transition-colors duration-200"
+                    className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
                   >
                     <div className="font-medium text-gray-800">Zanzibar</div>
                   </Link>
                   <Link
                     href="/contact"
-                    className="p-3 bg-gray-50 hover:bg-[#465b2d]/10 rounded-lg transition-colors duration-200"
+                    className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
                   >
                     <div className="font-medium text-gray-800">Contact Us</div>
                   </Link>
@@ -933,14 +933,14 @@ const Header = () => {
   return (
     <>
       {/* Top Bar - Normal Scrolling (NOT sticky) */}
-      <div className="bg-[#465b2d] text-white border-b border-[#3a4a24]">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-3">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
+      <div className="bg-[#8B6F47] text-white border-b border-[#6B5A3D]">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 py-3 w-full overflow-hidden">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0 gap-2 md:gap-4">
             {/* Currency and Language */}
 
-            <div className="flex items-center space-x-4 md:space-x-6">
+            <div className="flex items-center space-x-2 md:space-x-4">
               <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-lg px-3 py-1.5">
-                <FaGlobe className="text-sm text-white" />
+                <Globe className="text-white" size={16} />
                 <select className="bg-transparent border-none outline-none text-white cursor-pointer text-sm">
                   <option value="en">EN</option>
                   <option value="sw">SW</option>
@@ -949,17 +949,17 @@ const Header = () => {
               </div>
             </div>
 
-            <div className="flex items-center space-x-4 md:space-x-6">
-              <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-sm">
+            <div className="flex items-center space-x-2 md:space-x-4">
+              <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm">
                 {/* Phone Number */}
                 {/* <div className="flex items-center space-x-2">
-                <FaPhone className="text-yellow-300 text-sm" />
+                <Phone className="text-yellow-300" size={16} />
                 <span className="font-medium">+255 0767140150</span>
               </div> */}
 
                 {/* Email */}
-                <div className="flex items-center space-x-2">
-                  <span className="font-medium">
+                <div className="flex items-center space-x-1">
+                  <span className="font-medium hidden sm:block">
                     info@safaritripbooking.com
                   </span>
                 </div>
@@ -967,30 +967,30 @@ const Header = () => {
             </div>
 
             {/* Ratings */}
-            <div className="flex items-center space-x-4 md:space-x-8">
-              <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-lg px-4 py-1.5">
-                <div className="flex items-center space-x-1">
-                  <FaStar className="text-yellow-300 text-sm" />
+            <div className="flex items-center space-x-2 md:space-x-4">
+              <div className="flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-lg px-2 md:px-4 py-1.5 text-xs md:text-sm">
+                <div className="flex items-center space-x-0.5">
+                  <Star className="text-yellow-300" size={14} fill="currentColor" />
                   <span className="font-semibold text-white">4.9/5</span>
                 </div>
-                <span className="text-xs text-white/90 hidden sm:block">
-                  Based on 3,395+ reviews
+                <span className="text-xs text-white/90 hidden md:block">
+                  3,395+ reviews
                 </span>
               </div>
 
-              <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-lg px-4 py-1.5">
-                <div className="flex items-center space-x-1">
-                  <FaStar className="text-yellow-300 text-sm" />
+              <div className="hidden sm:flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-lg px-2 md:px-4 py-1.5 text-xs md:text-sm">
+                <div className="flex items-center space-x-0.5">
+                  <Star className="text-yellow-300" size={14} fill="currentColor" />
                   <span className="font-semibold text-white">4.7/5</span>
                 </div>
-                <span className="text-xs text-white/90 hidden sm:block">
-                  Based on 808+ reviews
+                <span className="text-xs text-white/90 hidden md:block">
+                  808+ reviews
                 </span>
               </div>
             </div>
 
             {/* Top Navigation Links (Hidden on Mobile) */}
-            <div className="hidden lg:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center space-x-4">
               {topNavItems.map((item, index) => (
                 <div key={index} className="relative group" ref={dropdownRef}>
                   {item.dropdown ? (
@@ -1001,7 +1001,7 @@ const Header = () => {
                         onMouseEnter={() => toggleDropdown(`top-${index}`)}
                       >
                         <span>{item.name}</span>
-                        <FaChevronDown className="text-xs transition-transform duration-200" />
+                        <ChevronDown className="transition-transform duration-200" size={14} />
                       </button>
                       <div
                         className={`absolute left-0 z-70 mt-2 w-56 bg-white text-gray-800 rounded-xl shadow-2xl border border-gray-100 transition-all duration-300 transform origin-top ${
@@ -1014,7 +1014,7 @@ const Header = () => {
                           <Link
                             key={subIndex}
                             href={subItem.href}
-                            className="block px-4 py-3 hover:bg-[#465b2d]/10 transition-colors duration-200 first:rounded-t-xl last:rounded-b-xl border-b border-gray-100 last:border-b-0"
+                            className="block px-4 py-3 hover:bg-[#8B6F47]/10 transition-colors duration-200 first:rounded-t-xl last:rounded-b-xl border-b border-gray-100 last:border-b-0"
                             onClick={closeAllDropdowns}
                           >
                             {subItem.name}
@@ -1048,8 +1048,8 @@ const Header = () => {
             isScrolled ? "py-2" : "py-4"
           }`}
         >
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <div className="flex items-center justify-between">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 w-full">
+            <div className="flex items-center justify-between gap-2 md:gap-4">
               {/* Logo Section */}
               <Link
                 href="/"
@@ -1066,14 +1066,14 @@ const Header = () => {
                   </div>
                 </div>
                 {/* <div className="flex flex-col  pr-8" >
-                  <span className="text-xl md:text-2xl font-bold text-[#465b2d] tracking-tight leading-6">ASILI EXPLORER</span>
+                  <span className="text-xl md:text-2xl font-bold text-[#8B6F47] tracking-tight leading-6">ASILI EXPLORER</span>
                   <span className="text-lg font-semibold text-[#8B5A4A] tracking-wide">SAFARIS</span>
                 </div> */}
               </Link>
 
               {/* Desktop Navigation (Hidden on Mobile) */}
               <nav
-                className="hidden xl:flex items-center space-x-8"
+                className="hidden lg:flex items-center space-x-8"
                 ref={dropdownRef}
               >
                 {mainNavItems.map((item, index) => (
@@ -1087,9 +1087,9 @@ const Header = () => {
                           setShowDiscoverPanel(false);
                         }}
                       >
-                        <button className="flex items-center space-x-1 text-gray-700 hover:text-[#465b2d] font-semibold text-sm uppercase tracking-wide transition-all duration-200 py-2">
+                        <button className="flex items-center space-x-1 text-gray-700 hover:text-[#8B6F47] font-semibold text-sm uppercase tracking-wide transition-all duration-200 py-2">
                           <span>{item.name}</span>
-                          <FaChevronDown className="text-xs transition-transform duration-200" />
+                          <ChevronDown className="transition-transform duration-200" size={14} />
                         </button>
                         {showItineraryPanel && <SampleItinerariesPanel />}
                       </div>
@@ -1105,9 +1105,9 @@ const Header = () => {
 
                         // onMouseLeave={() => setShowDiscoverPanel(false)}
                       >
-                        <button className="flex items-center space-x-1 text-gray-700 hover:text-[#465b2d] font-semibold text-sm uppercase tracking-wide transition-all duration-200 py-2">
+                        <button className="flex items-center space-x-1 text-gray-700 hover:text-[#8B6F47] font-semibold text-sm uppercase tracking-wide transition-all duration-200 py-2">
                           <span>{item.name}</span>
-                          <FaChevronDown className="text-xs transition-transform duration-200" />
+                          <ChevronDown className="transition-transform duration-200" size={14} />
                         </button>
                         {showDiscoverPanel && <DiscoverTanzaniaPanel />}
                       </div>
@@ -1115,14 +1115,14 @@ const Header = () => {
                       // Other dropdown items
                       <>
                         <button
-                          className="flex items-center space-x-1 text-gray-700 hover:text-[#465b2d] font-semibold text-sm uppercase tracking-wide transition-all duration-200 py-2"
+                          className="flex items-center space-x-1 text-gray-700 hover:text-[#8B6F47] font-semibold text-sm uppercase tracking-wide transition-all duration-200 py-2"
                           onClick={() => toggleDropdown(`main-${index}`)}
                           onMouseEnter={() =>
                             setActiveDropdown(`main-${index}`)
                           }
                         >
                           <span>{item.name}</span>
-                          <FaChevronDown className="text-xs transition-transform duration-200" />
+                          <ChevronDown className="transition-transform duration-200" size={14} />
                         </button>
                         {item.type === "mega" &&
                           activeDropdown === `main-${index}` && (
@@ -1136,7 +1136,7 @@ const Header = () => {
                       // Regular navigation items
                       <Link
                         href={item.href}
-                        className="text-gray-700 hover:text-[#465b2d] font-semibold text-sm uppercase tracking-wide transition-all duration-200 py-2"
+                        className="text-gray-700 hover:text-[#8B6F47] font-semibold text-sm uppercase tracking-wide transition-all duration-200 py-2"
                       >
                         {item.name}
                       </Link>
@@ -1149,16 +1149,16 @@ const Header = () => {
               <div className="hidden lg:flex items-center space-x-6">
                 {/* Search Button */}
                 <button
-                  className="p-3 text-gray-600 hover:text-[#465b2d] transition-colors duration-200 rounded-full hover:bg-gray-100"
+                  className="p-3 text-gray-600 hover:text-[#8B6F47] transition-colors duration-200 rounded-full hover:bg-gray-100"
                   onClick={() => setIsSearchOpen(true)}
                 >
-                  <FaSearch className="text-lg" />
+                  <Search size={20} />
                 </button>
 
                 {/* CTA Button */}
                 <a
                   href="/travel-proposal"
-                  className="bg-[#465b2d] text-white px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wide hover:shadow-lg transform hover:scale-105 transition-all duration-200 shadow-md hover:bg-[#3a4a24]"
+                  className="bg-[#8B6F47] text-white px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wide hover:shadow-lg transform hover:scale-105 transition-all duration-200 shadow-md hover:bg-[#6B5A3D]"
                 >
                   MAKE A REQUEST
                 </a>
@@ -1166,13 +1166,13 @@ const Header = () => {
 
               {/* Mobile Menu Button */}
               <button
-                className="lg:hidden p-3 text-gray-700 hover:text-[#465b2d] transition-colors duration-200 rounded-lg hover:bg-gray-100"
+                className="lg:hidden p-3 text-gray-700 hover:text-[#8B6F47] transition-colors duration-200 rounded-lg hover:bg-gray-100"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? (
-                  <FaTimes className="text-xl" />
+                  <X size={24} />
                 ) : (
-                  <FaBars className="text-xl" />
+                  <Menu size={24} />
                 )}
               </button>
             </div>
@@ -1184,10 +1184,10 @@ const Header = () => {
                   {/* Close Button */}
                   <div className="flex justify-end mb-6">
                     <button
-                      className="p-3 text-gray-700 hover:text-[#465b2d] transition-colors duration-200 rounded-lg hover:bg-gray-100"
+                      className="p-3 text-gray-700 hover:text-[#8B6F47] transition-colors duration-200 rounded-lg hover:bg-gray-100"
                       onClick={closeAllDropdowns}
                     >
-                      <FaTimes className="text-xl" />
+                      <X size={24} />
                     </button>
                   </div>
 
@@ -1232,7 +1232,7 @@ const Header = () => {
                                     <Link
                                       key={subIndex}
                                       href={subItem.href}
-                                      className="block py-2 text-gray-600 hover:text-[#465b2d] transition-colors duration-200 pl-2 border-l-2 border-gray-200 hover:border-[#465b2d]"
+                                      className="block py-2 text-gray-600 hover:text-[#8B6F47] transition-colors duration-200 pl-2 border-l-2 border-gray-200 hover:border-[#8B6F47]"
                                       onClick={closeAllDropdowns}
                                     >
                                       {subItem.name}
@@ -1292,7 +1292,7 @@ const Header = () => {
                                   <Link
                                     key={subIndex}
                                     href={subItem.href}
-                                    className="block py-2 text-gray-600 hover:text-[#465b2d] transition-colors duration-200 pl-2 border-l-2 border-gray-200 hover:border-[#465b2d]"
+                                    className="block py-2 text-gray-600 hover:text-[#8B6F47] transition-colors duration-200 pl-2 border-l-2 border-gray-200 hover:border-[#8B6F47]"
                                     onClick={closeAllDropdowns}
                                   >
                                     {subItem.name}
@@ -1316,7 +1316,7 @@ const Header = () => {
                     {/* Mobile Action Buttons */}
                     <div className="pt-6 border-t border-gray-200 flex flex-col space-y-4">
                       <button
-                        className="p-3 text-gray-600 border border-gray-300 rounded-xl hover:border-[#465b2d] transition-colors duration-200 flex items-center justify-center space-x-2"
+                        className="p-3 text-gray-600 border border-gray-300 rounded-xl hover:border-[#8B6F47] transition-colors duration-200 flex items-center justify-center space-x-2"
                         onClick={() => {
                           setIsSearchOpen(true);
                           setIsMenuOpen(false);
@@ -1325,7 +1325,7 @@ const Header = () => {
                         <FaSearch />
                         <span>Search</span>
                       </button>
-                      <button className="bg-[#465b2d] text-white py-3 rounded-xl font-semibold text-sm uppercase tracking-wide hover:shadow-lg transition-all duration-200 hover:bg-[#3a4a24]">
+                      <button className="bg-[#8B6F47] text-white py-3 rounded-xl font-semibold text-sm uppercase tracking-wide hover:shadow-lg transition-all duration-200 hover:bg-[#6B5A3D]">
                         MAKE REQUEST
                       </button>
                     </div>

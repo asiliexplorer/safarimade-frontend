@@ -76,14 +76,14 @@ const FAQSection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-[#465b2d]/10 text-[#465b2d] text-xs font-semibold px-3 py-1.5 rounded-full mb-3">
+          <div className="inline-flex items-center gap-2 bg-[#8B6F47]/10 text-[#8B6F47] text-xs font-semibold px-3 py-1.5 rounded-full mb-3">
             <FaQuestionCircle className="w-3 h-3" />
             FREQUENTLY ASKED QUESTIONS
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             Safari Questions Answered
           </h1>
-          <div className="w-20 h-0.5 bg-gradient-to-r from-[#465b2d] to-[#8B5A4A] rounded-full mx-auto mb-4"></div>
+          <div className="w-20 h-0.5 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] rounded-full mx-auto mb-4"></div>
           <p className="text-sm text-gray-600 max-w-2xl mx-auto">
             Find quick answers to common questions about booking your Tanzania safari adventure.
           </p>
@@ -100,7 +100,7 @@ const FAQSection = () => {
               placeholder="Search questions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-[#465b2d] focus:border-[#465b2d] transition-all duration-200 text-sm"
+              className="w-full pl-10 pr-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-[#8B6F47] focus:border-[#8B6F47] transition-all duration-200 text-sm"
             />
           </div>
         </div>
@@ -123,11 +123,11 @@ const FAQSection = () => {
                         className="w-full px-4 py-3 flex justify-between items-center text-left focus:outline-none group"
                         aria-expanded={openIndex === originalIndex}
                       >
-                        <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#465b2d] transition-colors duration-200 pr-3 leading-relaxed">
+                        <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#8B6F47] transition-colors duration-200 pr-3 leading-relaxed">
                           {faq.question}
                         </h3>
-                        <div className={`flex-shrink-0 w-8 h-8 bg-gradient-to-br from-[#465b2d] to-[#5a7238] rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-105 ${
-                          openIndex === originalIndex ? 'rotate-180 bg-[#465b2d]' : ''
+                        <div className={`flex-shrink-0 w-8 h-8 bg-gradient-to-br from-[#8B6F47] to-[#5a7238] rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-105 ${
+                          openIndex === originalIndex ? 'rotate-180 bg-[#8B6F47]' : ''
                         }`}>
                           {openIndex === originalIndex ? (
                             <FaChevronUp className="text-white w-3 h-3" />
@@ -142,7 +142,7 @@ const FAQSection = () => {
                         openIndex === originalIndex ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                       }`}>
                         <div className="px-4 py-3">
-                          <div className="w-8 h-0.5 bg-gradient-to-r from-[#465b2d] to-[#8B5A4A] rounded-full mb-3"></div>
+                          <div className="w-8 h-0.5 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] rounded-full mb-3"></div>
                           <p className="text-sm text-gray-600 leading-relaxed">
                             {faq.answer}
                           </p>
@@ -167,11 +167,11 @@ const FAQSection = () => {
                         className="w-full px-4 py-3 flex justify-between items-center text-left focus:outline-none group"
                         aria-expanded={openIndex === originalIndex}
                       >
-                        <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#465b2d] transition-colors duration-200 pr-3 leading-relaxed">
+                        <h3 className="text-sm font-semibold text-gray-800 group-hover:text-[#8B6F47] transition-colors duration-200 pr-3 leading-relaxed">
                           {faq.question}
                         </h3>
-                        <div className={`flex-shrink-0 w-8 h-8 bg-gradient-to-br from-[#465b2d] to-[#5a7238] rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-105 ${
-                          openIndex === originalIndex ? 'rotate-180 bg-[#465b2d]' : ''
+                        <div className={`flex-shrink-0 w-8 h-8 bg-gradient-to-br from-[#8B6F47] to-[#5a7238] rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-105 ${
+                          openIndex === originalIndex ? 'rotate-180 bg-[#8B6F47]' : ''
                         }`}>
                           {openIndex === originalIndex ? (
                             <FaChevronUp className="text-white w-3 h-3" />
@@ -186,7 +186,7 @@ const FAQSection = () => {
                         openIndex === originalIndex ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                       }`}>
                         <div className="px-4 py-3">
-                          <div className="w-8 h-0.5 bg-gradient-to-r from-[#465b2d] to-[#8B5A4A] rounded-full mb-3"></div>
+                          <div className="w-8 h-0.5 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] rounded-full mb-3"></div>
                           <p className="text-sm text-gray-600 leading-relaxed">
                             {faq.answer}
                           </p>
@@ -209,7 +209,7 @@ const FAQSection = () => {
               </p>
               <button
                 onClick={() => setSearchTerm('')}
-                className="bg-[#465b2d] text-white text-sm px-4 py-2 rounded font-medium hover:bg-[#3a4a24] transition-colors duration-200"
+                className="bg-[#8B6F47] text-white text-sm px-4 py-2 rounded font-medium hover:bg-[#6B5A3D] transition-colors duration-200"
               >
                 Clear Search
               </button>
@@ -219,7 +219,7 @@ const FAQSection = () => {
 
         {/* Contact CTA */}
         <div className="mt-12 text-center">
-          <div className="bg-gradient-to-r from-[#465b2d] to-[#5a7238] rounded-xl p-6 max-w-4xl mx-auto shadow-lg">
+          <div className="bg-gradient-to-r from-[#8B6F47] to-[#5a7238] rounded-xl p-6 max-w-4xl mx-auto shadow-lg">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
               <div className="text-left">
                 <h3 className="text-lg font-bold text-white mb-2">
@@ -232,13 +232,13 @@ const FAQSection = () => {
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-end">
                 <a
                   href="/contact"
-                  className="bg-white text-[#465b2d] text-sm font-semibold py-2 px-6 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-sm text-center"
+                  className="bg-white text-[#8B6F47] text-sm font-semibold py-2 px-6 rounded-lg hover:bg-gray-100 transition-all duration-200 transform hover:scale-105 shadow-sm text-center"
                 >
                   Contact Our Team
                 </a>
                 <a
                   href="tel:+255123456789"
-                  className="border border-white text-white text-sm font-semibold py-2 px-6 rounded-lg hover:bg-white hover:text-[#465b2d] transition-all duration-200 transform hover:scale-105 text-center"
+                  className="border border-white text-white text-sm font-semibold py-2 px-6 rounded-lg hover:bg-white hover:text-[#8B6F47] transition-all duration-200 transform hover:scale-105 text-center"
                 >
                   Call Us Now
                 </a>
