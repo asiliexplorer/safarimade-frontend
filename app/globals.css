@@ -29,7 +29,7 @@ text:#f4805f
   color: var(--color-logo-orange);
 }
 .widthclass{
-    width: 1400px;
+    width: 1600px;
 }
 @media (max-width: 500px) {
   .widthclass {
