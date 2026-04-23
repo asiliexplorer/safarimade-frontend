@@ -248,14 +248,7 @@ const Header = () => {
         type: "Safari",
         slug: "/packages",
       },
-      {
-        id: 2,
-        name: "Safari + Zanzibar",
-        image:
-          "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        type: "Combo",
-        slug: "/packages",
-      },
+      
       {
         id: 3,
         name: "Zanzibar",
@@ -272,22 +265,7 @@ const Header = () => {
         type: "Mountain",
         slug: "/kilimanjaro",
       },
-      {
-        id: 5,
-        name: "Honeymoon Trips",
-        image:
-          "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        type: "Romantic",
-        slug: "/packages",
-      },
-      {
-        id: 6,
-        name: "Family-Friendly Tours",
-        image:
-          "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-        type: "Family",
-        slug: "/packages",
-      },
+      
     ];
 
     return (
@@ -309,7 +287,7 @@ const Header = () => {
               </p>
             </div>
             <Link
-              href="/tanzania"
+              href="/packages"
               className="bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-4 py-2 rounded-xl hover:shadow-lg transition-all duration-300 font-semibold hover:scale-105 transform"
               onClick={closeAllDropdowns}
             >
@@ -776,6 +754,47 @@ const Header = () => {
   const SearchPopup = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const searchRef = useRef(null);
+    const searchablePages = [
+      {
+        title: "Safari Packages",
+        description:
+          "Explore our range of safari experiences in Tanzania's best national parks",
+        href: "/packages",
+      },
+      {
+        title: "Kilimanjaro Climbing Routes",
+        description:
+          "Choose your path to the roof of Africa with expert guides",
+        href: "/kilimanjaro",
+      },
+      {
+        title: "Zanzibar Vacations",
+        description:
+          "Discover beaches, excursions, and island experiences in Zanzibar",
+        href: "/zanzibar",
+      },
+      {
+        title: "Tanzania Parks",
+        description:
+          "Browse Tanzania's top national parks and wildlife destinations",
+        href: "/parks",
+      },
+      {
+        title: "Travel Proposal",
+        description:
+          "Share your travel plans and get a custom safari proposal",
+        href: "/travel-proposal",
+      },
+    ];
+
+    const normalizedQuery = searchQuery.trim().toLowerCase();
+    const filteredSearchResults = normalizedQuery
+      ? searchablePages.filter(
+          (page) =>
+            page.title.toLowerCase().includes(normalizedQuery) ||
+            page.description.toLowerCase().includes(normalizedQuery)
+        )
+      : [];
 
     // Close search when clicking outside
     useEffect(() => {
@@ -825,69 +844,34 @@ const Header = () => {
             </div>
           </div>
           <div className="p-6 max-h-96 overflow-y-auto">
-            <div className="space-y-4">
-              <h4 className="font-semibold text-gray-700">Popular Searches</h4>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "Safari Packages",
-                  "Kilimanjaro Trek",
-                  "Zanzibar Beach",
-                  "Serengeti Migration",
-                  "Luxury Safari",
-                  "Family Safari",
-                  "Budget Tours",
-                  "Wildlife Photography",
-                ].map((term, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setSearchQuery(term)}
-                    className="px-4 py-2 bg-gray-100 hover:bg-[#8B6F47] hover:text-white text-gray-700 rounded-full transition-colors duration-200 text-sm"
-                  >
-                    {term}
-                  </button>
-                ))}
-              </div>
-            </div>
+            
             {searchQuery && (
-              <div className="mt-6 pt-6 border-t border-gray-200">
+              <div>
                 <h4 className="font-semibold text-gray-700 mb-4">
                   Search Results for "{searchQuery}"
                 </h4>
                 <div className="space-y-3">
-                  <Link
-                    href="/safaris"
-                    className="block p-3 hover:bg-[#8B6F47]/10 rounded-lg cursor-pointer transition-colors duration-200"
-                  >
-                    <div className="font-medium text-gray-800">
-                      Safari Packages
+                  {filteredSearchResults.length > 0 ? (
+                    filteredSearchResults.map((result) => (
+                      <Link
+                        key={result.href}
+                        href={result.href}
+                        className="block p-3 hover:bg-[#8B6F47]/10 rounded-lg cursor-pointer transition-colors duration-200"
+                        onClick={() => setIsSearchOpen(false)}
+                      >
+                        <div className="font-medium text-gray-800">
+                          {result.title}
+                        </div>
+                        <div className="text-sm text-gray-600 mt-1">
+                          {result.description}
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
+                    <div className="text-sm text-gray-600 bg-gray-50 border border-gray-200 rounded-lg p-3">
+                      No matching pages found. Try keywords like "safari", "parks", or "zanzibar".
                     </div>
-                    <div className="text-sm text-gray-600 mt-1">
-                      Explore our range of safari experiences in Tanzania's best
-                      national parks
-                    </div>
-                  </Link>
-                  <Link
-                    href="/kilimanjaro"
-                    className="block p-3 hover:bg-[#8B6F47]/10 rounded-lg cursor-pointer transition-colors duration-200"
-                  >
-                    <div className="font-medium text-gray-800">
-                      Kilimanjaro Climbing Routes
-                    </div>
-                    <div className="text-sm text-gray-600 mt-1">
-                      Choose your path to the roof of Africa with expert guides
-                    </div>
-                  </Link>
-                  <Link
-                    href="/itineraries/7-day-safari"
-                    className="block p-3 hover:bg-[#8B6F47]/10 rounded-lg cursor-pointer transition-colors duration-200"
-                  >
-                    <div className="font-medium text-gray-800">
-                      7-Day Classic Safari
-                    </div>
-                    <div className="text-sm text-gray-600 mt-1">
-                      Perfect introduction to Tanzania's wildlife and landscapes
-                    </div>
-                  </Link>
+                  )}
                 </div>
               </div>
             )}
@@ -898,26 +882,30 @@ const Header = () => {
                 </h4>
                 <div className="grid grid-cols-2 gap-4">
                   <Link
-                    href="/safaris"
+                    href="/packages"
                     className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
+                    onClick={() => setIsSearchOpen(false)}
                   >
                     <div className="font-medium text-gray-800">All Safaris</div>
                   </Link>
                   <Link
                     href="/kilimanjaro"
                     className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
+                    onClick={() => setIsSearchOpen(false)}
                   >
                     <div className="font-medium text-gray-800">Kilimanjaro</div>
                   </Link>
                   <Link
                     href="/zanzibar"
                     className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
+                    onClick={() => setIsSearchOpen(false)}
                   >
                     <div className="font-medium text-gray-800">Zanzibar</div>
                   </Link>
                   <Link
-                    href="/contact"
+                    href="/travel-proposal"
                     className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
+                    onClick={() => setIsSearchOpen(false)}
                   >
                     <div className="font-medium text-gray-800">Contact Us</div>
                   </Link>
@@ -933,109 +921,7 @@ const Header = () => {
   return (
     <>
       {/* Top Bar - Normal Scrolling (NOT sticky) */}
-      <div className="bg-[#8B6F47] text-white border-b border-[#6B5A3D]">
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 py-3 w-full overflow-hidden">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0 gap-2 md:gap-4">
-            {/* Currency and Language */}
-
-            <div className="flex items-center space-x-2 md:space-x-4">
-              <div className="flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-lg px-3 py-1.5">
-                <Globe className="text-white" size={16} />
-                <select className="bg-transparent border-none outline-none text-white cursor-pointer text-sm">
-                  <option value="en">EN</option>
-                  <option value="sw">SW</option>
-                  <option value="fr">FR</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-2 md:space-x-4">
-              <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm">
-                {/* Phone Number */}
-                {/* <div className="flex items-center space-x-2">
-                <Phone className="text-yellow-300" size={16} />
-                <span className="font-medium">+255 0767140150</span>
-              </div> */}
-
-                {/* Email */}
-                <div className="flex items-center space-x-1">
-                  <span className="font-medium hidden sm:block">
-                    info@safaritripbooking.com
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Ratings */}
-            <div className="flex items-center space-x-2 md:space-x-4">
-              <div className="flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-lg px-2 md:px-4 py-1.5 text-xs md:text-sm">
-                <div className="flex items-center space-x-0.5">
-                  <Star className="text-yellow-300" size={14} fill="currentColor" />
-                  <span className="font-semibold text-white">4.9/5</span>
-                </div>
-                <span className="text-xs text-white/90 hidden md:block">
-                  3,395+ reviews
-                </span>
-              </div>
-
-              <div className="hidden sm:flex items-center space-x-1 bg-white/20 backdrop-blur-sm rounded-lg px-2 md:px-4 py-1.5 text-xs md:text-sm">
-                <div className="flex items-center space-x-0.5">
-                  <Star className="text-yellow-300" size={14} fill="currentColor" />
-                  <span className="font-semibold text-white">4.7/5</span>
-                </div>
-                <span className="text-xs text-white/90 hidden md:block">
-                  808+ reviews
-                </span>
-              </div>
-            </div>
-
-            {/* Top Navigation Links (Hidden on Mobile) */}
-            <div className="hidden lg:flex items-center space-x-4">
-              {topNavItems.map((item, index) => (
-                <div key={index} className="relative group" ref={dropdownRef}>
-                  {item.dropdown ? (
-                    <>
-                      <button
-                        className="flex items-center space-x-1 text-sm font-medium text-white hover:text-yellow-200 transition-colors duration-200"
-                        onClick={() => toggleDropdown(`top-${index}`)}
-                        onMouseEnter={() => toggleDropdown(`top-${index}`)}
-                      >
-                        <span>{item.name}</span>
-                        <ChevronDown className="transition-transform duration-200" size={14} />
-                      </button>
-                      <div
-                        className={`absolute left-0 z-70 mt-2 w-56 bg-white text-gray-800 rounded-xl shadow-2xl border border-gray-100 transition-all duration-300 transform origin-top ${
-                          activeDropdown === `top-${index}`
-                            ? "scale-100 opacity-100"
-                            : "scale-95 opacity-0 pointer-events-none"
-                        }`}
-                      >
-                        {item.dropdown.map((subItem, subIndex) => (
-                          <Link
-                            key={subIndex}
-                            href={subItem.href}
-                            className="block px-4 py-3 hover:bg-[#8B6F47]/10 transition-colors duration-200 first:rounded-t-xl last:rounded-b-xl border-b border-gray-100 last:border-b-0"
-                            onClick={closeAllDropdowns}
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
-                      </div>
-                    </>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className="text-sm font-medium text-white hover:text-yellow-200 transition-colors duration-200"
-                    >
-                      {item.name}
-                    </Link>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Main Navigation - Sticky Header */}
       <header

@@ -53,7 +53,7 @@ const PackageDetailsPage = () => {
     <div className="space-y-8">
       {/* Hero Gallery */}
       <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
-        <div className="aspect-w-16 aspect-h-9 h-96">
+        <div className="aspect-w-16 aspect-h-9 h-196">
           <img
             src={packageData.gallery[currentImageIndex]}
             alt={`Gallery image ${currentImageIndex + 1}`}
