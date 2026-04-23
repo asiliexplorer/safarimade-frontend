@@ -30,7 +30,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative h-130 flex flex-col justify-between overflow-hidden py-20 ">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
         <video
@@ -49,7 +49,7 @@ const HeroSection = () => {
       </div>
 
       {/* Main Content */}
-      <div className="z-10 w-full px-4 md:px-6 flex flex-col items-center">
+      <div className="z-10 w-full max-w-7xl mx-auto px-4 md:px-6 flex flex-col items-center">
         {/* Title */}
         <div className="text-center mb-8 max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-white mb-3">
