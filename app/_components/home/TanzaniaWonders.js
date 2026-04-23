@@ -42,10 +42,13 @@ const TanzaniaWonders = () => {
 
                 {/* Content Section */}
                 <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  {/* Badge/Duration */}
-                  <div className="mb-3 inline-block">
-                    <span className="bg-[#465b2d] text-white text-xs font-semibold px-3 py-2 rounded-full">
+                  {/* Duration and Price */}
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <span className="bg-[#465b2d] text-white text-xs font-semibold px-3 py-2 rounded-full whitespace-nowrap">
                       {pkg.duration} Days
+                    </span>
+                    <span className="text-xl font-bold text-white whitespace-nowrap">
+                      ${pkg.price}
                     </span>
                   </div>
 
@@ -54,10 +57,21 @@ const TanzaniaWonders = () => {
                     {pkg.name}
                   </h3>
 
+                  {/* Tags */}
+                  <div className="mb-3 flex flex-wrap gap-2">
+                    {['Safari', 'Adventure', 'Best Value'].map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-white/80 bg-white/90 px-3 py-1 text-[11px] font-semibold text-gray-700"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
                   {/* Description and Price */}
-                  <div className="flex justify-between items-start gap-2">
+                  <div className="flex items-start gap-2">
                     <span className="text-sm text-gray-100 line-clamp-2">{pkg.shortDescription}</span>
-                    <span className="text-xl font-bold text-white whitespace-nowrap">${pkg.price}</span>
                   </div>
                 </div>
 

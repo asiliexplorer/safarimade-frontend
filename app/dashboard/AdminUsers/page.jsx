@@ -243,12 +243,14 @@ export default function AdminUsers() {
                             View
                           </button>
 
-                          <button
-                            className="px-3 py-1 rounded-md bg-indigo-600 text-white text-sm hover:bg-indigo-700"
-                            onClick={() => alert(`Message ${u.email}`)}
-                          >
-                            Message
-                          </button>
+                          {u.role !== 'admin' && (
+                            <button
+                              className="px-3 py-1 rounded-md bg-indigo-600 text-white text-sm hover:bg-indigo-700"
+                              onClick={() => alert(`Message ${u.email}`)}
+                            >
+                              Message
+                            </button>
+                          )}
 
                           <button
                             title="Delete user"
