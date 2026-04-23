@@ -12,7 +12,7 @@ const TanzaniaWonders = () => {
 
   return (
     <section className="py-20 bg-white">
-      <div className="mx-auto w-[100px]   w-full px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto  px-4 sm:px-6 lg:px-8 widthclass" >
         {/* Header Section */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -25,10 +25,10 @@ const TanzaniaWonders = () => {
         </div>
 
         {/* Packages Grid - Cleaner Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-2 px-4 w-full">
+       <div className="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
           {packages.slice(0, 6).map((pkg) => (
             <Link href={`/packages/${pkg.id}`} key={pkg.id} passHref>
-              <div className="group relative overflow-hidden rounded-lg cursor-pointer transform transition-all duration-300 hover:shadow-xl">
+              <div className="group w-full relative overflow-hidden rounded-lg cursor-pointer transform transition-all duration-300 hover:shadow-xl">
                 {/* Image Container */}
                 <div className="relative h-80 w-full overflow-hidden bg-gray-200">
                   <div
@@ -47,32 +47,38 @@ const TanzaniaWonders = () => {
                     <span className="bg-[#465b2d] text-white text-lg xl:text-lg font-semibold px-3 py-2 rounded-full whitespace-nowrap">
                       {pkg.duration} Days
                     </span>
-                      <span className="rounded-full bg-white px-3 py-1 text-xl xl:text-2xl font-semibold text-green-500 whitespace-nowrap">
+                      <span className="rounded-full bg-white px-3 py-1 text-xl xl:text-xl font-semibold text-green-500 whitespace-nowrap">
                       ${pkg.price}
                       </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg xl:text-xl 2xl:text-2xl font-bold mb-3 leading-tight line-clamp-2">
+                  <h3 className="text-lg xl:text-xl 2xl:text-xl font-bold mb-3 leading-tight line-clamp-2">
                     {pkg.name}
                   </h3>
-
-                  {/* Tags */}
-                  <div className="mb-3 flex flex-wrap gap-2">
-                    {[ 'Mid Range Luxury','Private'].map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full border border-white/80 bg-white/90 px-3 py-1 text-[11px] xl:text-xs font-semibold text-gray-700"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Description and Price */}
-                  <div className="flex items-start gap-2">
+                   {/* Description and Price */}
+                  <div className="flex mb-3 items-start gap-2">
                     <span className="text-sm xl:text-base text-gray-100 line-clamp-2">{pkg.shortDescription}</span>
                   </div>
+
+                  {/* Tags and Company */}
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex flex-wrap gap-2">
+                      {['Mid Range Luxury', 'Private'].map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full border border-white/80 bg-white/90 px-3 py-1 text-[11px] xl:text-xs font-semibold text-gray-700"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <span className="text-xs xl:text-sm text-white/90 whitespace-nowrap">
+                      by Asili Explorer
+                    </span>
+                  </div>
+
+                 
                 </div>
 
                 {/* Hover Effect Border */}
