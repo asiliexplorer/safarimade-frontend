@@ -24,17 +24,16 @@ export default function DashboardLayout({ children }) {
     // while loading, do nothing
     if (isLoading) return;
 
-    // if error (401) or no user, force to login
-    // if (isError || !user) {
-    //   router.replace("/login");
-    //   return;
-    // }
+    
+    if (isError || !user) {
+     router.replace("/login");
+     return;
+     }
 
-    // if user exists but not admin, send to unauthorized
-    // if (String(user.role).toLowerCase() !== "admin") {
-    //   router.replace("/unauthorized");
-    //   return;
-    // }
+    if (String(user.role).toLowerCase() !== "admin") {
+     router.replace("/unauthorized");
+     return;
+    }
   }, [isLoading, isError, user, router]);
 
   // show loader while checking

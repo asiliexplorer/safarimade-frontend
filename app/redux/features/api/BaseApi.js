@@ -2,7 +2,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://69.164.247.112:4000",
+  baseUrl: "https://safarimade-backend.onrender.com/api",
   prepareHeaders: (headers) => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("accessToken");
