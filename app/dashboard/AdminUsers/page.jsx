@@ -1,7 +1,14 @@
 "use client";
 
-import { useGetUsersQuery } from "../../redux/features/admin/UserApi";
-import React, { useMemo, useState } from "react";
+import {
+  useGetUsersQuery,
+  useCreateAdminMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+  useLazyGetUserByIdQuery,
+} from "../../redux/features/admin/UserApi";
+import React, { useMemo, useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 function SearchIcon() {
   return (
@@ -28,6 +35,7 @@ function ChevronLeft() {
     </svg>
   );
 }
+
 function ChevronRight() {
   return (
     <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -39,11 +47,274 @@ function ChevronRight() {
   );
 }
 
+// Modals
+function CreateUserModal({ isOpen, onClose, onSubmit, isLoading }) {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.email || !formData.password || !formData.name) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+    onSubmit(formData);
+    setFormData({ email: "", password: "", name: "" });
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+        <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+          <h3 className="text-lg font-semibold text-slate-900">Create New Admin</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            ✕
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Name
+            </label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              placeholder="Admin name"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={isLoading}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              placeholder="admin@example.com"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={isLoading}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Password
+            </label>
+            <input
+              type="password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              placeholder="Secure password"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={isLoading}
+            />
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 px-4 py-2 border border-gray-300 text-slate-700 rounded-lg hover:bg-gray-50"
+              disabled={isLoading}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50"
+              disabled={isLoading}
+            >
+              {isLoading ? "Creating..." : "Create"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function EditUserModal({ isOpen, onClose, user, onSubmit, isLoading }) {
+  const [formData, setFormData] = useState({
+    email: "",
+    name: "",
+    password: "",
+  });
+
+  // Sync form fields whenever the user prop changes
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        email: user.email || "",
+        name: user.name || "",
+        password: "",
+      });
+    }
+  }, [user]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.email || !formData.name) {
+      toast.error("Email and name are required");
+      return;
+    }
+    onSubmit(formData);
+  };
+
+  if (!isOpen || !user) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+        <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+          <h3 className="text-lg font-semibold text-slate-900">Edit User</h3>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            ✕
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Name
+            </label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={isLoading}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={isLoading}
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">
+              New Password (leave blank to keep current)
+            </label>
+            <input
+              type="password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              placeholder="Optional: Enter new password"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              disabled={isLoading}
+            />
+          </div>
+
+          <div className="flex gap-3 pt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 px-4 py-2 border border-gray-300 text-slate-700 rounded-lg hover:bg-gray-50"
+              disabled={isLoading}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50"
+              disabled={isLoading}
+            >
+              {isLoading ? "Updating..." : "Update"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function DeleteConfirmModal({ isOpen, onClose, user, onConfirm, isLoading }) {
+  if (!isOpen || !user) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+        <div className="px-6 py-4 border-b border-gray-200">
+          <h3 className="text-lg font-semibold text-slate-900">Delete User</h3>
+        </div>
+
+        <div className="p-6">
+          <p className="text-slate-700 mb-4">
+            Are you sure you want to delete <strong>{user.email}</strong>? This action cannot be undone.
+          </p>
+
+          <div className="flex gap-3">
+            <button
+              onClick={onClose}
+              className="flex-1 px-4 py-2 border border-gray-300 text-slate-700 rounded-lg hover:bg-gray-50"
+              disabled={isLoading}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onConfirm}
+              className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50"
+              disabled={isLoading}
+            >
+              {isLoading ? "Deleting..." : "Delete"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AdminUsers() {
   const [page, setPage] = useState(1);
   const [q, setQ] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
+  const [showPasswordIds, setShowPasswordIds] = useState(new Set());
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
+
   const limit = 10;
+
+  const [fetchUserById] = useLazyGetUserByIdQuery();
 
   const { data, error, isLoading, isFetching } = useGetUsersQuery({
     page,
@@ -51,9 +322,12 @@ export default function AdminUsers() {
     role: roleFilter || undefined,
   });
 
+  const [createAdmin, { isLoading: isCreating }] = useCreateAdminMutation();
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
+  const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
+
   const items = data?.data?.items || [];
 
-  // client-side search filter (fast)
   const users = useMemo(() => {
     if (!q) return items;
     const s = q.trim().toLowerCase();
@@ -63,6 +337,90 @@ export default function AdminUsers() {
         (u.name || "").toLowerCase().includes(s)
     );
   }, [items, q]);
+
+  const togglePasswordVisibility = (userId) => {
+    const newSet = new Set(showPasswordIds);
+    if (newSet.has(userId)) {
+      newSet.delete(userId);
+    } else {
+      newSet.add(userId);
+    }
+    setShowPasswordIds(newSet);
+  };
+
+  const handleCreateAdmin = async (formData) => {
+    try {
+      await createAdmin(formData).unwrap();
+      toast.success("Admin user created successfully");
+      setCreateModalOpen(false);
+    } catch (err) {
+      toast.error(err?.data?.message || "Failed to create admin");
+    }
+  };
+
+  const handleEditUser = async (u) => {
+    try {
+      setIsLoadingUser(true);
+      const result = await fetchUserById(u._id).unwrap();
+      // result is { success, data } shape
+      setSelectedUser(result?.data || result);
+    } catch {
+      // Fall back to the list-row data if the single-fetch fails
+      setSelectedUser(u);
+    } finally {
+      setIsLoadingUser(false);
+      setEditModalOpen(true);
+    }
+  };
+
+  const handleUpdateUser = async (formData) => {
+    try {
+      const body = {
+        email: formData.email,
+        name: formData.name,
+      };
+      if (formData.password) {
+        body.password = formData.password;
+      }
+      const userId = String(selectedUser?._id || selectedUser?.id || "");
+      if (!userId) {
+        toast.error("No user selected");
+        return;
+      }
+      await updateUser({ userId, body }).unwrap();
+      toast.success("User updated successfully");
+      setEditModalOpen(false);
+      setSelectedUser(null);
+    } catch (err) {
+      const msg =
+        err?.data?.message ||
+        err?.data?.error ||
+        err?.error ||
+        "Failed to update user";
+      toast.error(msg);
+    }
+  };
+
+  const handleDeleteUser = async () => {
+    try {
+      const userId = String(selectedUser?._id || selectedUser?.id || "");
+      if (!userId) {
+        toast.error("No user selected");
+        return;
+      }
+      await deleteUser(userId).unwrap();
+      toast.success("User deleted successfully");
+      setDeleteModalOpen(false);
+      setSelectedUser(null);
+    } catch (err) {
+      const msg =
+        err?.data?.message ||
+        err?.data?.error ||
+        err?.error ||
+        "Failed to delete user";
+      toast.error(msg);
+    }
+  };
 
   return (
     <div className="p-6 bg-gradient-to-b from-white to-gray-50 min-h-screen">
@@ -82,52 +440,60 @@ export default function AdminUsers() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-            <div className="relative flex items-center w-full sm:w-80">
-              <span className="absolute left-3">
-                <SearchIcon />
-              </span>
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Search by name or email"
-                className="pl-11 pr-3 py-2 w-full border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-100"
-              />
-              {q && (
-                <button
-                  onClick={() => setQ("")}
-                  className="absolute right-2 text-xs text-gray-500 hover:text-gray-700"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
+          <button
+            onClick={() => setCreateModalOpen(true)}
+            className="px-6 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 font-medium"
+          >
+            + Add New User
+          </button>
+        </div>
 
-            <select
-              value={roleFilter}
-              onChange={(e) => {
-                setRoleFilter(e.target.value);
-                setPage(1);
-              }}
-              className="px-3 py-2 border border-gray-200 rounded-lg bg-white shadow-sm"
-            >
-              <option value="">All roles</option>
-              <option value="admin">Admin</option>
-              <option value="company">Company</option>
-              <option value="customer">Customer</option>
-            </select>
-
-            <button
-              onClick={() => {
-                setQ("");
-                setRoleFilter("");
-                setPage(1);
-              }}
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700"
-            >
-              Reset
-            </button>
+        {/* Filters */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full mb-6">
+          <div className="relative flex items-center w-full sm:w-80">
+            <span className="absolute left-3">
+              <SearchIcon />
+            </span>
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search by name or email"
+              className="pl-11 pr-3 py-2 w-full border border-gray-200 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-100"
+            />
+            {q && (
+              <button
+                onClick={() => setQ("")}
+                className="absolute right-2 text-xs text-gray-500 hover:text-gray-700"
+              >
+                Clear
+              </button>
+            )}
           </div>
+
+          <select
+            value={roleFilter}
+            onChange={(e) => {
+              setRoleFilter(e.target.value);
+              setPage(1);
+            }}
+            className="px-3 py-2 border border-gray-200 rounded-lg bg-white shadow-sm"
+          >
+            <option value="">All roles</option>
+            <option value="admin">Admin</option>
+            <option value="company">Company</option>
+            <option value="customer">Customer</option>
+          </select>
+
+          <button
+            onClick={() => {
+              setQ("");
+              setRoleFilter("");
+              setPage(1);
+            }}
+            className="px-4 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700"
+          >
+            Reset
+          </button>
         </div>
 
         {/* Card container with table */}
@@ -143,10 +509,10 @@ export default function AdminUsers() {
                     Email
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-slate-600">
-                    Role
+                    Password
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-slate-600">
-                    Company
+                    Role
                   </th>
                   <th className="px-6 py-3 text-left text-sm font-semibold text-slate-600">
                     Joined
@@ -195,6 +561,28 @@ export default function AdminUsers() {
                         {u.email}
                       </td>
 
+                      <td className="px-6 py-4 text-sm">
+                        <div className="flex items-center gap-2">
+                          {u.password ? (
+                            <>
+                              <code className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
+                                {showPasswordIds.has(u._id)
+                                  ? u.password
+                                  : "•".repeat(8)}
+                              </code>
+                              <button
+                                onClick={() => togglePasswordVisibility(u._id)}
+                                className="text-indigo-600 hover:text-indigo-700 text-xs font-medium"
+                              >
+                                {showPasswordIds.has(u._id) ? "Hide" : "Show"}
+                              </button>
+                            </>
+                          ) : (
+                            <span className="text-xs text-gray-400">—</span>
+                          )}
+                        </div>
+                      </td>
+
                       <td className="px-6 py-4">
                         <span
                           className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
@@ -209,25 +597,6 @@ export default function AdminUsers() {
                         </span>
                       </td>
 
-                      <td className="px-6 py-4 text-sm">
-                        {u.companyStatus ? (
-                          <span
-                            className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold
-                            ${
-                              u.companyStatus === "pending"
-                                ? "bg-yellow-100 text-yellow-800"
-                                : u.companyStatus === "approved"
-                                ? "bg-green-100 text-green-800"
-                                : "bg-red-100 text-red-800"
-                            }`}
-                          >
-                            {u.companyStatus}
-                          </span>
-                        ) : (
-                          <span className="text-xs text-gray-400">—</span>
-                        )}
-                      </td>
-
                       <td className="px-6 py-4 text-sm text-slate-600">
                         {u.createdAt
                           ? new Date(u.createdAt).toLocaleDateString()
@@ -237,27 +606,22 @@ export default function AdminUsers() {
                       <td className="px-6 py-4 text-right">
                         <div className="inline-flex items-center gap-2">
                           <button
-                            className="px-3 py-1 rounded-md bg-white border border-gray-200 text-sm text-slate-700 hover:bg-gray-50"
-                            onClick={() => alert(`View ${u.email}`)}
+                            className="px-3 py-1 rounded-md bg-indigo-600 text-white text-sm hover:bg-indigo-700 disabled:opacity-60"
+                            onClick={() => handleEditUser(u)}
+                            disabled={isLoadingUser}
                           >
-                            View
+                            {isLoadingUser && selectedUser?._id === u._id
+                              ? "Loading…"
+                              : "Edit"}
                           </button>
-
-                          {u.role !== 'admin' && (
-                            <button
-                              className="px-3 py-1 rounded-md bg-indigo-600 text-white text-sm hover:bg-indigo-700"
-                              onClick={() => alert(`Message ${u.email}`)}
-                            >
-                              Message
-                            </button>
-                          )}
 
                           <button
                             title="Delete user"
                             className="inline-flex items-center justify-center w-8 h-8 rounded-md bg-red-50 text-red-600 hover:bg-red-100"
-                            onClick={() =>
-                              confirm(`Delete ${u.email}?`) && alert("Deleted")
-                            }
+                            onClick={() => {
+                              setSelectedUser(u);
+                              setDeleteModalOpen(true);
+                            }}
                           >
                             <svg
                               className="w-4 h-4"
@@ -317,6 +681,36 @@ export default function AdminUsers() {
           </div>
         </div>
       </div>
+
+      {/* Modals */}
+      <CreateUserModal
+        isOpen={createModalOpen}
+        onClose={() => setCreateModalOpen(false)}
+        onSubmit={handleCreateAdmin}
+        isLoading={isCreating}
+      />
+
+      <EditUserModal
+        isOpen={editModalOpen}
+        onClose={() => {
+          setEditModalOpen(false);
+          setSelectedUser(null);
+        }}
+        user={selectedUser}
+        onSubmit={handleUpdateUser}
+        isLoading={isUpdating}
+      />
+
+      <DeleteConfirmModal
+        isOpen={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setSelectedUser(null);
+        }}
+        user={selectedUser}
+        onConfirm={handleDeleteUser}
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

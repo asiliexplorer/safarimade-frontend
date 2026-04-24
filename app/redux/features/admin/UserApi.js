@@ -24,6 +24,13 @@ export const userApi = baseApi.injectEndpoints({
           : [{ type: "User", id: "LIST" }],
     }),
 
+    getUserById: build.query({
+      query: (userId) => ({
+        url: `/auth/users/${userId}`,
+      }),
+      providesTags: (result, error, userId) => [{ type: "User", id: userId }],
+    }),
+
     getCompanies: build.query({
       query: ({ status, page = 1, limit = 50 } = {}) => {
         const params = { page, limit };
@@ -45,6 +52,35 @@ export const userApi = baseApi.injectEndpoints({
             ]
           : [{ type: "Company", id: "LIST" }],
     }),
+
+    createAdmin: build.mutation({
+      query: (body) => ({
+        url: "/auth/register/admin",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "User", id: "LIST" }],
+    }),
+
+    updateUser: build.mutation({
+      query: ({ userId, body }) => ({
+        url: `/auth/users/${userId}`,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: (result, error, { userId }) => [
+        { type: "User", id: userId },
+        { type: "User", id: "LIST" },
+      ],
+    }),
+
+    deleteUser: build.mutation({
+      query: (userId) => ({
+        url: `/auth/users/${userId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: [{ type: "User", id: "LIST" }],
+    }),
   }),
   overrideExisting: false,
 });
@@ -54,4 +90,9 @@ export const {
   useLazyGetUsersQuery,
   useGetCompaniesQuery,
   useLazyGetCompaniesQuery,
+  useGetUserByIdQuery,
+  useLazyGetUserByIdQuery,
+  useCreateAdminMutation,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
 } = userApi;
