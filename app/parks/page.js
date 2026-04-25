@@ -270,7 +270,7 @@ const TanzaniaDetailsPage = () => {
                   <div key={park.name} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
                     <div className="h-48 bg-gray-200 relative">
                       <img 
-                        src={fullPark?.image || "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"} 
+                        src={fullPark?.image || "https://images.unsplash.com/photo-1709403337027-45324f24fae3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"} 
                         alt={park.name}
                         className="w-full h-full object-cover"
                       />
@@ -1178,7 +1178,7 @@ const TanzaniaDetailsPage = () => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-[#2c4c1c] to-[#5a7238] text-white py-12">
+        {/* <div className="bg-gradient-to-br from-[#2c4c1c] to-[#5a7238] text-white py-12">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-4">
               Ready for Your <span className="text-yellow-400">Tanzanian Adventure</span>?
@@ -1194,7 +1194,7 @@ const TanzaniaDetailsPage = () => {
               <FaChevronRight className="ml-2 w-4 h-4" />
             </Link>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );

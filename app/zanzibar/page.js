@@ -1,26 +1,21 @@
-import React from 'react'
-import ZanzibarPackages from '../_components/zanzibar/Zanzibarpackages'
-import PembaZanzibarSimple from '../_components/zanzibar/PembaZanzibarSimple'
-import ZanzibarLodges from '../_components/zanzibar/ZanzibarLodges'
-import ZanzibarVacation from '../_components/zanzibar/ZanzibarVacation'
-import ZanzibarBeaches from '../_components/zanzibar/ZanzibarBeaches'
-import ZanzibarExcursions from '../_components/zanzibar/ZanzibarExcursions'
-import ZanzibarInfo from '../_components/zanzibar/ZanzibarInfo'
-import ZanzibarFAQ from '../_components/zanzibar/ZanzibarFAQ'
+"use client";
 
-const Page = () => {
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+
+export default function PackagesPageRedirect() {
+  const router = useRouter()
+
+  useEffect(() => {
+    router.replace('/zanzibar-tour-packages')
+  }, [router])
+
   return (
-    <div>
-    <ZanzibarPackages/>
-    <PembaZanzibarSimple/>
-    <ZanzibarLodges/>
-    <ZanzibarVacation/>
-    <ZanzibarBeaches/>
-    <ZanzibarExcursions/>
-    <ZanzibarInfo/>
-    <ZanzibarFAQ/>
+    <div className="min-h-screen flex items-center justify-center bg-white px-4">
+      <div className="text-center">
+        <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-4 border-[#8B6F47] border-t-transparent" />
+        <p className="text-base font-medium text-gray-700">Loading packages...</p>
+      </div>
     </div>
   )
 }
-
-export default Page

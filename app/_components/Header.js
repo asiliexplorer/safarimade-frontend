@@ -248,6 +248,14 @@ const Header = () => {
         type: "Safari",
         slug: "/packages",
       },
+      {
+        id: 2,
+        name: "Wildebeest Migration Safari",
+        image:
+          "https://images.unsplash.com/photo-1532199286643-4b8e3f4a2fd9?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        type: "Migration",
+        slug: "/wildebeest-migration-safari-packages",
+      },
       
       {
         id: 3,
@@ -255,7 +263,7 @@ const Header = () => {
         image:
           "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
         type: "Beach",
-        slug: "/zanzibar",
+        slug: "/zanzibar-tour-packages",
       },
       {
         id: 4,
@@ -662,6 +670,7 @@ const Header = () => {
       type: "panel",
     },
     { name: "SAFARIS", href: "/packages" },
+    { name: "WILDEBEEST ", href: "/wildebeest-migration-safari-packages" },
     { name: "KILIMANJARO", href: "/kilimanjaro" },
     { name: "ZANZIBAR", href: "/zanzibar" },
     {
@@ -778,6 +787,12 @@ const Header = () => {
         description:
           "Browse Tanzania's top national parks and wildlife destinations",
         href: "/parks",
+      },
+      {
+        title: "Wildebeest Migration Safaris",
+        description:
+          "See Great Migration safaris with seasonal route-focused itineraries",
+        href: "/wildebeest-migration-safari-packages",
       },
       {
         title: "Travel Proposal",
@@ -901,6 +916,13 @@ const Header = () => {
                     onClick={() => setIsSearchOpen(false)}
                   >
                     <div className="font-medium text-gray-800">Zanzibar</div>
+                  </Link>
+                  <Link
+                    href="/wildebeest-migration-safari-packages"
+                    className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
+                    onClick={() => setIsSearchOpen(false)}
+                  >
+                    <div className="font-medium text-gray-800">Migration Safaris</div>
                   </Link>
                   <Link
                     href="/travel-proposal"
@@ -1098,7 +1120,7 @@ const Header = () => {
                                 }
                               >
                                 <span>{item.name}</span>
-                                <FaChevronDown
+                                <ChevronDown
                                   className={`text-xs transition-transform duration-200 ${
                                     activeDropdown === `mobile-main-${index}`
                                       ? "rotate-180"
@@ -1159,7 +1181,7 @@ const Header = () => {
                                 }
                               >
                                 <span>{item.name}</span>
-                                <FaChevronDown
+                                <ChevronDown
                                   className={`text-xs transition-transform duration-200 ${
                                     activeDropdown === `mobile-top-${index}`
                                       ? "rotate-180"
@@ -1208,7 +1230,7 @@ const Header = () => {
                           setIsMenuOpen(false);
                         }}
                       >
-                        <FaSearch />
+                        <Search />
                         <span>Search</span>
                       </button>
                       <button className="bg-[#8B6F47] text-white py-3 rounded-xl font-semibold text-sm uppercase tracking-wide hover:shadow-lg transition-all duration-200 hover:bg-[#6B5A3D]">

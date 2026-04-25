@@ -109,6 +109,11 @@ const Footer = () => {
                     Combine Trips
                   </a>
                 </li>
+                <li>
+                  <a href="/wildebeest-migration-safari-packages" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                    Wildebeest Migration
+                  </a>
+                </li>
               </ul>
             </div>
 

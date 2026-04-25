@@ -7,7 +7,7 @@ const ZanzibarLodgesArrow = () => {
     {
       id: 1,
       name: "Legendary Zanzibar Beach Resort",
-      image:"https://cdn-ajfhi.nitrocdn.com/KGztweKcUtUgsFQkUHxObgZRMXOaBfJI/assets/images/optimized/rev-e4b7f67/tanzania-specialist.com/wp-content/uploads/2025/08/IM_TZ_ZNZ_Legendary-Zanzibar_Pool-1960x800.jpg"
+      image:"https://images.unsplash.com/photo-1664270716975-33992d17fdb3?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
       id: 2,

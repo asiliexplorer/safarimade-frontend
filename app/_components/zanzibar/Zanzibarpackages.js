@@ -1,37 +1,359 @@
 // components/ZanzibarPackages.js
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
-import { mockPackages } from "../../../lib/mockData";
-const ZanzibarPackages = () => {
-  const [hoveredCard, setHoveredCard] = useState(null);
+import { FaSearch, FaStar, FaHeart, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaCheck, FaTimes } from "react-icons/fa";
+import { mockPackages, filterOptions } from "../../../lib/mockData";
 
-  // Filter only Zanzibar packages
-  const zanzibarPackages = mockPackages
-    .filter(pkg => pkg.Island === "Zanzibar")
-    .map(pkg => ({
-      id: pkg.id,
-      title: pkg.name.split(" – ")[0].toUpperCase(), // e.g., "7-DAY BEACH PARADISE ESCAPE"
-      subtitle: pkg.name.includes(" – ") ? pkg.name.split(" – ")[1] : "Zanzibar Island Escape",
-      duration: `${pkg.duration} Days`,
-      experience: pkg.specializedTours.includes("honeymoon") ? "Romantic" :
-                  pkg.specializedTours.includes("family") ? "Family" :
-                  pkg.comfortLevel === "luxury" ? "Luxury" :
-                  pkg.specializedTours.includes("cultural") ? "Cultural" :
-                  pkg.specializedTours.includes("beach") ? "Relaxing" : "Adventure",
-      rating: `${pkg.rating}/5`,
-      price: `From $${pkg.price.toLocaleString()} USD`,
-      image: pkg.image.trim(),
-      description: pkg.shortDescription,
-      highlights: pkg.highlights || [],
-      groupSize: pkg.tourType === "private"
-        ? (pkg.specializedTours.includes("honeymoon") ? "2 people" : "1-6 people")
-        : "2-12 people",
+const RangeSlider = ({
+  min = 100,
+  max = 10000,
+  values,
+  onChange,
+  label,
+  formatValue = (val) => val,
+  step = 1,
+}) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const lastMouseX = useRef(0);
+
+  const handleMinChange = (e) => {
+    const newMin = parseInt(e.target.value);
+    if (newMin <= values.max) {
+      onChange({ min: newMin, max: values.max });
+    }
+  };
+
+  const handleMaxChange = (e) => {
+    const newMax = parseInt(e.target.value);
+    if (newMax >= values.min) {
+      onChange({ min: values.min, max: newMax });
+    }
+  };
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    lastMouseX.current = e.clientX;
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    const delta = e.clientX - lastMouseX.current;
+    lastMouseX.current = e.clientX;
+    const range = max - min;
+    const sliderWidth = e.currentTarget.offsetWidth;
+    const deltaValue = Math.round((delta / sliderWidth) * range);
+
+    let newMin = values.min + deltaValue;
+    let newMax = values.max + deltaValue;
+
+    if (newMin < min) {
+      newMax += min - newMin;
+      newMin = min;
+    }
+    if (newMax > max) {
+      newMin -= newMax - max;
+      newMax = max;
+    }
+
+    onChange({ min: newMin, max: newMax });
+  };
+
+  const handleMouseUp = () => setIsDragging(false);
+
+  const progressLeft = ((values.min - min) / (max - min)) * 100;
+  const progressRight = 100 - ((values.max - min) / (max - min)) * 100;
+
+  return (
+    <div className="mb-6 w-full select-none">
+      <div className="flex justify-between items-center mb-3">
+        <h3 className="text-base font-semibold text-gray-800">{label}</h3>
+      </div>
+
+      <div className="relative pt-8 pb-3">
+        <div className="absolute top-0 left-0 right-0 flex justify-between text-xs font-medium text-gray-700 px-1">
+          <span className="bg-white px-2 py-0.5 rounded shadow-sm">{formatValue(values.min)}</span>
+          <span className="bg-white px-2 py-0.5 rounded shadow-sm">{formatValue(values.max)}</span>
+        </div>
+
+        <div
+          className="relative h-2 bg-gray-200 rounded-full overflow-visible"
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+        >
+          <div
+            className="absolute h-2 bg-gradient-to-r from-[#8B6F47] to-[#5a7238] rounded-full transition-all duration-150 z-10 cursor-grab active:cursor-grabbing"
+            style={{ left: `${progressLeft}%`, right: `${progressRight}%` }}
+            onMouseDown={handleMouseDown}
+          />
+          <input
+            type="range"
+            min={min}
+            max={max}
+            value={values.min}
+            onChange={handleMinChange}
+            step={step}
+            className="absolute w-full h-2 opacity-0 cursor-pointer z-40 top-0"
+          />
+          <input
+            type="range"
+            min={min}
+            max={max}
+            value={values.max}
+            onChange={handleMaxChange}
+            step={step}
+            className="absolute w-full h-2 opacity-0 cursor-pointer z-40 top-0"
+          />
+          <div className="absolute w-5 h-5 bg-[#8B6F47] border-2 border-white rounded-full shadow-md transition-all duration-200 z-50" style={{ left: `calc(${progressLeft}% - 0.625rem)`, top: "-6px" }} />
+          <div className="absolute w-5 h-5 bg-[#8B6F47] border-2 border-white rounded-full shadow-md transition-all duration-200 z-50" style={{ left: `calc(${100 - progressRight}% - 0.625rem)`, top: "-6px" }} />
+        </div>
+
+        <div className="flex justify-between text-xs text-gray-400 mt-3">
+          <span>{formatValue(min)}</span>
+          <span>{formatValue(max)}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const FilterSection = ({ title, children, isOpen = true, onToggle }) => (
+  <div className="border-b border-gray-200 last:border-b-0">
+    <button onClick={onToggle} className="w-full py-4 flex justify-between items-center text-left hover:text-[#8B6F47] transition-colors duration-200">
+      <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
+      <svg className={`w-4 h-4 transform transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+    {isOpen && <div className="pb-4">{children}</div>}
+  </div>
+);
+
+const PackageCard = ({ pkg }) => {
+  const [isLiked, setIsLiked] = useState(false);
+
+  return (
+    <div className="group bg-white rounded-md shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full">
+      <div className="relative h-56 sm:h-64 overflow-hidden">
+        <div className="absolute inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${pkg.image})` }} />
+        <div className="absolute inset-0 bg-black/40" />
+
+        <img src={pkg.image} alt={pkg.name} className="relative w-full h-full object-cover  group-hover:scale-105 transition-transform duration-700" />
+
+        <button onClick={() => setIsLiked(!isLiked)} className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg z-10">
+          <FaHeart className={`w-5 h-5 ${isLiked ? "text-red-500 fill-current" : "text-gray-400"}`} />
+        </button>
+
+       
+      </div>
+
+      <div className="p-5 flex-grow flex flex-col">
+        <div className="mb-4">
+          <div className="flex items-baseline gap-2 flex-wrap">
+            <span className="text-2xl sm:text-3xl font-bold text-[#8B6F47]">${pkg.price.toLocaleString()}</span>
+            <span className="text-sm text-gray-500">to</span>
+            <span className="text-xl sm:text-2xl font-semibold text-gray-700">${Math.round(pkg.price * 1.2).toLocaleString()}</span>
+            <span className="text-xs text-gray-500">pp (USD)</span>
+          </div>
+        </div>
+
+        <div className="mb-4 space-y-2">
+          <div >
+            <h3 className="text-black text-xl sm:text-2xl font-bold leading-tight mb-2">{pkg.name}</h3>
+          </div>
+          <p className="inline-flex items-center text-sm text-gray-700 bg-white rounded-full px-3 py-1 border border-gray-200 w-fit">
+          {pkg.tourType} 
+          </p>
+           <p className="inline-flex ml-2 items-center text-sm text-gray-700 bg-white rounded-full px-3 py-1 border border-gray-200 w-fit">
+           {pkg.comfortLevel} 
+          </p>
+          <p className="inline-flex ml-2 items-center text-sm text-gray-700 bg-white rounded-full px-3 py-1 border border-gray-200 w-fit">
+           Lodge & Tented Camp
+          </p>
+          <div >
+            <div className="flex items-start gap-2 text-sm text-gray-700">
+              <FaMapMarkerAlt className="text-[#8B6F47] mt-0.5 flex-shrink-0" />
+              <div>
+                <span className="font-semibold text-gray-900">You Visit: </span>
+                <span className="text-gray-600">
+                  {pkg.destinations?.slice(0, 3).join(", ")}
+                  {pkg.destinations?.length > 3 && ` +${pkg.destinations.length - 3} more`}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-auto pt-4 border-t border-gray-100">
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex-grow min-w-0">
+              <p className="text-sm font-bold text-gray-900 mb-1 truncate">{pkg.tourOperator}</p>
+              <div className="flex items-center gap-2">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <FaStar key={i} className={`w-3.5 h-3.5 ${i < Math.floor(pkg.rating) ? "text-yellow-400 fill-current" : "text-gray-300"}`} />
+                  ))}
+                </div>
+                <span className="text-xs font-semibold text-gray-900">{pkg.rating}</span>
+                <span className="text-xs text-gray-500">- {pkg.reviewCount} Reviews</span>
+              </div>
+            </div>
+
+            <Link href={`/packages/${pkg.id}`} className="bg-[#8B6F47] text-white text-xs font-semibold py-2 px-4 rounded-lg hover:bg-[#6B5A3D] transition-colors duration-200 whitespace-nowrap shadow-md hover:shadow-lg flex-shrink-0">
+              VIEW DETAILS
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ZanzibarPackages = () => {
+  const zanzibarPackages = useMemo(
+    () => mockPackages.filter((pkg) => pkg.Island === "Zanzibar"),
+    [],
+  );
+
+  const [activeFilters, setActiveFilters] = useState({
+    tourLength: { min: 1, max: 21 },
+    priceRange: { min: 100, max: 10000 },
+    startingFrom: "all",
+    comfortLevel: "all",
+    tourType: "all",
+    safariType: "all",
+    specializedTours: [],
+    otherFeatures: [],
+  });
+
+  const [filteredPackages, setFilteredPackages] = useState(zanzibarPackages);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [openSections, setOpenSections] = useState({
+    tourLength: true,
+    priceRange: true,
+    startingFrom: true,
+    comfortLevel: true,
+    tourType: true,
+    safariType: true,
+    specializedTours: false,
+    otherFeatures: false,
+  });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const packagesPerPage = 10;
+
+  const maxDuration = Math.max(...zanzibarPackages.map((pkg) => pkg.duration));
+  const maxPrice = Math.max(...zanzibarPackages.map((pkg) => pkg.price));
+
+  useEffect(() => {
+    let result = [...zanzibarPackages];
+
+    result = result.filter((pkg) => pkg.duration >= activeFilters.tourLength.min && pkg.duration <= activeFilters.tourLength.max);
+    result = result.filter((pkg) => pkg.price >= activeFilters.priceRange.min && pkg.price <= activeFilters.priceRange.max);
+
+    if (activeFilters.startingFrom !== "all" && activeFilters.startingFrom) {
+      result = result.filter((pkg) => (pkg.startingFrom || "").toLowerCase() === activeFilters.startingFrom.replace("-", " "));
+    }
+
+    if (activeFilters.comfortLevel !== "all") {
+      result = result.filter((pkg) => pkg.comfortLevel === activeFilters.comfortLevel);
+    }
+
+    if (activeFilters.tourType !== "all") {
+      result = result.filter((pkg) => pkg.tourType === activeFilters.tourType);
+    }
+
+    if (activeFilters.safariType !== "all") {
+      result = result.filter((pkg) => pkg.safariType === activeFilters.safariType);
+    }
+
+    if (activeFilters.specializedTours.length > 0) {
+      result = result.filter((pkg) => activeFilters.specializedTours.every((tour) => (pkg.specializedTours || []).includes(tour.replace("-", " "))));
+    }
+
+    if (activeFilters.otherFeatures.length > 0) {
+      result = result.filter((pkg) =>
+        activeFilters.otherFeatures.every((feature) => {
+          if (feature === "airport-transfer") return (pkg.features || []).includes("airport transfer included");
+          if (feature === "customizable") return (pkg.features || []).includes("itinerary customizable");
+          if (feature === "domestic-flight") return (pkg.features || []).includes("domestic flight included");
+          return true;
+        }),
+      );
+    }
+
+    setFilteredPackages(result);
+    setCurrentPage(1);
+  }, [activeFilters, zanzibarPackages]);
+
+  const handleFilterChange = useCallback((filterType, value) => {
+    setActiveFilters((prev) => {
+      if (filterType === "specializedTours" || filterType === "otherFeatures") {
+        const currentArray = prev[filterType];
+        const newArray = currentArray.includes(value) ? currentArray.filter((item) => item !== value) : [...currentArray, value];
+        return { ...prev, [filterType]: newArray };
+      }
+
+      return { ...prev, [filterType]: value };
+    });
+  }, []);
+
+  const handleRangeChange = useCallback((filterType, range) => {
+    setActiveFilters((prev) => ({
+      ...prev,
+      [filterType]: range,
     }));
+  }, []);
+
+  const resetFilters = () => {
+    setActiveFilters({
+      tourLength: { min: 1, max: maxDuration },
+      priceRange: { min: 100, max: maxPrice },
+      startingFrom: "all",
+      comfortLevel: "all",
+      tourType: "all",
+      safariType: "all",
+      specializedTours: [],
+      otherFeatures: [],
+    });
+    setCurrentPage(1);
+  };
+
+  const toggleSection = (section) => {
+    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
+  };
+
+  const formatPrice = (price) => `$${price.toLocaleString()}`;
+  const formatDays = (days) => `${days} day${days !== 1 ? "s" : ""}`;
+
+  const indexOfLastPackage = currentPage * packagesPerPage;
+  const indexOfFirstPackage = indexOfLastPackage - packagesPerPage;
+  const currentPackages = filteredPackages.slice(indexOfFirstPackage, indexOfLastPackage);
+  const totalPages = Math.ceil(filteredPackages.length / packagesPerPage);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <section className="pb-20">
-      <div className="relative text-center mb-16 py-16 overflow-hidden">
+      <div className="relative h-[70vh] text-center mb-16 py-16 overflow-hidden flex items-center justify-center">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -40,111 +362,207 @@ const ZanzibarPackages = () => {
         />
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#8B6F47]/10 to-[#8B5A4A]/10" />
-        <div className="relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+        <div className="relative z-10 max-w-4xl mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
             DISCOVER <span className="text-white">ZANZIBAR</span>
           </h2>
-          <p className="text-xl md:text-2xl text-white opacity-80 font-semibold mb-4">
+          <p className="text-xl md:text-2xl lg:text-3xl text-white opacity-80 font-semibold mb-4">
             Tropical Paradise in the Indian Ocean
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] mx-auto rounded-full mb-8"></div>
-          <p className="text-gray-200 text-lg max-w-3xl mx-auto leading-relaxed">
-            Experience the magic of Zanzibar's pristine beaches, rich culture, and turquoise waters. 
+          <p className="text-gray-200 text-lg md:text-xl lg:text-2xl max-w-5xl mx-auto leading-relaxed">
+            Experience the magic of Zanzibar's pristine beaches, rich culture, and turquoise waters.
             Your perfect island getaway awaits with luxury resorts, historic sites, and unforgettable adventures.
           </p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-          {zanzibarPackages.map((pkg) => (
-            <Link href={`/packages/${pkg.id}`} key={pkg.id} passHref>
-              <div
-                className="relative group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 overflow-hidden cursor-pointer border border-gray-100"
-                onMouseEnter={() => setHoveredCard(pkg.id)}
-                onMouseLeave={() => setHoveredCard(null)}
-              >
-                <div className="flex flex-col md:flex-row h-auto md:h-60 w-full max-w-5xl mx-auto rounded-lg overflow-hidden shadow-md bg-white group transition-all duration-300 hover:shadow-lg">
-                  {/* Image Section */}
-                  <div className="relative w-full md:w-2/5 h-48 md:h-auto overflow-hidden">
-                    <img
-                      src={pkg.image}
-                      alt={pkg.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      onError={(e) => {
-                        e.target.src = "https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80";
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                    <div className="absolute top-3 left-3 bg-[#8B6F47] text-white px-3 py-1.5 rounded-lg text-xs font-semibold shadow-lg">
-                      {pkg.duration}
-                    </div>
-                    <div className="absolute bottom-3 left-3 bg-black/70 text-white px-2 py-1 rounded text-xs font-medium backdrop-blur-sm">
-                      {pkg.rating} Rating
-                    </div>
-                  </div>
+      <div className="max-w-7xl mx-auto py-6 sm:py-8 lg:py-12 px-4 sm:px-6 lg:px-8">
+        <div className="lg:hidden mb-6">
+          <button onClick={() => setMobileFiltersOpen(true)} className="w-full bg-white border border-gray-200 rounded-md p-4 flex items-center justify-center space-x-3 shadow-md hover:shadow-lg transition-all duration-300">
+            <FaSearch className="text-[#8B6F47]" />
+            <span className="text-lg font-semibold text-gray-800">Filter Packages</span>
+          </button>
+        </div>
 
-                  {/* Content Section */}
-                  <div className="flex-1 p-4 flex flex-col justify-between">
-                    <div className="space-y-2">
-                      <div>
-                        <h3 className="text-lg font-bold text-gray-900 leading-tight">
-                          {pkg.title}
-                        </h3>
-                        <p className="text-[#8B6F47] font-medium text-xs mt-1">
-                          {pkg.subtitle}
-                        </p>
-                      </div>
-                      <p className="text-gray-600 text-xs leading-relaxed line-clamp-2">
-                        {pkg.description}
-                      </p>
-                      <div className="flex flex-wrap gap-1">
-                        {pkg.highlights.map((highlight, index) => (
-                          <span
-                            key={index}
-                            className="bg-gray-50 text-gray-700 px-2 py-1 rounded text-xs font-medium border border-gray-200"
-                          >
-                            {highlight}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+          <div className={`w-full lg:w-80 xl:w-96 ${mobileFiltersOpen ? "fixed inset-0 z-50 bg-white p-6 overflow-y-auto" : "hidden lg:block"}`}>
+            <div className="bg-white rounded-md shadow-xl border border-gray-200 p-6 sticky top-6">
+              {mobileFiltersOpen && (
+                <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200 lg:hidden">
+                  <h2 className="text-2xl font-bold text-[#8B6F47]">FILTERS</h2>
+                  <button onClick={() => setMobileFiltersOpen(false)} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                    <FaTimes className="text-xl text-gray-600" />
+                  </button>
+                </div>
+              )}
 
-                    <div className="flex items-center justify-between pt-3 border-t border-gray-100">
-                      <div>
-                        <div className="text-base font-bold text-[#8B6F47]">
-                          {pkg.price}
-                        </div>
-                        <div className="text-gray-500 text-xs">
-                          {pkg.groupSize}
-                        </div>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-bold text-[#8B6F47] hidden lg:block">FILTERS</h2>
+                <button onClick={resetFilters} className="text-sm bg-[#8B6F47] text-white px-4 py-2 rounded-lg font-semibold hover:bg-[#6B5A3D] transition-colors duration-200">
+                  Reset All
+                </button>
+              </div>
+
+              <FilterSection title="Tour Length" isOpen={openSections.tourLength} onToggle={() => toggleSection("tourLength")}>
+                <RangeSlider min={1} max={21} values={activeFilters.tourLength} onChange={(range) => handleRangeChange("tourLength", range)} label="" formatValue={formatDays} />
+              </FilterSection>
+
+              <FilterSection title="Price Range (USD)" isOpen={openSections.priceRange} onToggle={() => toggleSection("priceRange")}>
+                <p className="text-xs text-gray-500 mb-4">Per person, excluding international flights</p>
+                <RangeSlider min={100} max={10000} values={activeFilters.priceRange} onChange={(range) => handleRangeChange("priceRange", range)} label="" formatValue={formatPrice} step={1} />
+              </FilterSection>
+
+              <FilterSection title="Starting From" isOpen={openSections.startingFrom} onToggle={() => toggleSection("startingFrom")}>
+                <div className="space-y-3">
+                  {filterOptions.categories?.filter((option) => option.id === "zanzibar" || option.id === "all").map((option) => (
+                    <label key={option.id} className="flex items-center space-x-3 group cursor-pointer">
+                      <div className="relative">
+                        <input type="radio" name="startingFrom" checked={activeFilters.startingFrom === option.id} onChange={() => handleFilterChange("startingFrom", option.id)} className="sr-only" />
+                        <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-all duration-200 ${activeFilters.startingFrom === option.id ? "border-[#8B6F47] bg-[#8B6F47]" : "border-gray-300 group-hover:border-[#8B6F47]"}`}>{activeFilters.startingFrom === option.id && <div className="w-2 h-2 bg-white rounded-full" />}</div>
                       </div>
-                      {/* <div className="transform transition-all duration-500 opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0">
-                        <div className="w-8 h-8 bg-[#8B6F47] rounded-full flex items-center justify-center hover:bg-[#6B5A3D] transition-colors duration-300 shadow-md">
-                          <svg
-                            className="w-4 h-4 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                          </svg>
+                      <span className="text-gray-700 group-hover:text-gray-900 transition-colors">{option.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </FilterSection>
+
+              <FilterSection title="Comfort Level" isOpen={openSections.comfortLevel} onToggle={() => toggleSection("comfortLevel")}>
+                <div className="space-y-3">
+                  {filterOptions.comfortLevels.map((option) => (
+                    <label key={option.id} className="flex items-center space-x-3 group cursor-pointer">
+                      <div className="relative">
+                        <input type="radio" name="comfortLevel" checked={activeFilters.comfortLevel === option.id} onChange={() => handleFilterChange("comfortLevel", option.id)} className="sr-only" />
+                        <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-all duration-200 ${activeFilters.comfortLevel === option.id ? "border-[#8B6F47] bg-[#8B6F47]" : "border-gray-300 group-hover:border-[#8B6F47]"}`}>{activeFilters.comfortLevel === option.id && <div className="w-2 h-2 bg-white rounded-full" />}</div>
+                      </div>
+                      <span className="text-gray-700 group-hover:text-gray-900 transition-colors">{option.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </FilterSection>
+
+              <FilterSection title="Tour Type" isOpen={openSections.tourType} onToggle={() => toggleSection("tourType")}>
+                <div className="space-y-3">
+                  {filterOptions.tourTypes.map((option) => (
+                    <label key={option.id} className="flex items-center space-x-3 group cursor-pointer">
+                      <div className="relative">
+                        <input type="radio" name="tourType" checked={activeFilters.tourType === option.id} onChange={() => handleFilterChange("tourType", option.id)} className="sr-only" />
+                        <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-all duration-200 ${activeFilters.tourType === option.id ? "border-[#8B6F47] bg-[#8B6F47]" : "border-gray-300 group-hover:border-[#8B6F47]"}`}>{activeFilters.tourType === option.id && <div className="w-2 h-2 bg-white rounded-full" />}</div>
+                      </div>
+                      <span className="text-gray-700 group-hover:text-gray-900 transition-colors">{option.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </FilterSection>
+
+              <FilterSection title="Safari Type" isOpen={openSections.safariType} onToggle={() => toggleSection("safariType")}>
+                <div className="space-y-3">
+                  {filterOptions.safariTypes.map((option) => (
+                    <label key={option.id} className="flex items-center space-x-3 group cursor-pointer">
+                      <div className="relative">
+                        <input type="radio" name="safariType" checked={activeFilters.safariType === option.id} onChange={() => handleFilterChange("safariType", option.id)} className="sr-only" />
+                        <div className={`w-5 h-5 border-2 rounded-full flex items-center justify-center transition-all duration-200 ${activeFilters.safariType === option.id ? "border-[#8B6F47] bg-[#8B6F47]" : "border-gray-300 group-hover:border-[#8B6F47]"}`}>{activeFilters.safariType === option.id && <div className="w-2 h-2 bg-white rounded-full" />}</div>
+                      </div>
+                      <span className="text-gray-700 group-hover:text-gray-900 transition-colors">{option.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </FilterSection>
+
+              <FilterSection title="Specialized Tours" isOpen={openSections.specializedTours} onToggle={() => toggleSection("specializedTours")}>
+                <div className="space-y-3">
+                  {filterOptions.specializedTours
+                    .filter((option) => ["beach-time", "honeymoon", "family"].includes(option.id))
+                    .map((option) => (
+                      <label key={option.id} className="flex items-center space-x-3 group cursor-pointer">
+                        <div className="relative">
+                          <input type="checkbox" checked={activeFilters.specializedTours.includes(option.id)} onChange={() => handleFilterChange("specializedTours", option.id)} className="sr-only" />
+                          <div className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-all duration-200 ${activeFilters.specializedTours.includes(option.id) ? "border-[#8B6F47] bg-[#8B6F47]" : "border-gray-300 group-hover:border-[#8B6F47]"}`}>{activeFilters.specializedTours.includes(option.id) && <FaCheck className="w-3 h-3 text-white" />}</div>
                         </div>
-                      </div> */}
-                    </div>
-                  </div>
+                        <span className="text-gray-700 group-hover:text-gray-900 transition-colors">{option.name}</span>
+                      </label>
+                    ))}
+                </div>
+              </FilterSection>
+
+              <FilterSection title="Other Features" isOpen={openSections.otherFeatures} onToggle={() => toggleSection("otherFeatures")}>
+                <div className="space-y-3">
+                  {filterOptions.otherFeatures.map((option) => (
+                    <label key={option.id} className="flex items-center space-x-3 group cursor-pointer">
+                      <div className="relative">
+                        <input type="checkbox" checked={activeFilters.otherFeatures.includes(option.id)} onChange={() => handleFilterChange("otherFeatures", option.id)} className="sr-only" />
+                        <div className={`w-5 h-5 border-2 rounded flex items-center justify-center transition-all duration-200 ${activeFilters.otherFeatures.includes(option.id) ? "border-[#8B6F47] bg-[#8B6F47]" : "border-gray-300 group-hover:border-[#8B6F47]"}`}>{activeFilters.otherFeatures.includes(option.id) && <FaCheck className="w-3 h-3 text-white" />}</div>
+                      </div>
+                      <span className="text-gray-700 group-hover:text-gray-900 transition-colors">{option.name}</span>
+                    </label>
+                  ))}
+                </div>
+              </FilterSection>
+
+              {mobileFiltersOpen && (
+                <button onClick={() => setMobileFiltersOpen(false)} className="w-full mt-6 bg-[#8B6F47] text-white py-3 rounded-lg font-semibold hover:bg-[#6B5A3D] transition-colors duration-200 lg:hidden">
+                  Apply Filters
+                </button>
+              )}
+            </div>
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <div className="mb-6 sm:mb-8">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#8B6F47] mb-3">Zanzibar Tour Packages</h1>
+              <div className="inline-flex items-center">
+                <span className="bg-blue-100 text-blue-800 text-xs sm:text-sm px-3 py-1.5 rounded-full font-medium">{filteredPackages.length} packages found</span>
+              </div>
+            </div>
+
+            {filteredPackages.length > 0 ? (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 gap-5 sm:gap-6">
+                  {currentPackages.map((pkg) => (
+                    <PackageCard key={pkg.id} pkg={pkg} />
+                  ))}
                 </div>
 
-                <div className="absolute inset-0 border-2 border-transparent group-hover:border-[#8B6F47]/30 rounded-xl transition-all duration-500 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
+                <div className="flex justify-center items-center mt-12 space-x-2">
+                  <button onClick={prevPage} disabled={currentPage === 1} className={`p-2 rounded-full ${currentPage === 1 ? "text-gray-400 cursor-not-allowed" : "text-[#8B6F47] hover:bg-gray-200"}`} aria-label="Previous page">
+                    <FaChevronLeft />
+                  </button>
+
+                  {[...Array(totalPages)].map((_, index) => {
+                    const pageNumber = index + 1;
+                    if (pageNumber === 1 || pageNumber === totalPages || (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)) {
+                      return (
+                        <button key={index} onClick={() => paginate(pageNumber)} className={`w-10 h-10 rounded-full ${currentPage === pageNumber ? "bg-[#8B6F47] text-white" : "text-[#8B6F47] hover:bg-gray-200"}`} aria-label={`Go to page ${pageNumber}`}>
+                          {pageNumber}
+                        </button>
+                      );
+                    }
+
+                    if (pageNumber === currentPage - 2 || pageNumber === currentPage + 2) {
+                      return <span key={index} className="px-2 text-gray-500">...</span>;
+                    }
+
+                    return null;
+                  })}
+
+                  <button onClick={nextPage} disabled={currentPage === totalPages} className={`p-2 rounded-full ${currentPage === totalPages ? "text-gray-400 cursor-not-allowed" : "text-[#8B6F47] hover:bg-gray-200"}`} aria-label="Next page">
+                    <FaChevronRight />
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-16 bg-white rounded-xl shadow-lg border border-gray-200">
+                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <FaSearch className="text-2xl text-gray-400" />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-700 mb-3">No packages found</h3>
+                <p className="text-gray-500 mb-6 max-w-md mx-auto">We couldn't find any packages matching your current filters. Try adjusting your criteria to see more options.</p>
+                <button onClick={resetFilters} className="bg-[#8B6F47] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6B5A3D] transition-colors duration-200">
+                  Reset All Filters
+                </button>
               </div>
-            </Link>
-          ))}
+            )}
+          </div>
         </div>
       </div>
     </section>

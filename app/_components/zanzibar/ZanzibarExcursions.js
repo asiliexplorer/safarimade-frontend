@@ -83,7 +83,7 @@ const ZanzibarExcursions = () => {
               {/* First Image */}
               <div className="rounded-lg overflow-hidden">
                 <img
-                  src="https://cdn-ajfhi.nitrocdn.com/KGztweKcUtUgsFQkUHxObgZRMXOaBfJI/assets/images/optimized/rev-e4b7f67/tanzania-specialist.com/wp-content/uploads/2023/07/Pemba-Lodge-Pemba-Island-Tanzania-kajak.png"
+                  src="https://images.unsplash.com/photo-1630958920052-96b501587962?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Stone Town Zanzibar"
                   className="w-full h-75 object-cover"
                 />
@@ -92,7 +92,7 @@ const ZanzibarExcursions = () => {
               {/* Second Image */}
               <div className="rounded-lg overflow-hidden">
                 <img
-                  src="https://cdn-ajfhi.nitrocdn.com/KGztweKcUtUgsFQkUHxObgZRMXOaBfJI/assets/images/optimized/rev-e4b7f67/tanzania-specialist.com/wp-content/uploads/2023/07/httpstanzaniaspecialist.comwp-contentuploads202009chumbe-7.jpg"
+                  src="https://plus.unsplash.com/premium_photo-1661859352097-855a040f944c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Zanzibar Beach Activities"
                   className="w-full h-75 object-cover"
                 />

@@ -25,64 +25,76 @@ const TanzaniaWonders = () => {
         </div>
 
         {/* Packages Grid - Cleaner Layout */}
-       <div className="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
           {packages.slice(0, 6).map((pkg) => (
             <Link href={`/packages/${pkg.id}`} key={pkg.id} passHref>
-              <div className="group w-full relative overflow-hidden rounded-lg cursor-pointer transform transition-all duration-300 hover:shadow-xl">
-                {/* Image Container */}
-                <div className="relative h-80 w-full overflow-hidden bg-gray-200">
+              <div className="group bg-white rounded-md shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full cursor-pointer">
+                <div className="relative h-76 sm:h-64 overflow-hidden">
                   <div
-                    className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                    className="absolute inset-0 bg-center hover:scale-105 transition-transform duration-300"
                     style={{ backgroundImage: `url(${pkg.image})` }}
                   />
+                
+
+                  <img
+                    src={pkg.image}
+                    alt={pkg.name}
+                    className="relative w-full h-full object-cover  group-hover:scale-105 transition-transform duration-700"
+                  />
+
                   
-                  {/* Enhanced Overlay Gradient for Better Text Readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
                 </div>
 
-                {/* Content Section */}
-                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-                  {/* Duration and Price */}
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <span className="bg-[#465b2d] text-white text-lg xl:text-lg font-semibold px-3 py-2 rounded-full whitespace-nowrap">
+                <div className="p-5 flex-grow flex flex-col bg-white">
+                  <div className="mb-4 flex items-center justify-between gap-3">
+                    <span className="bg-[#8B6F47] text-white text-lg font-semibold px-3 py-2 rounded-full whitespace-nowrap">
                       {pkg.duration} Days
                     </span>
-                      <span className="rounded-full bg-white px-3 py-1 text-xl xl:text-xl font-semibold text-green-500 whitespace-nowrap">
+                    <span className="rounded-full bg-white px-3 py-2 text-lg font-semibold text-[#8B6F47] whitespace-nowrap border border-gray-200">
                       ${pkg.price}
-                      </span>
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-lg xl:text-xl 2xl:text-xl font-bold mb-3 leading-tight line-clamp-2">
-                    {pkg.name}
-                  </h3>
-                   {/* Description and Price */}
-                  <div className="flex mb-3 items-start gap-2">
-                    <span className="text-sm xl:text-base text-gray-100 line-clamp-2">{pkg.shortDescription}</span>
-                  </div>
-
-                  {/* Tags and Company */}
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex flex-wrap gap-2">
-                      {['Mid Range Luxury', 'Private'].map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full border border-white/80 bg-white/90 px-3 py-1 text-[11px] xl:text-xs font-semibold text-gray-700"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="text-xs xl:text-sm text-white/90 whitespace-nowrap">
-                      by Asili Explorer
                     </span>
                   </div>
 
-                 
-                </div>
+                  <div >
+                    <h3 className="text-gray-700 text-xl sm:text-2xl font-bold leading-tight mb-2 line-clamp-2">
+                      {pkg.name}
+                    </h3>
+                  </div>
+                  <div className="mb-4 space-y-2">
+                    {/* <p className="text-sm text-gray-700">
+                      <span className="font-semibold text-gray-900">Tanzania:</span> {pkg.tourType} • {pkg.comfortLevel} • Lodge & Tented Camp
+                    </p> */}
+                    <p className="text-lg text-gray-600 line-clamp-2">
+                      {pkg.shortDescription}
+                    </p>
+                  </div>
+                   <div className="flex mb-2 flex-wrap gap-2">
+                          {['Mid Range Luxury', 'Private'].map((tag) => (
+                            <span
+                              key={tag}
+                              className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-[1rem] font-semibold text-gray-700"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                  
 
-                {/* Hover Effect Border */}
-                <div className="absolute inset-0 rounded-lg border-2 border-transparent group-hover:border-[#465b2d] transition-all duration-300 pointer-events-none" />
+                  <div className="mt-auto pt-4 border-t border-gray-100">
+                    <div className="flex items-center justify-between gap-3 flex-wrap">
+                      <div>
+                       
+                        <p className="text-sm font-bold text-gray-900 mb-1 truncate">by Asili Explorer Safaris</p>
+                        
+                      </div>
+                      <div className="w-8 h-8 bg-[#465b2d] rounded-full flex items-center justify-center hover:bg-[#3a4a24] transition-colors duration-300 shadow-md flex-shrink-0">
+                        <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </Link>
           ))}

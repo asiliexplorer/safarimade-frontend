@@ -1,20 +1,28 @@
-// components/KilimanjaroPackages.js
 "use client";
+
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
-import { FaBars, FaTimes, FaSearch, FaChevronDown, FaGlobe, FaStar, FaHeart, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaCheck } from "react-icons/fa";
-import { mockPackages, filterOptions } from "../../../lib/mockData";
-import { slugifyPackageName } from "../../../lib/packageSlug";
+import { FaTimes, FaSearch, FaStar, FaHeart, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaCheck } from "react-icons/fa";
+import { mockPackages, filterOptions } from "../../lib/mockData";
+import { slugifyPackageName } from "../../lib/packageSlug";
 
-const getKilimanjaroRouteTitle = (name = "") => {
-  if (name.split(" ")[0] === "Private") return "PRIVATE CLIMB";
-  if (name.includes("Machame")) return "MACHAME ROUTE";
-  if (name.includes("Marangu")) return "MARANGU ROUTE";
-  if (name.includes("Lemosho")) return "LEMOSHO ROUTE";
-  if (name.includes("Rongai")) return "RONGAI ROUTE";
-  if (name.includes("Northern Circuit")) return "NORTHERN CIRCUIT";
-  if (name.includes("Custom")) return "PRIVATE CLIMB";
-  return "KILIMANJARO CLIMB";
+const isMigrationPackage = (pkg) => {
+  const haystack = [
+    pkg?.name,
+    pkg?.shortDescription,
+    pkg?.fullDescription,
+    ...(pkg?.highlights || []),
+    ...(pkg?.destinations || []),
+    ...(pkg?.dayByDay || []).map((day) => `${day?.location || ""} ${day?.description || ""}`),
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  return (
+    (haystack.includes("migration") || haystack.includes("wildebeest") || haystack.includes("mara river") || haystack.includes("serengeti")) &&
+    !pkg?.Island &&
+    !pkg?.Mount
+  );
 };
 
 const RangeSlider = ({
@@ -52,6 +60,7 @@ const RangeSlider = ({
     if (!isDragging) return;
     const delta = e.clientX - lastMouseX.current;
     lastMouseX.current = e.clientX;
+
     const range = max - min;
     const sliderWidth = e.currentTarget.offsetWidth;
     const deltaValue = Math.round((delta / sliderWidth) * range);
@@ -91,13 +100,30 @@ const RangeSlider = ({
         <div className="relative h-2 bg-gray-200 rounded-full overflow-visible" onMouseMove={handleMouseMove} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
           <div
             className="absolute h-2 bg-gradient-to-r from-[#8B6F47] to-[#5a7238] rounded-full transition-all duration-150 z-10 cursor-grab active:cursor-grabbing"
-            style={{ left: `${progressLeft}%`, right: `${progressRight}%` }}
+            style={{
+              left: `${progressLeft}%`,
+              right: `${progressRight}%`,
+            }}
             onMouseDown={handleMouseDown}
           />
+
           <input type="range" min={min} max={max} value={values.min} onChange={handleMinChange} step={step} className="absolute w-full h-2 opacity-0 cursor-pointer z-40 top-0" />
           <input type="range" min={min} max={max} value={values.max} onChange={handleMaxChange} step={step} className="absolute w-full h-2 opacity-0 cursor-pointer z-40 top-0" />
-          <div className="absolute w-5 h-5 bg-[#8B6F47] border-2 border-white rounded-full shadow-md transition-all duration-200 z-50" style={{ left: `calc(${progressLeft}% - 0.625rem)`, top: "-6px" }} />
-          <div className="absolute w-5 h-5 bg-[#8B6F47] border-2 border-white rounded-full shadow-md transition-all duration-200 z-50" style={{ left: `calc(${100 - progressRight}% - 0.625rem)`, top: "-6px" }} />
+
+          <div
+            className="absolute w-5 h-5 bg-[#8B6F47] border-2 border-white rounded-full shadow-md transition-all duration-200 z-50"
+            style={{
+              left: `calc(${progressLeft}% - 0.625rem)`,
+              top: "-6px",
+            }}
+          />
+          <div
+            className="absolute w-5 h-5 bg-[#8B6F47] border-2 border-white rounded-full shadow-md transition-all duration-200 z-50"
+            style={{
+              left: `calc(${100 - progressRight}% - 0.625rem)`,
+              top: "-6px",
+            }}
+          />
         </div>
 
         <div className="flex justify-between text-xs text-gray-400 mt-3">
@@ -123,8 +149,6 @@ const FilterSection = ({ title, children, isOpen = true, onToggle }) => (
 
 const PackageCard = ({ pkg }) => {
   const [isLiked, setIsLiked] = useState(false);
-  const routeTitle = getKilimanjaroRouteTitle(pkg.name);
-  const slug = slugifyPackageName(pkg.name);
 
   return (
     <div className="group bg-white rounded-md shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full">
@@ -152,7 +176,7 @@ const PackageCard = ({ pkg }) => {
         </div>
 
         <div className="mb-4 space-y-2">
-         <div >
+          <div >
             <h3 className="text-black text-xl sm:text-2xl font-bold leading-tight mb-2">{pkg.name}</h3>
           </div>
           <p className="inline-flex items-center text-sm text-gray-700 bg-white rounded-full px-3 py-1 border border-gray-200 w-fit">
@@ -193,7 +217,7 @@ const PackageCard = ({ pkg }) => {
               </div>
             </div>
 
-            <Link href={`/climbing-kilimanjaro-tour-packages/${slug}`} className="bg-[#8B6F47] text-white text-xs font-semibold py-2 px-4 rounded-lg hover:bg-[#6B5A3D] transition-colors duration-200 whitespace-nowrap shadow-md hover:shadow-lg flex-shrink-0">
+            <Link href={`/affordable-safari-tour-packages/${slugifyPackageName(pkg.name)}`} className="bg-[#8B6F47] text-white text-xs font-semibold py-2 px-4 rounded-lg hover:bg-[#6B5A3D] transition-colors duration-200 whitespace-nowrap shadow-md hover:shadow-lg flex-shrink-0">
               VIEW DETAILS
             </Link>
           </div>
@@ -203,11 +227,9 @@ const PackageCard = ({ pkg }) => {
   );
 };
 
-const KilimanjaroPackages = () => {
-  const kilimanjaroPackages = useMemo(
-    () => mockPackages.filter((pkg) => pkg.Mount === "Kilimanjaro"),
-    [],
-  );
+export default function WildebeestMigrationSafariPackagesPage() {
+  const migrationPackages = useMemo(() => mockPackages.filter((pkg) => isMigrationPackage(pkg)), []);
+
   const [activeFilters, setActiveFilters] = useState({
     tourLength: { min: 1, max: 21 },
     priceRange: { min: 100, max: 10000 },
@@ -219,7 +241,7 @@ const KilimanjaroPackages = () => {
     otherFeatures: [],
   });
 
-  const [filteredPackages, setFilteredPackages] = useState(kilimanjaroPackages);
+  const [filteredPackages, setFilteredPackages] = useState(migrationPackages);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [openSections, setOpenSections] = useState({
     tourLength: true,
@@ -235,16 +257,19 @@ const KilimanjaroPackages = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const packagesPerPage = 10;
 
-  const maxDuration = Math.max(...kilimanjaroPackages.map((pkg) => pkg.duration));
-  const maxPrice = Math.max(...kilimanjaroPackages.map((pkg) => pkg.price));
+  const minDuration = migrationPackages.length ? Math.min(...migrationPackages.map((pkg) => pkg.duration)) : 1;
+  const maxDuration = migrationPackages.length ? Math.max(...migrationPackages.map((pkg) => pkg.duration)) : 21;
+  const minPrice = migrationPackages.length ? Math.min(...migrationPackages.map((pkg) => pkg.price)) : 100;
+  const maxPrice = migrationPackages.length ? Math.max(...migrationPackages.map((pkg) => pkg.price)) : 10000;
 
   useEffect(() => {
-    let result = [...kilimanjaroPackages];
+    let result = [...migrationPackages];
 
     result = result.filter((pkg) => pkg.duration >= activeFilters.tourLength.min && pkg.duration <= activeFilters.tourLength.max);
+
     result = result.filter((pkg) => pkg.price >= activeFilters.priceRange.min && pkg.price <= activeFilters.priceRange.max);
 
-    if (activeFilters.startingFrom !== "all" && activeFilters.startingFrom) {
+    if (activeFilters.startingFrom !== "all") {
       result = result.filter((pkg) => (pkg.startingFrom || "").toLowerCase() === activeFilters.startingFrom.replace("-", " "));
     }
 
@@ -267,8 +292,12 @@ const KilimanjaroPackages = () => {
     if (activeFilters.otherFeatures.length > 0) {
       result = result.filter((pkg) =>
         activeFilters.otherFeatures.every((feature) => {
-          if (feature === "airport-transfer") return (pkg.features || []).includes("airport transfer included");
-          if (feature === "customizable") return (pkg.features || []).includes("itinerary customizable");
+          if (feature === "airport-transfer") {
+            return (pkg.features || []).includes("airport transfer included");
+          }
+          if (feature === "customizable") {
+            return (pkg.features || []).includes("itinerary customizable");
+          }
           return true;
         }),
       );
@@ -276,16 +305,20 @@ const KilimanjaroPackages = () => {
 
     setFilteredPackages(result);
     setCurrentPage(1);
-  }, [activeFilters, kilimanjaroPackages]);
+  }, [activeFilters, migrationPackages]);
 
   const handleFilterChange = useCallback((filterType, value) => {
     setActiveFilters((prev) => {
       if (filterType === "specializedTours" || filterType === "otherFeatures") {
         const currentArray = prev[filterType];
-        const newArray = currentArray.includes(value) ? currentArray.filter((item) => item !== value) : [...currentArray, value];
+        let newArray;
+        if (currentArray.includes(value)) {
+          newArray = currentArray.filter((item) => item !== value);
+        } else {
+          newArray = [...currentArray, value];
+        }
         return { ...prev, [filterType]: newArray };
       }
-
       return { ...prev, [filterType]: value };
     });
   }, []);
@@ -299,8 +332,8 @@ const KilimanjaroPackages = () => {
 
   const resetFilters = () => {
     setActiveFilters({
-      tourLength: { min: 1, max: maxDuration },
-      priceRange: { min: 100, max: maxPrice },
+      tourLength: { min: minDuration, max: maxDuration },
+      priceRange: { min: minPrice, max: maxPrice },
       startingFrom: "all",
       comfortLevel: "all",
       tourType: "all",
@@ -312,7 +345,10 @@ const KilimanjaroPackages = () => {
   };
 
   const toggleSection = (section) => {
-    setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
+    setOpenSections((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
   };
 
   const formatPrice = (price) => `$${price.toLocaleString()}`;
@@ -343,26 +379,26 @@ const KilimanjaroPackages = () => {
   };
 
   return (
-    <section className="pb-20 ">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 ">
       <div className="relative h-[70vh] text-center mb-16 py-16 overflow-hidden flex items-center justify-center">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')`,
+            backgroundImage: `url('https://images.unsplash.com/photo-1532199286643-4b8e3f4a2fd9?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
           }}
         />
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#8B6F47]/10 to-[#8B5A4A]/10" />
-        <div className="relative z-10 max-w-4xl mx-auto px-4">
+        <div className="relative z-10 flex flex-col items-center justify-center px-4 max-w-4xl mx-auto">
           <h2 className="text-4xl md:text-5xl  lg:text-6xl font-bold text-white mb-6">
-            CLIMB <span className="text-white">KILIMANJARO</span>
+            WILDEBEEST <span className="text-white">MIGRATION</span>
           </h2>
           <p className="text-xl md:text-2xl lg:text-3xl text-white opacity-80 font-semibold mb-4">
-            Choose Your Route to the Roof of Africa
+            Follow the Great Migration Through Tanzania's Wildest Plains
           </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] mx-auto rounded-full mb-8"></div>
-          <p className="text-gray-200 text-lg md:text-xl lg:text-2xl max-w-5xl mx-auto leading-relaxed">
-            Experience the adventure of a lifetime climbing Africa's highest peak with expert guides, proven safety records, and unforgettable memories guaranteed.
+          <div className="w-34 h-1 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] mx-auto rounded-full mb-8"></div>
+          <p className="text-gray-200 text-lg md:text-xl lg:text-2xl   leading-relaxed">
+            Discover migration-focused safari trips crafted around calving season, Mara River crossings, and prime predator sightings with expert guides and quality lodges.
           </p>
         </div>
       </div>
@@ -497,7 +533,7 @@ const KilimanjaroPackages = () => {
 
           <div className="flex-1 min-w-0">
             <div className="mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#8B6F47] mb-3">Climb Kilimanjaro Packages</h1>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#8B6F47] mb-3">Wildebeest Migration Safari Packages</h1>
               <div className="inline-flex items-center">
                 <span className="bg-blue-100 text-blue-800 text-xs sm:text-sm px-3 py-1.5 rounded-full font-medium">{filteredPackages.length} packages found</span>
               </div>
@@ -527,7 +563,11 @@ const KilimanjaroPackages = () => {
                     }
 
                     if (pageNumber === currentPage - 2 || pageNumber === currentPage + 2) {
-                      return <span key={index} className="px-2 text-gray-500">...</span>;
+                      return (
+                        <span key={index} className="px-2 text-gray-500">
+                          ...
+                        </span>
+                      );
                     }
 
                     return null;
@@ -553,8 +593,6 @@ const KilimanjaroPackages = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
-};
-
-export default KilimanjaroPackages;
+}
