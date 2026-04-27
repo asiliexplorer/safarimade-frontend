@@ -24,6 +24,6 @@ const baseQueryWithAuth = async (args, api, extraOptions) => {
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithAuth,
-  tagTypes: ["User", "Company","Reviews","Review"], 
+  tagTypes: ["User", "Company", "Reviews", "Review", "TravelProposal", "Packages"],
   endpoints: () => ({}),  
 });

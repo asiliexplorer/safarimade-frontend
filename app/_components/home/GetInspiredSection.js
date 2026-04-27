@@ -2,7 +2,7 @@
 "use client";
 
 import Link from "next/link";
-import { Star, MapPin, Zap, Home, Target, Trophy, Heart, Mountain, Leaf } from "lucide-react";
+import { Star, MapPin, Zap, Home, Target, Trophy, Heart, Mountain, Leaf, Images } from "lucide-react";
 
 const GetInspiredSection = () => {
   return (
@@ -229,12 +229,13 @@ const GetInspiredSection = () => {
         {/* Quick Links */}
         <div className="mt-20 pt-12 border-t border-gray-200">
           <h3 className="text-2xl font-bold text-center text-slate-900 mb-12">Explore by Interest</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {[
               { label: "SAFARIS", href: "/packages", icon: Trophy },
               { label: "KILIMANJARO", href: "/kilimanjaro", icon: Mountain },
               { label: "ZANZIBAR", href: "/zanzibar", icon: MapPin },
               { label: "NATIONAL PARKS", href: "/parks", icon: Leaf },
+              { label: "GALLERY", href: "/gallery", icon: Images },
               { label: "HONEYMOON", href: "/", icon: Heart },
             ].map((item, i) => {
               const IconComponent = item.icon;

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function UnauthorizedPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
@@ -8,15 +10,15 @@ export default function UnauthorizedPage() {
           <strong>admin</strong> can access the dashboard.
         </p>
         <div className="flex justify-center gap-3">
-          <a
+          <Link
             href="/login"
             className="px-4 py-2 bg-indigo-600 text-white rounded"
           >
             Sign in
-          </a>
-          <a href="/" className="px-4 py-2 border rounded">
+          </Link>
+          <Link href="/" className="px-4 py-2 border rounded">
             Go home
-          </a>
+          </Link>
         </div>
       </div>
     </div>

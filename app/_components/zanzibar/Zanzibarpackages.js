@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
 import { FaSearch, FaStar, FaHeart, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaCheck, FaTimes } from "react-icons/fa";
 import { mockPackages, filterOptions } from "../../../lib/mockData";
+import PackageHeroBanner from "../PackageHeroBanner";
 
 const RangeSlider = ({
   min = 100,
@@ -353,29 +354,14 @@ const ZanzibarPackages = () => {
 
   return (
     <section className="pb-20">
-      <div className="relative h-[70vh] text-center mb-16 py-16 overflow-hidden flex items-center justify-center">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#8B6F47]/10 to-[#8B5A4A]/10" />
-        <div className="relative z-10 max-w-4xl mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-            DISCOVER <span className="text-white">ZANZIBAR</span>
-          </h2>
-          <p className="text-xl md:text-2xl lg:text-3xl text-white opacity-80 font-semibold mb-4">
-            Tropical Paradise in the Indian Ocean
-          </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] mx-auto rounded-full mb-8"></div>
-          <p className="text-gray-200 text-lg md:text-xl lg:text-2xl max-w-5xl mx-auto leading-relaxed">
-            Experience the magic of Zanzibar's pristine beaches, rich culture, and turquoise waters.
-            Your perfect island getaway awaits with luxury resorts, historic sites, and unforgettable adventures.
-          </p>
-        </div>
-      </div>
+      <PackageHeroBanner
+        badge="Island Escapes"
+        backgroundImage="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+        titlePrefix="DISCOVER"
+        titleHighlight="ZANZIBAR"
+        subtitle="Tropical Paradise in the Indian Ocean"
+        description="Enjoy clear turquoise waters, white-sand beaches, and rich Swahili heritage with handpicked Zanzibar stays that combine relaxation, culture, and sea adventures."
+      />
 
       <div className="max-w-7xl mx-auto py-6 sm:py-8 lg:py-12 px-4 sm:px-6 lg:px-8">
         <div className="lg:hidden mb-6">

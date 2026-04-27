@@ -1,6 +1,7 @@
 // components/Footer.js
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import logo from "../../public/safari-trip-booking.png";
 
@@ -8,7 +9,7 @@ const Footer = () => {
   return (
     <>
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-[#1b9b8f] to-[#16856e] py-16 px-4">
+      <section className="bg-gradient-to-r from-[#8B6F47]  to-[#16856e] py-16 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Ready to Start Your Safari Adventure?
@@ -17,12 +18,12 @@ const Footer = () => {
             Browse hundreds of safari packages and curated trips from trusted safari companies
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/packages" className="bg-[#F47D54] text-white font-semibold py-3 px-8 rounded-md hover:bg-[#E8704C] transition-colors duration-300 inline-block text-center">
+            <Link href="/packages" className="bg-[#F47D54] text-white font-semibold py-3 px-8 rounded-md hover:bg-[#E8704C] transition-colors duration-300 inline-block text-center">
               Explore Packages
-            </a>
-            <a href="/travel-proposal" className="border-2 border-white text-white font-semibold py-3 px-8 rounded-md hover:bg-white hover:text-[#1b9b8f] transition-colors duration-300 inline-block text-center">
+            </Link>
+            <Link href="/travel-proposal" className="border-2 border-white text-white font-semibold py-3 px-8 rounded-md hover:bg-white hover:text-[#1b9b8f] transition-colors duration-300 inline-block text-center">
               Get Proposals
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -85,34 +86,39 @@ const Footer = () => {
               <h4 className="text-white font-bold text-lg mb-6">DESTINATIONS</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="/parks" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/parks" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Tanzania Safari
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/kilimanjaro" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/kilimanjaro" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Mount Kilimanjaro
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/zanzibar" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/zanzibar" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Zanzibar Island
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/parks" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/parks" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     National Parks
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/packages" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/packages" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Combine Trips
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/wildebeest-migration-safari-packages" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/wildebeest-migration-safari-packages" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Wildebeest Migration
-                  </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/gallery" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                    Tanzania Gallery
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -122,29 +128,34 @@ const Footer = () => {
               <h4 className="text-white font-bold text-lg mb-6">INFORMATION</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Travel Advice
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Visa Requirements
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Best Time to Visit
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Weather Guide
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Safety Tips
-                  </a>
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/gallery" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                    Photo Gallery
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -154,29 +165,29 @@ const Footer = () => {
               <h4 className="text-white font-bold text-lg mb-6">COMPANY</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="/" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     About Us
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Contact
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/blog" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Blog
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Partnerships
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="/" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
+                  <Link href="/" className="text-sm hover:text-[#F47D54] transition-colors duration-300">
                     Careers
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -212,15 +223,15 @@ const Footer = () => {
               © 2025 SafariFind. All rights reserved.
             </p>
             <div className="flex space-x-6">
-              <a href="/" className="text-sm text-gray-400 hover:text-[#F47D54] transition-colors duration-300">
+              <Link href="/" className="text-sm text-gray-400 hover:text-[#F47D54] transition-colors duration-300">
                 Privacy Policy
-              </a>
-              <a href="/" className="text-sm text-gray-400 hover:text-[#F47D54] transition-colors duration-300">
+              </Link>
+              <Link href="/" className="text-sm text-gray-400 hover:text-[#F47D54] transition-colors duration-300">
                 Terms of Service
-              </a>
-              <a href="/" className="text-sm text-gray-400 hover:text-[#F47D54] transition-colors duration-300">
+              </Link>
+              <Link href="/" className="text-sm text-gray-400 hover:text-[#F47D54] transition-colors duration-300">
                 Cookie Policy
-              </a>
+              </Link>
             </div>
           </div>
         </div>

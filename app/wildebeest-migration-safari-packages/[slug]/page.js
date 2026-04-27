@@ -1,5 +1,7 @@
-// app/packages/[id]/page.js
+// app/wildebeest-migration-safari-packages/[slug]/page.js
 "use client"
+import { useRouter } from "next/navigation";
+
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -13,9 +15,11 @@ import {
   FaLeaf, FaTree, FaPaw, FaSun, FaWater, FaMoneyBillWave,
   FaHeadset, FaPassport, FaSuitcase, FaWifi, FaSwimmer
 } from 'react-icons/fa';
-import { mockPackages, wildebeestMigrationPackages } from '../../../lib/mockData';
+import { wildebeestMigrationPackages } from '../../../lib/mockData';
 
 const PackageDetailsPage = () => {
+    const router = useRouter();
+
   const params = useParams();
   const { slug } = params;
 
@@ -35,8 +39,7 @@ const PackageDetailsPage = () => {
     const fetchData = async () => {
       try {
         await new Promise(resolve => setTimeout(resolve, 800));
-        const allPackages = [...mockPackages, ...wildebeestMigrationPackages];
-        const pkg = allPackages.find((p) => slugifyPackageName(p.name) === slug);
+        const pkg = wildebeestMigrationPackages.find((p) => slugifyPackageName(p.name) === slug);
         if (pkg) {
           setPackageData(pkg);
         }
@@ -813,7 +816,7 @@ const PackageDetailsPage = () => {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-2">Package Not Found</h1>
           <p className="text-gray-600 mb-4">Sorry, we couldn't find the package you're looking for.</p>
-          <Link href="/affordable-safari-tour-packages" className="text-[#465b2d] hover:underline">
+          <Link href="/wildebeest-migration-safari-packages" className="text-[#465b2d] hover:underline">
             ← Back to All Packages
           </Link>
         </div>
@@ -842,7 +845,7 @@ const PackageDetailsPage = () => {
   
   <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <Link 
-      href="/affordable-safari-tour-packages" 
+      href="/wildebeest-migration-safari-packages" 
       className="inline-flex items-center text-white hover:text-gray-200 mb-8 transition-colors duration-200 font-semibold group"
     >
       <FaChevronLeft className="mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
@@ -911,7 +914,10 @@ const PackageDetailsPage = () => {
               <div className="text-4xl font-bold text-white mb-2">${packageData.price}</div>
               <div className="text-white/80 font-medium">per person</div>
             </div>
-            <button className="w-full bg-white text-[#465b2d] font-bold py-4 rounded-xl hover:bg-gray-100 transition-all duration-300 mb-3 shadow-lg transform hover:scale-105">
+            <button onClick={()=>{
+              router.replace('/travel-proposal');
+
+            }} className="w-full bg-white text-[#465b2d] font-bold py-4 rounded-xl hover:bg-gray-100 transition-all duration-300 mb-3 shadow-lg transform hover:scale-105">
               Book Now
             </button>
             <button 
@@ -1006,7 +1012,7 @@ const PackageDetailsPage = () => {
                 <Link href="/travel-proposal" className="bg-[#465b2d] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#3a4a24] transition-colors duration-200 shadow-md">
                   MAKE A REQUEST
                 </Link>
-                <Link href="/affordable-safari-tour-packages" className="border-2 border-[#465b2d] text-[#465b2d] px-8 py-4 rounded-xl font-semibold hover:bg-[#465b2d] hover:text-white transition-colors duration-200">
+                <Link href="/wildebeest-migration-safari-packages" className="border-2 border-[#465b2d] text-[#465b2d] px-8 py-4 rounded-xl font-semibold hover:bg-[#465b2d] hover:text-white transition-colors duration-200">
                   VIEW ALL PACKAGES
                 </Link>
               </div>

@@ -4,6 +4,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import {
   Menu,
   X,
@@ -16,6 +17,7 @@ import {
 import logo from "../../public/safari-trip-booking.png";
 
 const Header = () => {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -673,6 +675,7 @@ const Header = () => {
     { name: "WILDEBEEST ", href: "/wildebeest-migration-safari-packages" },
     { name: "KILIMANJARO", href: "/kilimanjaro" },
     { name: "ZANZIBAR", href: "/zanzibar" },
+    { name: "GALLERY", href: "/gallery" },
     {
       name: "DISCOVER TANZANIA",
       type: "panel",
@@ -793,6 +796,12 @@ const Header = () => {
         description:
           "See Great Migration safaris with seasonal route-focused itineraries",
         href: "/wildebeest-migration-safari-packages",
+      },
+      {
+        title: "Tanzania Gallery",
+        description:
+          "View slider-based highlights of Tanzania landscapes and safari moments",
+        href: "/gallery",
       },
       {
         title: "Travel Proposal",
@@ -925,6 +934,13 @@ const Header = () => {
                     <div className="font-medium text-gray-800">Migration Safaris</div>
                   </Link>
                   <Link
+                    href="/gallery"
+                    className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
+                    onClick={() => setIsSearchOpen(false)}
+                  >
+                    <div className="font-medium text-gray-800">Tanzania Gallery</div>
+                  </Link>
+                  <Link
                     href="/travel-proposal"
                     className="p-3 bg-gray-50 hover:bg-[#8B6F47]/10 rounded-lg transition-colors duration-200"
                     onClick={() => setIsSearchOpen(false)}
@@ -956,7 +972,7 @@ const Header = () => {
             isScrolled ? "py-2" : "py-4"
           }`}
         >
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-8 w-full">
+          <div className=" mx-auto px-3 sm:px-4 md:px-8 w-full">
             <div className="flex items-center justify-between gap-2 md:gap-4">
               {/* Logo Section */}
               <Link
@@ -1064,12 +1080,13 @@ const Header = () => {
                 </button>
 
                 {/* CTA Button */}
-                <a
-                  href="/travel-proposal"
+                <button
+                  type="button"
+                  onClick={() => router.push("/travel-proposal")}
                   className="bg-[#8B6F47] text-white px-6 py-3 rounded-xl font-semibold text-sm uppercase tracking-wide hover:shadow-lg transform hover:scale-105 transition-all duration-200 shadow-md hover:bg-[#6B5A3D]"
                 >
                   MAKE A REQUEST
-                </a>
+                </button>
               </div>
 
               {/* Mobile Menu Button */}
@@ -1233,7 +1250,14 @@ const Header = () => {
                         <Search />
                         <span>Search</span>
                       </button>
-                      <button className="bg-[#8B6F47] text-white py-3 rounded-xl font-semibold text-sm uppercase tracking-wide hover:shadow-lg transition-all duration-200 hover:bg-[#6B5A3D]">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          closeAllDropdowns();
+                          router.push("/travel-proposal");
+                        }}
+                        className="bg-[#8B6F47] text-white py-3 rounded-xl font-semibold text-sm uppercase tracking-wide hover:shadow-lg transition-all duration-200 hover:bg-[#6B5A3D]"
+                      >
                         MAKE REQUEST
                       </button>
                     </div>

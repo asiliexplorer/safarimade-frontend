@@ -1,6 +1,7 @@
 // components/ParksLayout.js
 "use client"
 import { useState } from 'react';
+import Link from 'next/link';
 
 export default function ParksLayout() {
   const [selectedPark, setSelectedPark] = useState(0);
@@ -149,7 +150,7 @@ export default function ParksLayout() {
                     {park.name}
                   </button>
                 ))}
-                <a href="/parks" className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-[#465b2d] hover:text-white text-gray-700 rounded-lg font-medium text-sm whitespace-nowrap transition-all duration-300 flex-shrink-0">
+                <Link href="/parks" className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-[#465b2d] hover:text-white text-gray-700 rounded-lg font-medium text-sm whitespace-nowrap transition-all duration-300 flex-shrink-0">
                   All Parks
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +162,7 @@ export default function ParksLayout() {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -49,10 +49,10 @@ export default function DashboardLayout({ children }) {
   return (
     <div className="min-h-screen flex bg-gray-50">
       <Sidebar />
-      <main className="flex-1 p-6 md:p-8">
-        <div className="max-w-[1200px] mx-auto">
+      <main className="flex-1">
+        <div className="mx-auto">
           <Topbar />
-          <div className="mt-6">{children}</div>
+          <div className="p-6">{children}</div>
         </div>
       </main>
     </div>

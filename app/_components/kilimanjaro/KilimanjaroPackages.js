@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaBars, FaTimes, FaSearch, FaChevronDown, FaGlobe, FaStar, FaHeart, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaCheck } from "react-icons/fa";
 import { mockPackages, filterOptions } from "../../../lib/mockData";
 import { slugifyPackageName } from "../../../lib/packageSlug";
+import PackageHeroBanner from "../PackageHeroBanner";
 
 const getKilimanjaroRouteTitle = (name = "") => {
   if (name.split(" ")[0] === "Private") return "PRIVATE CLIMB";
@@ -344,28 +345,14 @@ const KilimanjaroPackages = () => {
 
   return (
     <section className="pb-20 ">
-      <div className="relative h-[70vh] text-center mb-16 py-16 overflow-hidden flex items-center justify-center">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#8B6F47]/10 to-[#8B5A4A]/10" />
-        <div className="relative z-10 max-w-4xl mx-auto px-4">
-          <h2 className="text-4xl md:text-5xl  lg:text-6xl font-bold text-white mb-6">
-            CLIMB <span className="text-white">KILIMANJARO</span>
-          </h2>
-          <p className="text-xl md:text-2xl lg:text-3xl text-white opacity-80 font-semibold mb-4">
-            Choose Your Route to the Roof of Africa
-          </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] mx-auto rounded-full mb-8"></div>
-          <p className="text-gray-200 text-lg md:text-xl lg:text-2xl max-w-5xl mx-auto leading-relaxed">
-            Experience the adventure of a lifetime climbing Africa's highest peak with expert guides, proven safety records, and unforgettable memories guaranteed.
-          </p>
-        </div>
-      </div>
+      <PackageHeroBanner
+        badge="Kilimanjaro Adventures"
+        backgroundImage="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+        titlePrefix="CLIMB"
+        titleHighlight="KILIMANJARO"
+        subtitle="Choose Your Route to the Roof of Africa"
+        description="Experience the climb of a lifetime with expert mountain crews, strong safety standards, and route options designed for different fitness and comfort levels."
+      />
 
       <div className="max-w-7xl mx-auto py-6 sm:py-8 lg:py-12 px-4 sm:px-6 lg:px-8">
         <div className="lg:hidden mb-6">

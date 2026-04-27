@@ -30,8 +30,7 @@
 // app/layout.js
 import "./globals.css";
 import { Roboto } from "next/font/google";
-import Header from "./_components/Header";
-import Footer from "./_components/Footer";
+import LayoutChrome from "./_components/LayoutChrome";
 import Providers from "./providers";
 
 const roboto = Roboto({
@@ -58,12 +57,9 @@ export default function RootLayout({ children }) {
         className={`${roboto.variable} antialiased`}
         suppressHydrationWarning // Add suppressHydrationWarning to body
       >
-        <Header />
         <Providers>
-          <main>{children}</main>
+          <LayoutChrome>{children}</LayoutChrome>
         </Providers>
-
-        <Footer />
       </body>
     </html>
   );

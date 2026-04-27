@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FaBars, FaTimes, FaSearch, FaChevronDown, FaGlobe, FaStar, FaHeart, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaCheck } from "react-icons/fa";
 import { mockPackages, filterOptions } from "../../lib/mockData";
 import { slugifyPackageName } from "../../lib/packageSlug";
+import PackageHeroBanner from "../_components/PackageHeroBanner";
 
 const RangeSlider = ({
   min = 100, // updated minimum value
@@ -381,24 +382,14 @@ const PackageListing = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 ">
-      <div className="relative h-[70vh] text-center mb-16 py-16 overflow-hidden flex items-center justify-center">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#8B6F47]/10 to-[#8B5A4A]/10" />
-        <div className="relative z-10 flex flex-col items-center justify-center px-4 max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl  lg:text-6xl font-bold text-white mb-6">
-            TANZANIA <span className="text-white">SAFARI</span>
-          </h2>
-          <p className="text-xl md:text-2xl lg:text-3xl text-white opacity-80 font-semibold mb-4">Untamed. Unforgettable. Tanzania Safari</p>
-          <div className="w-34 h-1 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] mx-auto rounded-full mb-8"></div>
-          <p className="text-gray-200 text-lg md:text-xl lg:text-2xl   leading-relaxed">A Tanzania safari is a once-in-a-lifetime experience. From the wild natural landscapes to the magnificent animals that roam the land, Tanzania is a destination for those looking for adventure like no other. Our tailor-made safaris allow you to enjoy every moment. Get in touch with our travel consultants.They’ll be happy to customize your trip!</p>
-        </div>
-      </div>
+      <PackageHeroBanner
+        badge="Signature Safaris"
+        backgroundImage="https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+        titlePrefix="TANZANIA"
+        titleHighlight="SAFARI"
+        subtitle="Untamed. Unforgettable. Tanzania Safari"
+        description="From vast wildlife plains to dramatic crater landscapes, explore tailored Tanzania safaris built around your pace, priorities, and dream sightings."
+      />
 
       <div className="max-w-7xl mx-auto py-6 sm:py-8 lg:py-12 px-4 sm:px-6 lg:px-8">
         <div className="lg:hidden mb-6">

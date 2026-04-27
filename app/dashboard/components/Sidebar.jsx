@@ -1,32 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
-import { baseApi } from "../../redux/features/api/BaseApi"; // adjust path
-import { useState } from "react";
-import { ChevronDown, ChevronRight } from "lucide-react";
+import { baseApi } from "../../redux/features/api/BaseApi";
+import {
+  ClipboardList,
+  LayoutDashboard,
+  LogOut,
+  Package,
+  Users,
+} from "lucide-react";
 
 const nav = [
-  { href: "/dashboard", label: "Overview", icon: "🏠" },
-  { href: "/dashboard/packages", label: "Packages", icon: "🧭" },
-  { href: "/dashboard/add-tour", label: "Add Tour", icon: "🧾" },
+  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+  { href: "/dashboard/packages", label: "Packages", icon: Package },
   {
-    href: "/dashboard/tours-and-profile",
-    label: "Tours & Profile",
-    icon: "👥",
+    href: "/dashboard/client-proposals",
+    label: "Client Proposals",
+    icon: ClipboardList,
   },
-  { href: "/dashboard/reports", label: "Reports", icon: "📊" },
-  // we'll show Settings with nested items below
-  { href: "/dashboard/AdminUsers", label: "AdminUsers", icon: "👤" },
-  { href: "/dashboard/CompaniesList", label: "CompaniesList", icon: "🏢" },
+  { href: "/dashboard/AdminUsers", label: "Admin Users", icon: Users },
 ];
 
 export default function Sidebar() {
   const router = useRouter();
+  const pathname = usePathname();
   const dispatch = useDispatch();
-  const [settingsOpen, setSettingsOpen] = useState(false);
-  const [reviewsOpen, setReviewsOpen] = useState(false);
 
   const handleLogout = () => {
     if (typeof window !== "undefined") {
@@ -37,145 +37,61 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-72 hidden min-h-screen md:flex flex-col gap-6 bg-white p-6 border-r border-gray-100">
-      {/* Logo */}
-      <div className="flex items-center gap-3">
-        <div className="w-12 h-12 overflow-hidden rounded-md bg-white flex items-center justify-center">
+    <aside className="hidden w-72 shrink-0 border-r border-[#e9e2d8] bg-gradient-to-b from-[#fffdf9] via-[#fffaf3] to-[#f8f1e6] p-6 md:sticky md:top-0 md:flex md:h-screen md:flex-col">
+      <div className="mb-8 flex items-center gap-3 rounded-2xl border border-[#eadfce] bg-white/80 p-3 shadow-sm">
+        <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-white ring-1 ring-[#e6dac8]">
           <img
             src="/logo.png"
             alt="Safari Trip Booking"
-            className="w-full h-full object-contain"
+            className="h-full w-full object-contain"
           />
         </div>
         <div>
-          <div className="text-sm font-semibold text-[#8a3f2c]">
-          Safari Trip Booking
+          <div className="text-sm font-bold tracking-wide text-[#8B6F47]">
+            Safari Trip Booking
           </div>
-          <div className="text-xs text-gray-500">Safaris Dashboard</div>
+          <div className="text-xs text-[#7f7365]">Admin Dashboard</div>
         </div>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 overflow-auto">
-        <ul className="flex flex-col gap-1">
-          {nav.map((n) => (
-            <li key={n.href}>
+        <ul className="flex flex-col gap-2">
+          {nav.map((item) => {
+            const Icon = item.icon;
+            const isActive = pathname === item.href;
+
+            return (
+              <li key={item.href}>
               <Link
-                href={n.href}
-                className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-800"
+                href={item.href}
+                className={`group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition-all ${
+                  isActive
+                    ? "bg-[#8B6F47] text-white shadow-md"
+                    : "text-[#4e4336] hover:bg-[#f4ecdf]"
+                }`}
               >
-                <span className="text-lg opacity-80">{n.icon}</span>
-                <span className="font-medium">{n.label}</span>
+                <span
+                  className={`flex h-8 w-8 items-center justify-center rounded-lg ${
+                    isActive
+                      ? "bg-white/20"
+                      : "bg-[#f8f2e8] text-[#8B6F47] group-hover:bg-[#efe3d3]"
+                  }`}
+                >
+                  <Icon size={17} />
+                </span>
+                <span>{item.label}</span>
               </Link>
             </li>
-          ))}
+            );
+          })}
 
-          {/* Settings parent */}
-          <li>
-            <button
-              onClick={() => setSettingsOpen((s) => !s)}
-              className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-800"
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-lg opacity-80">⚙️</span>
-                <span className="font-medium">Settings</span>
-              </div>
-              <span className="opacity-70">
-                {settingsOpen ? (
-                  <ChevronDown size={14} />
-                ) : (
-                  <ChevronRight size={14} />
-                )}
-              </span>
-            </button>
-
-            {/* Settings submenu */}
-            {settingsOpen && (
-              <ul className="mt-1 ml-6 flex flex-col gap-1">
-                <li>
-                  <Link
-                    href="/dashboard/settings/profile"
-                    className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-800"
-                  >
-                    <span className="text-sm">Profile</span>
-                  </Link>
-                </li>
-
-                {/* Reviews multi-dropdown inside Settings */}
-                <li>
-                  <button
-                    onClick={() => setReviewsOpen((r) => !r)}
-                    className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-800"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm">Reviews</span>
-                      <span className="text-xs text-gray-400">
-                        manage & APIs
-                      </span>
-                    </div>
-                    <span className="opacity-70">
-                      {reviewsOpen ? (
-                        <ChevronDown size={14} />
-                      ) : (
-                        <ChevronRight size={14} />
-                      )}
-                    </span>
-                  </button>
-
-                  {reviewsOpen && (
-                    <ul className="mt-1 ml-6 flex flex-col gap-1">
-                      <li>
-                        <Link
-                          href="/dashboard/settings/reviews/list"
-                          className="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-800"
-                        >
-                          Review Manage
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/dashboard/settings/reviews/create"
-                          className="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-800"
-                        >
-                      Create  Review
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          href="/dashboard/settings/reviews/api"
-                          className="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-800"
-                        >
-                          Review API Endpoints
-                        </Link>
-                      </li>
-                    </ul>
-                  )}
-                </li>
-
-                <li>
-                  <Link
-                    href="/dashboard/settings/notifications"
-                    className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-800"
-                  >
-                    <span className="text-sm">Notifications</span>
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </li>
-
-          <li className="mt-3 px-3">
+          <li className="mt-5 pt-4">
             <button
               onClick={handleLogout}
-              className="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-white px-4 py-3 font-semibold text-red-600 transition-colors hover:bg-red-50"
             >
+              <LogOut size={16} />
               Logout
-            </button>
-          </li>
-
-          <li className="px-3">
-            <button className="w-full bg-emerald-700 text-white py-2 rounded-md hover:bg-emerald-800">
-              Make a Request
             </button>
           </li>
         </ul>

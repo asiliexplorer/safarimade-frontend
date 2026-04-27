@@ -3,27 +3,9 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
 import { FaTimes, FaSearch, FaStar, FaHeart, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaCheck } from "react-icons/fa";
-import { mockPackages, filterOptions } from "../../lib/mockData";
+import { wildebeestMigrationPackages, filterOptions } from "../../lib/mockData";
 import { slugifyPackageName } from "../../lib/packageSlug";
-
-const isMigrationPackage = (pkg) => {
-  const haystack = [
-    pkg?.name,
-    pkg?.shortDescription,
-    pkg?.fullDescription,
-    ...(pkg?.highlights || []),
-    ...(pkg?.destinations || []),
-    ...(pkg?.dayByDay || []).map((day) => `${day?.location || ""} ${day?.description || ""}`),
-  ]
-    .join(" ")
-    .toLowerCase();
-
-  return (
-    (haystack.includes("migration") || haystack.includes("wildebeest") || haystack.includes("mara river") || haystack.includes("serengeti")) &&
-    !pkg?.Island &&
-    !pkg?.Mount
-  );
-};
+import PackageHeroBanner from "../_components/PackageHeroBanner";
 
 const RangeSlider = ({
   min = 100,
@@ -217,7 +199,7 @@ const PackageCard = ({ pkg }) => {
               </div>
             </div>
 
-            <Link href={`/affordable-safari-tour-packages/${slugifyPackageName(pkg.name)}`} className="bg-[#8B6F47] text-white text-xs font-semibold py-2 px-4 rounded-lg hover:bg-[#6B5A3D] transition-colors duration-200 whitespace-nowrap shadow-md hover:shadow-lg flex-shrink-0">
+            <Link href={`/wildebeest-migration-safari-packages/${slugifyPackageName(pkg.name)}`} className="bg-[#8B6F47] text-white text-xs font-semibold py-2 px-4 rounded-lg hover:bg-[#6B5A3D] transition-colors duration-200 whitespace-nowrap shadow-md hover:shadow-lg flex-shrink-0">
               VIEW DETAILS
             </Link>
           </div>
@@ -228,7 +210,7 @@ const PackageCard = ({ pkg }) => {
 };
 
 export default function WildebeestMigrationSafariPackagesPage() {
-  const migrationPackages = useMemo(() => mockPackages.filter((pkg) => isMigrationPackage(pkg)), []);
+  const migrationPackages = useMemo(() => wildebeestMigrationPackages, []);
 
   const [activeFilters, setActiveFilters] = useState({
     tourLength: { min: 1, max: 21 },
@@ -380,28 +362,14 @@ export default function WildebeestMigrationSafariPackagesPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 ">
-      <div className="relative h-[70vh] text-center mb-16 py-16 overflow-hidden flex items-center justify-center">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1532199286643-4b8e3f4a2fd9?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#8B6F47]/10 to-[#8B5A4A]/10" />
-        <div className="relative z-10 flex flex-col items-center justify-center px-4 max-w-4xl mx-auto">
-          <h2 className="text-4xl md:text-5xl  lg:text-6xl font-bold text-white mb-6">
-            WILDEBEEST <span className="text-white">MIGRATION</span>
-          </h2>
-          <p className="text-xl md:text-2xl lg:text-3xl text-white opacity-80 font-semibold mb-4">
-            Follow the Great Migration Through Tanzania's Wildest Plains
-          </p>
-          <div className="w-34 h-1 bg-gradient-to-r from-[#8B6F47] to-[#8B5A4A] mx-auto rounded-full mb-8"></div>
-          <p className="text-gray-200 text-lg md:text-xl lg:text-2xl   leading-relaxed">
-            Discover migration-focused safari trips crafted around calving season, Mara River crossings, and prime predator sightings with expert guides and quality lodges.
-          </p>
-        </div>
-      </div>
+      <PackageHeroBanner
+        badge="Great Migration Journeys"
+        backgroundImage="https://images.unsplash.com/photo-1532199286643-4b8e3f4a2fd9?q=80&w=2056&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        titlePrefix="WILDEBEEST"
+        titleHighlight="MIGRATION"
+        subtitle="Follow the Great Migration Through Tanzania's Wildest Plains"
+        description="Find migration-focused safaris timed for calving season, river crossings, and prime predator encounters with experienced guides and quality camps."
+      />
 
       <div className="max-w-7xl mx-auto py-6 sm:py-8 lg:py-12 px-4 sm:px-6 lg:px-8">
         <div className="lg:hidden mb-6">
