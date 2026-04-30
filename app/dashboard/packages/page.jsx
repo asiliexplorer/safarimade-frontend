@@ -1,12 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ViewPacges from "../components/ViewPacges";
 import AddEditPacage from "../components/AddEditPacage";
 
 export default function PackagesPage() {
   const [mode, setMode] = useState("view");
   const [editingPackage, setEditingPackage] = useState(null);
+
+  useEffect(() => {
+    if (mode !== "form") return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mode]);
 
   const openCreate = () => {
     setEditingPackage(null);
@@ -28,7 +38,7 @@ export default function PackagesPage() {
       {mode === "view" ? (
         <ViewPacges onCreate={openCreate} onEdit={openEdit} />
       ) : (
-        <div className=" bg-[#f7efe2]">
+        <div className="fixed inset-0 z-[120] bg-[#f7efe2]">
           <AddEditPacage
             initialData={editingPackage}
             onCancel={() => setMode("view")}

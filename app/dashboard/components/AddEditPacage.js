@@ -152,9 +152,11 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
           URL.revokeObjectURL(item.previewUrl);
         }
       });
-      Object.values(destPreviewItems).flat().forEach((p) => {
-        if (p.previewUrl && p.previewUrl.startsWith("blob:")) URL.revokeObjectURL(p.previewUrl);
-      });
+      Object.values(destPreviewItems)
+        .flat()
+        .forEach((p) => {
+          if (p.previewUrl && p.previewUrl.startsWith("blob:")) URL.revokeObjectURL(p.previewUrl);
+        });
     };
   }, [galleryPreviewItems, mainImagePreview, destPreviewItems]);
 
@@ -209,7 +211,7 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
   const uploadImages = async (files) => {
     const formDataPayload = new FormData();
     files.forEach((file) => formDataPayload.append("images", file));
-    
+
     try {
       const headers = getAuthHeaders();
       // Do NOT set Content-Type header when using FormData - browser will set it with boundary
@@ -220,18 +222,18 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
       });
 
       const data = await response.json().catch(() => null);
-      
+
       if (!response.ok) {
         const errorMsg = data?.message || `Upload failed with status ${response.status}`;
         console.error("Upload error response:", { status: response.status, data });
         throw new Error(errorMsg);
       }
-      
+
       if (!data?.data?.urls || !Array.isArray(data.data.urls)) {
         console.warn("Unexpected upload response format:", data);
         throw new Error("Invalid upload response format");
       }
-      
+
       return data.data.urls;
     } catch (error) {
       console.error("Image upload error:", error);
@@ -259,7 +261,12 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
   };
 
   const removeGalleryImage = (url) => {
-    setFormData((prev) => ({ ...prev, gallery: parseCsv(prev.gallery).filter((i) => i !== url).join(", ") }));
+    setFormData((prev) => ({
+      ...prev,
+      gallery: parseCsv(prev.gallery)
+        .filter((i) => i !== url)
+        .join(", "),
+    }));
   };
 
   const removePendingGalleryImage = (previewUrl) => {
@@ -321,7 +328,7 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
 
   const deleteUnusedImages = async (imagesToDelete) => {
     if (!imagesToDelete.length) return;
-    
+
     try {
       const response = await fetch(`${API_BASE_URL}/uploads/images/delete`, {
         method: "POST",
@@ -356,11 +363,7 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
 
     const oldDestinations = initialData?.destinationsDetailed || [];
     oldDestinations.forEach((oldDest, index) => {
-      const oldAccomImages = parseCsv(
-        Array.isArray(oldDest.accommodation?.images)
-          ? oldDest.accommodation.images.join(",")
-          : oldDest.accommodation?.images || ""
-      );
+      const oldAccomImages = parseCsv(Array.isArray(oldDest.accommodation?.images) ? oldDest.accommodation.images.join(",") : oldDest.accommodation?.images || "");
       const newDest = formData.destinationsDetailed[index];
       const newAccomImages = parseCsv(newDest?.accommodation?.images || "");
 
@@ -553,17 +556,16 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
           <Input type="number" name="priceFrom" value={formData.priceFrom} onChange={handleChange} placeholder="e.g. 4200" />
         </Field>
         <Field label="Currency" hint="Select pricing currency">
-          {Array.isArray(currencyFormatter.currencies)
-            ? (
-                <select name="currency" value={formData.currency} onChange={handleChange} className="w-full rounded-lg border border-[#dcccba] bg-white px-3 py-2 outline-none transition focus:border-[#8B6F47] focus:ring-2 focus:ring-[#8B6F47]/15">
-                  {currencyFormatter.currencies.map((c) => (
-                    <option key={c.code} value={c.code}>
-                      {c.code}
-                      {c.symbol ? ` — ${c.symbol}` : ""}
-                    </option>
-                  ))}
-                </select>
-              ) : null}
+          {Array.isArray(currencyFormatter.currencies) ? (
+            <select name="currency" value={formData.currency} onChange={handleChange} className="w-full rounded-lg border border-[#dcccba] bg-white px-3 py-2 outline-none transition focus:border-[#8B6F47] focus:ring-2 focus:ring-[#8B6F47]/15">
+              {currencyFormatter.currencies.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.code}
+                  {c.symbol ? ` — ${c.symbol}` : ""}
+                </option>
+              ))}
+            </select>
+          ) : null}
         </Field>
       </div>
     </div>,
@@ -807,7 +809,7 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f7efe2] via-[#fcfaf5] to-[#efe6d8] text-[#2f251c] lg:h-screen lg:overflow-hidden">
+    <form onSubmit={handleSubmit} className="min-h-screen bg-gradient-to-br from-[#f7efe2] via-[#fcfaf5] to-[#efe6d8] text-[#2f251c] lg:h-screen lg:overflow-hidden">
       <div className="flex min-h-screen flex-col lg:h-screen lg:flex-row lg:overflow-hidden">
         <aside className="border-b border-[#dfcfb8] bg-[#2f251c] px-5 py-6 text-white lg:sticky lg:top-0 lg:h-screen lg:w-80 lg:self-start lg:overflow-y-auto lg:border-b-0 lg:border-r lg:px-6">
           <div className="mb-6 flex items-start justify-between gap-4 lg:block">
@@ -832,7 +834,9 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
                   <Icon size={18} className={isActive ? "mt-0.5 text-[#f1c98d]" : isDone ? "mt-0.5 text-emerald-300" : "mt-0.5 text-white/45"} />
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-white">{index + 1}. {step.title}</span>
+                      <span className="font-semibold text-white">
+                        {index + 1}. {step.title}
+                      </span>
                     </div>
                     <p className={`mt-1 text-xs ${isActive ? "text-[#f6e2c6]" : "text-white/60"}`}>{step.description}</p>
                   </div>
@@ -842,11 +846,13 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
           </nav>
         </aside>
 
-        <main className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:min-h-0 lg:px-8 lg:py-8">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-[#e8dccb] bg-white/92 p-5 shadow-[0_24px_80px_rgba(68,49,25,0.12)] backdrop-blur-sm sm:p-6 lg:p-8">
+        <main className="w-full  overflow-y-auto pt-6 sm:px-6 lg:min-h-0  lg:pt-8">
+          <div className="mx-auto   border border-[#e8dccb] bg-white/92 p-5 shadow-[0_24px_80px_rgba(68,49,25,0.12)] backdrop-blur-sm sm:p-6 ">
             <div className="mb-6 flex flex-col gap-4 border-b border-[#f0e5d6] pb-5 lg:flex-row lg:items-end lg:justify-between">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#a07f4c]">Step {currentStep + 1} of {STEPS.length}</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#a07f4c]">
+                  Step {currentStep + 1} of {STEPS.length}
+                </p>
                 <h1 className="mt-2 text-3xl font-semibold text-[#382d22]">{STEPS[currentStep].title}</h1>
                 <p className="mt-2 text-sm text-[#7d705f]">{STEPS[currentStep].description}</p>
               </div>
@@ -854,34 +860,31 @@ export default function AddEditPacage({ initialData, onCancel, onSuccess }) {
               <div className="rounded-2xl border border-[#ecdfcf] bg-[#fffaf4] px-4 py-3 text-sm text-[#6d604d]">{isEditing ? "Editing an existing package" : "Creating a new package"}</div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {stepContent[currentStep]}
+            <div className="space-y-8">{stepContent[currentStep]}</div>
+          </div>
+          <div className="sticky bottom-0 z-20 flex flex-col gap-3 border-t border-[#f0e5d6] bg-white/95 p-5 shadow-[0_-10px_30px_rgba(0,0,0,0.08)] backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+            <div className="text-sm text-[#7a6b58]">You can jump between steps without losing entered data.</div>
 
-              <div className="flex flex-col gap-3 border-t border-[#f0e5d6] pt-5 sm:flex-row sm:items-center sm:justify-between">
-                <div className="text-sm text-[#7a6b58]">You can jump between steps without losing entered data.</div>
+            <div className="flex items-center gap-3">
+              <button type="button" onClick={goPrevious} disabled={currentStep === 0 || loading} className="inline-flex items-center gap-2 rounded-lg border border-[#d8c9b7] px-4 py-2 font-semibold text-[#6a5a46] transition hover:bg-[#f7f1e8] disabled:cursor-not-allowed disabled:opacity-50">
+                <ArrowLeft size={16} />
+                Previous
+              </button>
 
-                <div className="flex items-center gap-3">
-                  <button type="button" onClick={goPrevious} disabled={currentStep === 0 || loading} className="inline-flex items-center gap-2 rounded-lg border border-[#d8c9b7] px-4 py-2 font-semibold text-[#6a5a46] transition hover:bg-[#f7f1e8] disabled:cursor-not-allowed disabled:opacity-50">
-                    <ArrowLeft size={16} />
-                    Previous
-                  </button>
-
-                  {currentStep < STEPS.length - 1 ? (
-                    <button type="button" onClick={goNext} disabled={loading} className="inline-flex items-center gap-2 rounded-lg bg-[#8B6F47] px-4 py-2 font-semibold text-white transition hover:bg-[#6f5737] disabled:cursor-not-allowed disabled:opacity-60">
-                      Next
-                      <ArrowRight size={16} />
-                    </button>
-                  ) : (
-                    <button type="submit" disabled={loading} className="inline-flex items-center gap-2 rounded-lg bg-[#8B6F47] px-5 py-2 font-semibold text-white transition hover:bg-[#6f5737] disabled:cursor-not-allowed disabled:opacity-60">
-                      {loading ? (isEditing ? "Updating..." : "Creating...") : isEditing ? "Update Package" : "Create Package"}
-                    </button>
-                  )}
-                </div>
-              </div>
-            </form>
+              {currentStep < STEPS.length - 1 ? (
+                <button type="button" onClick={goNext} disabled={loading} className="inline-flex items-center gap-2 rounded-lg bg-[#8B6F47] px-4 py-2 font-semibold text-white transition hover:bg-[#6f5737] disabled:cursor-not-allowed disabled:opacity-60">
+                  Next
+                  <ArrowRight size={16} />
+                </button>
+              ) : (
+                <button type="submit" disabled={loading} className="inline-flex items-center gap-2 rounded-lg bg-[#8B6F47] px-5 py-2 font-semibold text-white transition hover:bg-[#6f5737] disabled:cursor-not-allowed disabled:opacity-60">
+                  {loading ? (isEditing ? "Updating..." : "Creating...") : isEditing ? "Update Package" : "Create Package"}
+                </button>
+              )}
+            </div>
           </div>
         </main>
       </div>
-    </div>
+    </form>
   );
 }

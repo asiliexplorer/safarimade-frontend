@@ -1,7 +1,7 @@
 // src/features/api/BaseApi.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://safarimade-backend.onrender.com/api";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000/api";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_BASE_URL,
@@ -17,7 +17,19 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithAuth = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
 
- 
+  // Handle 401 (Unauthorized - token expired or invalid)
+  if (result.error && result.error.status === 401) {
+    // Clear token from localStorage
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("user");
+    }
+
+    // Redirect to login page
+    if (typeof window !== "undefined") {
+      window.location.href = "/login";
+    }
+  }
 
   return result;
 };

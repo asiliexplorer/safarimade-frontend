@@ -15,6 +15,7 @@ export default function DashboardLayout({ children }) {
     data: profileRes,
     isLoading,
     isError,
+    error,
   } = useGetProfileQuery(undefined);
 
   // profileRes expected: { success: true, data: { id, email, role, ... } }
@@ -24,7 +25,17 @@ export default function DashboardLayout({ children }) {
     // while loading, do nothing
     if (isLoading) return;
 
-    
+    // Check for 401 error (unauthorized/token expired)
+    if (error && error.status === 401) {
+      // Token expired - clear storage and redirect to login
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("user");
+      }
+      router.replace("/login");
+      return;
+    }
+
     if (isError || !user) {
      router.replace("/login");
      return;
@@ -34,7 +45,7 @@ export default function DashboardLayout({ children }) {
      router.replace("/unauthorized");
      return;
     }
-  }, [isLoading, isError, user, router]);
+  }, [isLoading, isError, error, user, router]);
 
   // show loader while checking
   if (isLoading || (!profileRes && !isError)) {
