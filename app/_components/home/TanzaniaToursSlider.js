@@ -1,7 +1,7 @@
 // components/TanzaniaToursSlider.js
 "use client";
 import { useEffect, useState } from "react";
-import { mockPackages } from "../../../lib/mockData";
+import { safariPackages, kilimanjaroPackages, wildebeestMigrationPackages, zanzibarPackages } from "../../../lib/mockData";
 
 import Link from "next/link";
 
@@ -9,7 +9,21 @@ const TanzaniaToursSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
 
-  const tourPackages = mockPackages;
+  const tourPackages = [safariPackages, kilimanjaroPackages, wildebeestMigrationPackages, zanzibarPackages].flat();
+
+  const getTourLocations = (tour) => {
+    if (Array.isArray(tour?.destinations) && tour.destinations.length) {
+      return tour.destinations;
+    }
+
+    if (Array.isArray(tour?.destinationsDetailed) && tour.destinationsDetailed.length) {
+      return tour.destinationsDetailed
+        .map((item) => item?.place)
+        .filter(Boolean);
+    }
+
+    return [];
+  };
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % tourPackages.length);
@@ -54,26 +68,7 @@ const TanzaniaToursSlider = () => {
     return packages;
   };
 
-  const StarRating = ({ rating }) => {
-    return (
-      <div className="flex items-center">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <svg
-            key={star}
-            className={`w-4 h-4 ${
-              star <= rating ? "text-yellow-400" : "text-gray-300"
-            }`}
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-          </svg>
-        ))}
-        <span className="ml-1 text-sm text-gray-600">({rating})</span>
-      </div>
-    );
-  };
-
+  
   return (
     <section className="py-20 bg-gradient-to-br from-gray-25 to-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -157,98 +152,82 @@ const TanzaniaToursSlider = () => {
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {getVisiblePackages().map((tour, index) => (
-                  <Link href={`/packages/${tour.id}`} key={tour.id} passHref>
+            {getVisiblePackages().map((tour, index) => {
+              const locations = getTourLocations(tour);
+              const packagePrice = tour.priceFrom || tour.price || "On request";
+              const packageCurrency = tour.currency || "USD";
 
-              <div
-                key={`${tour.days}-${index}`}
-                className="group bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 hover:transform hover:-translate-y-3"
-              >
-                {/* Image Section with Overlay */}
-                <div className="relative h-60 overflow-hidden">
-                  <img
-                    src={tour.image}
-                    alt={tour.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+              return (
+                <Link href={`/packages/${tour.id}`} key={tour.id ?? tour.slug ?? index}>
+                  <div
+                    className="group bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 hover:transform hover:-translate-y-3"
+                  >
+                    {/* Image Section with Overlay */}
+                    <div className="relative h-60 overflow-hidden">
+                      <img
+                        src={tour.mainImage || tour.image || "/images/placeholder-tour.jpg"}
+                        alt={tour.name}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
 
-                  {/* Top Badges */}
-                  <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
-                    <div className="bg-white/95 backdrop-blur-sm px-2 py-1 rounded-2xl shadow-lg">
-                      <span className="font-bold text-gray-900 text-md">
-                        {tour.duration} Days
-                      </span>
-                    </div>
-                    {tour.tourType === "private" && (
-                      <div className="bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-2 py-1 rounded-2xl shadow-lg">
-                        <span className="font-semibold text-sm">
-                          PRIVATE TOUR
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Rating Overlay */}
-                  {/* <div className="absolute  left-4">
-                    <div className="bg-white/95 backdrop-blur-sm px-3 py-2 rounded-2xl shadow-lg">
-                      <div className="flex items-center space-x-1">
-                        <StarRating rating={tour.rating} />
-                      </div>
-                    </div>
-                  </div> */}
-                </div>
-
-                {/* Card Content */}
-                <div className="p-2">
-                  {/* Tour Title */}
-                  <h3 className="text-xl font-bold text-gray-900  leading-tight line-clamp-2">
-                    {tour.name}
-                  </h3>
-
-                  {/* Locations */}
-                  <div className="flex flex-wrap gap-1 text-gray-600 text-sm mb-6">
-                    {tour.destinations.map((location, locIndex) => (
-                      <span
-                        key={locIndex}
-                        className="flex items-center px-1 py-1"
-                      >
-                        {location}
-                        {locIndex < tour.destinations.length - 1 && (
-                          <span className="ml-2 text-gray-400">•</span>
+                      {/* Top Badges */}
+                      <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
+                        <div className="bg-white/95 backdrop-blur-sm px-2 py-1 rounded-2xl shadow-lg">
+                          <span className="font-bold text-gray-900 text-md">
+                            {tour.duration} Days
+                          </span>
+                        </div>
+                        {tour.category && (
+                          <div className="bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-2 py-1 rounded-2xl shadow-lg">
+                            <span className="font-semibold text-sm">
+                            {tour.category.toLowerCase()}
+                            </span>
+                          </div>
                         )}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Reviews */}
-                  {/* <div className="flex items-center text-sm text-gray-500 mb-6">
-                    <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                      <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
-                    </svg>
-                    <span>{tour.reviews} reviews</span>
-                  </div> */}
-
-                  {/* Price and CTA */}
-                  <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                    <div>
-                      <span className="text-xl font-bold text-[#8B6F47]">
-                        $ {tour.price}
-                      </span>
-                      <span className="block text-sm text-gray-500">
-                        per person
-                      </span>
+                      </div>
                     </div>
-                    <button className="group relative bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-8 py-2 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden">
-                      <span className="relative z-10">Read More</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#6B5A3D] to-[#8B6F47] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </button>
+
+                    {/* Card Content */}
+                    <div className="p-2">
+                      <h3 className="text-xl font-bold text-gray-900  leading-tight line-clamp-2">
+                        {tour.name}
+                      </h3>
+
+                      <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
+                        {tour.shortDescription || tour.experienceSummary || tour.fullDescription || "Discover one of Tanzania's standout journeys."}
+                      </p>
+
+                      <div className="mt-4 flex flex-wrap gap-2 text-gray-600 text-sm mb-5">
+                        {locations.slice(0, 3).map((location, locIndex) => (
+                          <span
+                            key={`${location}-${locIndex}`}
+                            className="flex bg-green-100 backdrop-blur-sm p-2 border border-white/100 rounded-md  text-black items-center px-2 py-1"
+                          >
+                            {location}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex justify-between items-center pt-2 border-t border-gray-200">
+                        <div>
+                          <span className="text-xl font-bold text-[#8B6F47]">
+                            {typeof packagePrice === "number" ? `$${packagePrice}` : packagePrice}
+                          </span>
+                          <span className="block text-sm text-gray-500">
+                            {packageCurrency === "USD" ? "per person" : packageCurrency}
+                          </span>
+                        </div>
+                        <button className="group relative bg-gradient-to-r from-[#8B6F47] to-[#6B5A3D] text-white px-8 py-2 rounded-xl font-semibold hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden">
+                          <span className="relative z-10">Read More</span>
+                          <div className="absolute inset-0 bg-gradient-to-r from-[#6B5A3D] to-[#8B6F47] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Enhanced Dots Indicator */}

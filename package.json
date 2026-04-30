@@ -11,6 +11,7 @@
     "@reduxjs/toolkit": "^2.10.1",
     "chart.js": "^4.5.1",
     "country-state-city": "^3.2.1",
+    "currency-formatter": "^1.5.9",
     "lucide-react": "^0.555.0",
     "next": "^16.1.6",
     "react": "19.1.0",

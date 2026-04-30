@@ -3,8 +3,68 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import Link from "next/link";
 import { FaBars, FaTimes, FaSearch, FaChevronDown, FaGlobe, FaStar, FaHeart, FaChevronLeft, FaChevronRight, FaMapMarkerAlt, FaCheck } from "react-icons/fa";
-import { mockPackages, filterOptions } from "../../../lib/mockData";
+import { filterOptions } from "../../../lib/mockData";
 import { slugifyPackageName } from "../../../lib/packageSlug";
+
+const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:4000/api").replace(/\/+$/, "");
+
+function deriveComfortLevel(price) {
+  if (!Number.isFinite(price)) return "";
+  if (price < 1500) return "Budget";
+  if (price < 3000) return "Mid-Range";
+  if (price < 5000) return "Luxury";
+  return "Luxury+";
+}
+
+function deriveSafariType(destinationsDetailed = []) {
+  const text = destinationsDetailed
+    .map((item) => item?.accommodation?.type)
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  if (text.includes("tented camp")) return "Tented Camp";
+  if (text.includes("hotel")) return "Hotel";
+  if (text.includes("camp")) return "Camping";
+  if (text.includes("lodge")) return "Lodge";
+  return "";
+}
+
+function normalizePackage(raw, source = "backend") {
+  if (!raw) return null;
+  const slug = raw.slug || slugifyPackageName(raw.name || "package");
+  const destinationsDetailed = Array.isArray(raw.destinationsDetailed)
+    ? raw.destinationsDetailed
+    : Array.isArray(raw.destinations)
+      ? raw.destinations.map((d) => (typeof d === "string" ? { place: d } : d))
+      : [];
+  const price = Number(raw.priceFrom ?? raw.price ?? 0);
+  const gallery = Array.isArray(raw.gallery) ? raw.gallery.filter(Boolean) : [];
+  const destinations = destinationsDetailed.map((item) => item?.place).filter(Boolean);
+  return {
+    ...raw,
+    id: raw._id || raw.id || slug,
+    slug,
+    category: raw.category || "KILIMANJARO",
+    destinationsDetailed,
+    destinations,
+    gallery,
+    image: raw.mainImage || gallery[0] || "/images/placeholder-tour.jpg",
+    mainImage: raw.mainImage || gallery[0] || "/images/placeholder-tour.jpg",
+    price,
+    tourOperator: raw.offeredBy || raw.tourOperator || "Asili Explorer Safaris",
+    rating: Number(raw.rating ?? 4.8),
+    reviewCount: Number(raw.reviewCount ?? 0),
+    comfortLevel: raw.comfortLevel || deriveComfortLevel(price),
+    tourType: raw.tourType || raw.travelStyle || raw.category || "Kilimanjaro",
+    safariType: raw.safariType || deriveSafariType(destinationsDetailed),
+    highlights: Array.isArray(raw.highlights) ? raw.highlights : [],
+    themes: Array.isArray(raw.themes) ? raw.themes : [],
+    bestFor: Array.isArray(raw.bestFor) ? raw.bestFor : [],
+    features: Array.isArray(raw.features) ? raw.features : [...(raw.highlights || []), ...(raw.themes || [])],
+    source,
+  };
+}
 import PackageHeroBanner from "../PackageHeroBanner";
 
 const getKilimanjaroRouteTitle = (name = "") => {
@@ -124,91 +184,125 @@ const FilterSection = ({ title, children, isOpen = true, onToggle }) => (
 
 const PackageCard = ({ pkg }) => {
   const [isLiked, setIsLiked] = useState(false);
-  const routeTitle = getKilimanjaroRouteTitle(pkg.name);
-  const slug = slugifyPackageName(pkg.name);
+  const image = pkg.mainImage || pkg.image || "/images/placeholder-tour.jpg";
+  const priceLabel = typeof pkg.priceFrom === "number" ? `$${pkg.priceFrom.toLocaleString()}` : typeof pkg.price === "number" ? `$${pkg.price.toLocaleString()}` : "On request";
+  const currencyLabel = pkg.currency || "USD";
+  const locations = (pkg.destinationsDetailed || []).map((item) => item?.place).filter(Boolean).slice(0, 3);
+  const tagList = [...(pkg.bestFor || []), ...(pkg.themes || [])].filter(Boolean).slice(0, 3);
+  const detailsHref = `/climbing-kilimanjaro-tour-packages/${pkg.slug || slugifyPackageName(pkg.name)}`;
 
   return (
-    <div className="group bg-white rounded-md shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col h-full">
-      <div className="relative h-56 sm:h-64 overflow-hidden">
-        <div className="absolute inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${pkg.image})` }} />
-        <div className="absolute inset-0 bg-black/40" />
+    <article className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-gray-100 bg-white shadow-[0_10px_34px_rgba(17,24,39,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_48px_rgba(17,24,39,0.14)]">
+      <div className="relative aspect-[4/3] overflow-hidden">
+        <img src={image} alt={pkg.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
-        <img src={pkg.image} alt={pkg.name} className="relative w-full h-full object-cover  group-hover:scale-105 transition-transform duration-700" />
-
-        <button onClick={() => setIsLiked(!isLiked)} className="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg z-10">
-          <FaHeart className={`w-5 h-5 ${isLiked ? "text-red-500 fill-current" : "text-gray-400"}`} />
+        <button onClick={() => setIsLiked(!isLiked)} className="absolute right-4 top-4 z-20 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-lg backdrop-blur transition-transform hover:scale-110">
+          <FaHeart className={`h-5 w-5 ${isLiked ? "fill-current text-red-500" : "text-gray-400"}`} />
         </button>
 
-       
+        <div className="absolute left-4 right-4 top-4 flex items-start justify-between gap-3">
+          <div className="rounded-full bg-white/95 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-gray-900 shadow-lg backdrop-blur">
+            {pkg.duration ? `${pkg.duration} Days` : "Safari"}
+          </div>
+          <div className="rounded-full border border-white/30 bg-black/30 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white backdrop-blur">
+            {String(pkg.category || "KILIMANJARO").toLowerCase()}
+          </div>
+        </div>
+
+        {tagList.length > 0 && (
+          <div className="absolute bottom-0 left-0 right-0 p-4">
+            <div className="flex flex-wrap gap-2">
+              {tagList.map((tag) => (
+                <span key={tag} className="rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-gray-800 backdrop-blur">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
-      <div className="p-5 flex-grow flex flex-col">
-        <div className="mb-4">
-          <div className="flex items-baseline gap-2 flex-wrap">
-            <span className="text-2xl sm:text-3xl font-bold text-[#8B6F47]">${pkg.price.toLocaleString()}</span>
-            <span className="text-sm text-gray-500">to</span>
-            <span className="text-xl sm:text-2xl font-semibold text-gray-700">${Math.round(pkg.price * 1.2).toLocaleString()}</span>
-            <span className="text-xs text-gray-500">pp (USD)</span>
-          </div>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="line-clamp-2 text-xl font-bold leading-tight text-gray-950 transition-colors group-hover:text-[#8B6F47]">{pkg.name}</h3>
+
+        <p className="mt-3 line-clamp-2 text-sm leading-6 text-gray-600">
+          {pkg.shortDescription || pkg.experienceSummary || pkg.fullDescription || "Discover one of Tanzania's standout safari journeys."}
+        </p>
+
+        <div className="mt-4 flex flex-wrap gap-2">
+          {locations.length > 0 ? (
+            locations.map((location, index) => (
+              <span key={`${location}-${index}`} className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-medium text-gray-700">
+                <FaMapMarkerAlt className="text-[#8B6F47]" />
+                {location}
+              </span>
+            ))
+          ) : (
+            <span className="inline-flex items-center gap-1 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-medium text-gray-700">
+              <FaMapMarkerAlt className="text-[#8B6F47]" />
+              Flexible route
+            </span>
+          )}
         </div>
 
-        <div className="mb-4 space-y-2">
-         <div >
-            <h3 className="text-black text-xl sm:text-2xl font-bold leading-tight mb-2">{pkg.name}</h3>
-          </div>
-          <p className="inline-flex items-center text-sm text-gray-700 bg-white rounded-full px-3 py-1 border border-gray-200 w-fit">
-          {pkg.tourType} 
-          </p>
-           <p className="inline-flex ml-2 items-center text-sm text-gray-700 bg-white rounded-full px-3 py-1 border border-gray-200 w-fit">
-           {pkg.comfortLevel} 
-          </p>
-          <p className="inline-flex ml-2 items-center text-sm text-gray-700 bg-white rounded-full px-3 py-1 border border-gray-200 w-fit">
-           Lodge & Tented Camp
-          </p>
-          <div >
-            <div className="flex items-start gap-2 text-sm text-gray-700">
-              <FaMapMarkerAlt className="text-[#8B6F47] mt-0.5 flex-shrink-0" />
-              <div>
-                <span className="font-semibold text-gray-900">You Visit: </span>
-                <span className="text-gray-600">
-                  {pkg.destinations?.slice(0, 3).join(", ")}
-                  {pkg.destinations?.length > 3 && ` +${pkg.destinations.length - 3} more`}
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-auto pt-4 border-t border-gray-100">
-          <div className="flex items-center justify-between gap-3 flex-wrap">
-            <div className="flex-grow min-w-0">
-              <p className="text-sm font-bold text-gray-900 mb-1 truncate">{pkg.tourOperator}</p>
-              <div className="flex items-center gap-2">
-                <div className="flex">
-                  {[...Array(5)].map((_, i) => (
-                    <FaStar key={i} className={`w-3.5 h-3.5 ${i < Math.floor(pkg.rating) ? "text-yellow-400 fill-current" : "text-gray-300"}`} />
-                  ))}
-                </div>
-                <span className="text-xs font-semibold text-gray-900">{pkg.rating}</span>
-                <span className="text-xs text-gray-500">- {pkg.reviewCount} Reviews</span>
-              </div>
+        <div className="mt-auto pt-5">
+          <div className="flex items-end justify-between gap-4 border-t border-gray-100 pt-4">
+            <div>
+              <span className="block text-xs font-semibold uppercase tracking-[0.22em] text-gray-500">From</span>
+              <span className="mt-1 block text-2xl font-bold text-[#8B6F47]">{priceLabel}</span>
+              <span className="block text-xs text-gray-500">{currencyLabel === "USD" ? "per person" : currencyLabel}</span>
             </div>
 
-            <Link href={`/climbing-kilimanjaro-tour-packages/${slug}`} className="bg-[#8B6F47] text-white text-xs font-semibold py-2 px-4 rounded-lg hover:bg-[#6B5A3D] transition-colors duration-200 whitespace-nowrap shadow-md hover:shadow-lg flex-shrink-0">
-              VIEW DETAILS
+            <Link href={detailsHref} className="inline-flex h-12 items-center rounded-full bg-[#465b2d] px-5 text-sm font-semibold text-white shadow-md transition-colors duration-300 hover:bg-[#324120]">
+              View details
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
 const KilimanjaroPackages = () => {
-  const kilimanjaroPackages = useMemo(
-    () => mockPackages.filter((pkg) => pkg.Mount === "Kilimanjaro"),
-    [],
-  );
+  const [backendPackages, setBackendPackages] = useState([]);
+  const [loadingBackend, setLoadingBackend] = useState(true);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadBackendPackages() {
+      try {
+        setLoadingBackend(true);
+        const response = await fetch(`${API_BASE_URL}/packages?limit=100&isActive=true&sortBy=createdAt&sortOrder=desc`, { signal: controller.signal });
+
+        if (!response.ok) {
+          throw new Error(`Backend request failed with status ${response.status}`);
+        }
+
+        const payload = await response.json();
+        const items = Array.isArray(payload?.data?.items) ? payload.data.items : [];
+        setBackendPackages(
+          items
+            .map((pkg) => normalizePackage(pkg, "backend"))
+            .filter((pkg) => pkg && String(pkg.category || "").toUpperCase() === "KILIMANJARO"),
+        );
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          setBackendPackages([]);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoadingBackend(false);
+        }
+      }
+    }
+
+    loadBackendPackages();
+    return () => controller.abort();
+  }, []);
+
+  const kilimanjaroPackages = useMemo(() => backendPackages, [backendPackages]);
   const [activeFilters, setActiveFilters] = useState({
     tourLength: { min: 1, max: 21 },
     priceRange: { min: 100, max: 10000 },
@@ -236,14 +330,14 @@ const KilimanjaroPackages = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const packagesPerPage = 10;
 
-  const maxDuration = Math.max(...kilimanjaroPackages.map((pkg) => pkg.duration));
-  const maxPrice = Math.max(...kilimanjaroPackages.map((pkg) => pkg.price));
+  const maxDuration = kilimanjaroPackages.length ? Math.max(...kilimanjaroPackages.map((pkg) => Number(pkg.duration) || 0)) : 21;
+  const maxPrice = kilimanjaroPackages.length ? Math.max(...kilimanjaroPackages.map((pkg) => Number(pkg.price ?? pkg.priceFrom) || 0)) : 10000;
 
   useEffect(() => {
     let result = [...kilimanjaroPackages];
 
-    result = result.filter((pkg) => pkg.duration >= activeFilters.tourLength.min && pkg.duration <= activeFilters.tourLength.max);
-    result = result.filter((pkg) => pkg.price >= activeFilters.priceRange.min && pkg.price <= activeFilters.priceRange.max);
+    result = result.filter((pkg) => Number(pkg.duration) >= activeFilters.tourLength.min && Number(pkg.duration) <= activeFilters.tourLength.max);
+    result = result.filter((pkg) => Number(pkg.price ?? pkg.priceFrom) >= activeFilters.priceRange.min && Number(pkg.price ?? pkg.priceFrom) <= activeFilters.priceRange.max);
 
     if (activeFilters.startingFrom !== "all" && activeFilters.startingFrom) {
       result = result.filter((pkg) => (pkg.startingFrom || "").toLowerCase() === activeFilters.startingFrom.replace("-", " "));

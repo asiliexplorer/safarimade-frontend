@@ -22,6 +22,11 @@ export const packageApi = baseApi.injectEndpoints({
       providesTags: (result, error, id) => [{ type: "Packages", id }],
     }),
 
+    getPackageBySlug: builder.query({
+      query: (slug) => `/packages/slug/${slug}`,
+      providesTags: (result, error, slug) => [{ type: "Packages", id: slug }],
+    }),
+
     createPackage: builder.mutation({
       query: (payload) => ({
         url: "/packages",
@@ -60,6 +65,7 @@ export const packageApi = baseApi.injectEndpoints({
 export const {
   useGetPackagesQuery,
   useGetPackageQuery,
+  useGetPackageBySlugQuery,
   useCreatePackageMutation,
   useUpdatePackageMutation,
   useDeletePackageMutation,

@@ -168,7 +168,7 @@ export default function PackageDetailsPage() {
         <div className="mx-auto max-w-3xl rounded-3xl border border-[#e8dccd] bg-white p-10 text-center shadow-[0_20px_70px_rgba(42,34,25,0.08)]">
           <h1 className="text-3xl font-semibold text-[#2f261d]">Package not found</h1>
           <p className="mt-3 text-[#6e6254]">We could not find the tour you are looking for.</p>
-          <Link href="/wildebeest-migration-safari-packages" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#465b2d] px-5 py-3 font-semibold text-white transition hover:bg-[#324120]">
+          <Link href="/zanzibar-tour-packages" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#465b2d] px-5 py-3 font-semibold text-white transition hover:bg-[#324120]">
             <FaArrowLeft />
             Back to packages
           </Link>
@@ -201,13 +201,13 @@ export default function PackageDetailsPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#1f2a17]/95 via-[#1f2a17]/75 to-[#1f2a17]/55" />
 
         <div className="relative mx-auto flex h-full max-w-7xl flex-col items-center justify-center px-4 py-6 text-center sm:px-6 lg:px-8 lg:py-8">
-          <Link href="/wildebeest-migration-safari-packages" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur-md transition hover:bg-white/15">
+          <Link href="/zanzibar-tour-packages" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/90 backdrop-blur-md transition hover:bg-white/15">
             <FaArrowLeft />
             Back to packages
           </Link>
 
           <div className="mx-auto mt-12 max-w-4xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/80 backdrop-blur-md">Tanzania tour</div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white/80 backdrop-blur-md">Zanzibar tour</div>
             <h1 className="mt-5 text-4xl font-semibold leading-tight text-white sm:text-5xl lg:text-6xl">{packageData.name}</h1>
             <p className="mx-auto mt-5 max-w-3xl text-base leading-8 text-white/80 sm:text-lg">{packageData.experienceSummary || packageData.shortDescription || packageData.fullDescription}</p>
             <p className="mt-4 text-sm uppercase tracking-[0.24em] text-white/65">{summaryLine}</p>
@@ -220,11 +220,11 @@ export default function PackageDetailsPage() {
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-white/90 backdrop-blur-md">
               <div className="text-xs uppercase tracking-[0.22em] text-white/55">Start</div>
-              <div className="mt-2 text-sm font-semibold">{destinations[0]?.place || packageData.travelStyle || "Arusha"}</div>
+              <div className="mt-2 text-sm font-semibold">{destinations[0]?.place || packageData.travelStyle || "Zanzibar"}</div>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-white/90 backdrop-blur-md">
               <div className="text-xs uppercase tracking-[0.22em] text-white/55">Style</div>
-              <div className="mt-2 text-sm font-semibold">{packageData.travelStyle || "Safari"}</div>
+              <div className="mt-2 text-sm font-semibold">{packageData.travelStyle || "Beach"}</div>
             </div>
             <div className="rounded-2xl border border-white/10 bg-white/10 p-4 text-white/90 backdrop-blur-md">
               <div className="text-xs uppercase tracking-[0.22em] text-white/55">Category</div>
@@ -265,7 +265,7 @@ export default function PackageDetailsPage() {
                   </div>
                   <div className="flex items-center justify-between gap-4 border-b border-[#e8dcc9] pb-2">
                     <span>Style</span>
-                    <span className="font-semibold text-[#34291f]">{packageData.travelStyle || "Safari"}</span>
+                    <span className="font-semibold text-[#34291f]">{packageData.travelStyle || "Beach"}</span>
                   </div>
                   <div className="flex items-center justify-between gap-4">
                     <span>Price</span>
@@ -348,7 +348,7 @@ export default function PackageDetailsPage() {
                 <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-[#6d604d]">
                   <div>
                     <span className="uppercase tracking-[0.22em] text-[#9f7f53]">Travel style</span>
-                    <div className="mt-1 font-semibold text-[#34291f]">{packageData.travelStyle || "Safari"}</div>
+                    <div className="mt-1 font-semibold text-[#34291f]">{packageData.travelStyle || "Beach"}</div>
                   </div>
                   <div className="hidden h-10 w-px bg-[#e7dbc9] sm:block" />
                   <div>
@@ -543,4 +543,3 @@ export default function PackageDetailsPage() {
     </div>
   );
 }
-

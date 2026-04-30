@@ -1,9 +1,10 @@
 // src/features/api/BaseApi.js
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "https://safarimade-backend.onrender.com/api";
+
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://safarimade-backend.onrender.com/api",
-  //baseUrl: "http://localhost:4000/api",
+  baseUrl: API_BASE_URL,
   prepareHeaders: (headers) => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("accessToken");

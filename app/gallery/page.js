@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { mockPackages, wildebeestMigrationPackages } from "../../lib/mockData";
+import { mockPackages } from "../../lib/mockData";
 import { slugifyPackageName } from "../../lib/packageSlug";
 
 const galleryImages = [
@@ -98,11 +98,11 @@ export default function GalleryPage() {
 
   const featuredPackages = useMemo(() => {
     const safariPackage = mockPackages.find(
-      (pkg) => !pkg?.Mount && !pkg?.Island && !pkg?.island
+      (pkg) => pkg?.category === "SAFARI"
     );
-    const kilimanjaroPackage = mockPackages.find((pkg) => pkg?.Mount);
-    const zanzibarPackage = mockPackages.find((pkg) => pkg?.Island || pkg?.island);
-    const wildebeestPackage = wildebeestMigrationPackages?.[0];
+    const kilimanjaroPackage = mockPackages.find((pkg) => pkg?.category === "KILIMANJARO");
+    const zanzibarPackage = mockPackages.find((pkg) => pkg?.category === "ZANZIBAR");
+    const wildebeestPackage = mockPackages.find((pkg) => pkg?.category === "WILDEBEEST");
 
     return [
       safariPackage && { ...safariPackage, categoryLabel: "Safari" },
